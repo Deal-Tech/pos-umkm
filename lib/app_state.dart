@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
+
+class FFAppState extends ChangeNotifier {
+  static FFAppState _instance = FFAppState._internal();
+
+  factory FFAppState() {
+    return _instance;
+  }
+
+  FFAppState._internal();
+
+  static void reset() {
+    _instance = FFAppState._internal();
+  }
+
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _cart = prefs
+              .getStringList('ff_cart')
+              ?.map((x) {
+                try {
+                  return CartItemStruct.fromSerializableMap(jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _cart;
+    });
+  }
+
+  void update(VoidCallback callback) {
+    callback();
+    notifyListeners();
+  }
+
+  late SharedPreferences prefs;
+
+  List<CartItemStruct> _cart = [
+    CartItemStruct.fromSerializableMap(jsonDecode(
+        '{\"product_id\":\"1\",\"quantity\":\"2\",\"price\":\"5000\",\"name\":\"Pecel\",\"unit\":\"/ pcs\"}')),
+    CartItemStruct.fromSerializableMap(jsonDecode(
+        '{\"product_id\":\"2\",\"quantity\":\"3\",\"price\":\"5000\",\"name\":\"bakpau\",\"unit\":\"/ pcs\"}'))
+  ];
+  List<CartItemStruct> get cart => _cart;
+  set cart(List<CartItemStruct> value) {
+    _cart = value;
+    prefs.setStringList('ff_cart', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToCart(CartItemStruct value) {
+    cart.add(value);
+    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromCart(CartItemStruct value) {
+    cart.remove(value);
+    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromCart(int index) {
+    cart.removeAt(index);
+    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+
+  void updateCartAtIndex(
+    int index,
+    CartItemStruct Function(CartItemStruct) updateFn,
+  ) {
+    cart[index] = updateFn(_cart[index]);
+    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInCart(int index, CartItemStruct value) {
+    cart.insert(index, value);
+    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
+}
