@@ -81,6 +81,7 @@ class _SuccesCheckoutPageWidgetState extends State<SuccesCheckoutPageWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 138.0),
                   child: SingleChildScrollView(
+                    primary: false,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
