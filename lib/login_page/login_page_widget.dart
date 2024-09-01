@@ -83,7 +83,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   32.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'SuperPOS',
+                                'POS UMKM',
                                 style: FlutterFlowTheme.of(context)
                                     .displaySmall
                                     .override(

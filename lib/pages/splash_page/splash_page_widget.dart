@@ -63,7 +63,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 13.0, 0.0, 0.0),
                 child: Text(
-                  'SuperPOS',
+                  'POS UMKM',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
