@@ -33,6 +33,9 @@ class FFAppState extends ChangeNotifier {
               .toList() ??
           _cart;
     });
+    _safeInit(() {
+      _apilogin = prefs.getString('ff_apilogin') ?? _apilogin;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -80,6 +83,13 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInCart(int index, CartItemStruct value) {
     cart.insert(index, value);
     prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
+  }
+
+  String _apilogin = '';
+  String get apilogin => _apilogin;
+  set apilogin(String value) {
+    _apilogin = value;
+    prefs.setString('ff_apilogin', value);
   }
 }
 

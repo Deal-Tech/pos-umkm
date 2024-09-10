@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class ProductAddPageModel extends FlutterFlowModel<ProductAddPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TextFieldNama widget.
   FocusNode? textFieldNamaFocusNode;
   TextEditingController? textFieldNamaTextController;

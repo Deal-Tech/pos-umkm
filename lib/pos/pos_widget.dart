@@ -84,7 +84,8 @@ class _PosWidgetState extends State<PosWidget> {
                           '_model.textController',
                           const Duration(milliseconds: 250),
                           () async {
-                            setState(() => _model.apiRequestCompleter = null);
+                            safeSetState(
+                                () => _model.apiRequestCompleter = null);
                             await _model.waitForApiRequestCompleted();
                           },
                         ),

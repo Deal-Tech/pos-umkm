@@ -267,7 +267,7 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                         if (selectedMedia != null &&
                             selectedMedia.every((m) =>
                                 validateFileFormat(m.storagePath, context))) {
-                          setState(() => _model.isDataUploading = true);
+                          safeSetState(() => _model.isDataUploading = true);
                           var selectedUploadedFiles = <FFUploadedFile>[];
 
                           try {
@@ -285,12 +285,12 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                           }
                           if (selectedUploadedFiles.length ==
                               selectedMedia.length) {
-                            setState(() {
+                            safeSetState(() {
                               _model.uploadedLocalFile =
                                   selectedUploadedFiles.first;
                             });
                           } else {
-                            setState(() {});
+                            safeSetState(() {});
                             return;
                           }
                         }

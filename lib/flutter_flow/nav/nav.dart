@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '/backend/schema/structs/index.dart';
 
 
-import '/auth/base_auth_user_provider.dart';
+import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/index.dart';
 import '/main.dart';
@@ -24,8 +24,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  BaseAuthUser? initialUser;
-  BaseAuthUser? user;
+  CahrurPOSUMKMAuthUser? initialUser;
+  CahrurPOSUMKMAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -50,7 +50,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(BaseAuthUser newUser) {
+  void update(CahrurPOSUMKMAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -118,11 +118,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : const OtherPageWidget(),
         ),
         FFRoute(
-          name: 'LoginPage',
-          path: '/loginPage',
-          builder: (context, params) => const LoginPageWidget(),
-        ),
-        FFRoute(
           name: 'ProductAddPage',
           path: '/productAddPage',
           builder: (context, params) => const ProductAddPageWidget(),
@@ -184,6 +179,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'TransactionDetailPage',
           path: '/transactionDetailPage',
           builder: (context, params) => const TransactionDetailPageWidget(),
+        ),
+        FFRoute(
+          name: 'SighUpPage',
+          path: '/sighUpPage',
+          builder: (context, params) => const SighUpPageWidget(),
+        ),
+        FFRoute(
+          name: 'loginPage',
+          path: '/loginPage',
+          builder: (context, params) => const LoginPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

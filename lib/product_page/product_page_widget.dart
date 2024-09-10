@@ -81,7 +81,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                           '_model.textController',
                           const Duration(milliseconds: 250),
                           () async {
-                            setState(() => _model.apiRequestCompleter = null);
+                            safeSetState(
+                                () => _model.apiRequestCompleter = null);
                             await _model.waitForApiRequestCompleted();
                           },
                         ),
@@ -410,7 +411,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                     productItem.id,
                                                   ),
                                                 );
-                                                setState(() =>
+                                                safeSetState(() =>
                                                     _model.apiRequestCompleter =
                                                         null);
                                                 await _model

@@ -26,7 +26,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(milliseconds: 2000));
 
-      context.pushNamed('LoginPage');
+      context.pushNamed('loginPage');
     });
   }
 

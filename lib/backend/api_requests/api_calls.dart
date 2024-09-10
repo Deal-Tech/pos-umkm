@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -40,6 +41,100 @@ class SummaryCall {
       callType: ApiCallType.GET,
       headers: {},
       params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiDaftarCall {
+  static Future<ApiCallResponse> call({
+    String? name = '',
+    String? email = '',
+    String? password = '',
+    String? passwordConfirmation = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "email": "$email",
+  "password": "$password",
+"password_confirmation": "$passwordConfirmation"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'api daftar',
+      apiUrl: 'http://thetester.me/api/register',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? tokenlogin(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.token''',
+      ));
+}
+
+class LoginApiCall {
+  static Future<ApiCallResponse> call({
+    String? email = '',
+    String? password = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "email": "$email",
+  "password": "$password"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'login api',
+      apiUrl: 'http://thetester.me/api/login',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic tokenlogin(dynamic response) => getJsonField(
+        response,
+        r'''$.token''',
+      );
+}
+
+class ApiLogoutCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'api logout',
+      apiUrl: 'http://thetester.me/api/logout',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      bodyType: BodyType.NONE,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

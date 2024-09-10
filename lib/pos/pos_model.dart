@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class PosModel extends FlutterFlowModel<PosWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;

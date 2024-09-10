@@ -10,7 +10,7 @@ import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
-import '/auth/supabase_auth/auth_util.dart';
+import '/auth/custom_auth/auth_util.dart';
 
 int calaculateTotalCartPrice(List<CartItemStruct> items) {
   // jumlahkan semua hasil dari price*quantity tiap item pada cart_item , kembalikan berupa total harga dari semua item

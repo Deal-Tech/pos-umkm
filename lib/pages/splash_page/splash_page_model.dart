@@ -3,10 +3,6 @@ import 'splash_page_widget.dart' show SplashPageWidget;
 import 'package:flutter/material.dart';
 
 class SplashPageModel extends FlutterFlowModel<SplashPageWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  final unfocusNode = FocusNode();
-
   @override
   void initState(BuildContext context) {}
 

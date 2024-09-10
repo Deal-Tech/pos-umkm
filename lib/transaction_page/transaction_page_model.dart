@@ -3,10 +3,6 @@ import 'transaction_page_widget.dart' show TransactionPageWidget;
 import 'package:flutter/material.dart';
 
 class TransactionPageModel extends FlutterFlowModel<TransactionPageWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  final unfocusNode = FocusNode();
-
   @override
   void initState(BuildContext context) {}
 
