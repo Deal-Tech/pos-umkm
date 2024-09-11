@@ -145,6 +145,86 @@ class ApiLogoutCall {
   }
 }
 
+class ApiGetUserCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Get User',
+      apiUrl: 'http://thetester.me/api/user',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? nama(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.name''',
+      ));
+  static String? email(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.email''',
+      ));
+  static String? phone(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.phone''',
+      ));
+  static String? plan(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.plan''',
+      ));
+}
+
+class ApiProductCreateCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? userId = '',
+    String? name = '',
+    int? price,
+    String? unit = '',
+    String? imageUrl = '',
+    String? category = '',
+    bool? status = true,
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "user_id": "$userId",
+  "name": "$name",
+  "price": $price,
+  "unit": "$unit",
+  "image_url": "$imageUrl",
+  "category": "$category",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Product Create',
+      apiUrl: 'http://thetester.me/api/products',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
