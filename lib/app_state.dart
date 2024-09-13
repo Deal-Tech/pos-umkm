@@ -36,6 +36,9 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _apilogin = prefs.getString('ff_apilogin') ?? _apilogin;
     });
+    _safeInit(() {
+      _userid = prefs.getString('ff_userid') ?? _userid;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -90,6 +93,19 @@ class FFAppState extends ChangeNotifier {
   set apilogin(String value) {
     _apilogin = value;
     prefs.setString('ff_apilogin', value);
+  }
+
+  String _userid = '';
+  String get userid => _userid;
+  set userid(String value) {
+    _userid = value;
+    prefs.setString('ff_userid', value);
+  }
+
+  String _imageurl = '';
+  String get imageurl => _imageurl;
+  set imageurl(String value) {
+    _imageurl = value;
   }
 }
 

@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'product_edit_page_widget.dart' show ProductEditPageWidget;
 import 'package:flutter/material.dart';
@@ -9,6 +10,12 @@ class ProductEditPageModel extends FlutterFlowModel<ProductEditPageWidget> {
   FocusNode? textFieldNamaFocusNode;
   TextEditingController? textFieldNamaTextController;
   String? Function(BuildContext, String?)? textFieldNamaTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Text widget.
+  ApiCallResponse? apiResulth96;
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
   // State field(s) for TextFieldHarga widget.
   FocusNode? textFieldHargaFocusNode;
   TextEditingController? textFieldHargaTextController;

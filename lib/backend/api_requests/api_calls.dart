@@ -9,48 +9,6 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-class GetListProductCall {
-  static Future<ApiCallResponse> call({
-    String? name = '',
-  }) async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'Get List Product',
-      apiUrl:
-          'https://n8n-cahrur-api.lwpvj5.easypanel.host/webhook/superpos-product',
-      callType: ApiCallType.GET,
-      headers: {},
-      params: {
-        'name': name,
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class SummaryCall {
-  static Future<ApiCallResponse> call() async {
-    return ApiManager.instance.makeApiCall(
-      callName: 'summary',
-      apiUrl:
-          'https://n8n-cahrur-api.lwpvj5.easypanel.host/webhook/SuperPOS-Summary',
-      callType: ApiCallType.GET,
-      headers: {},
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
     String? name = '',
@@ -67,7 +25,7 @@ class ApiDaftarCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'api daftar',
-      apiUrl: 'http://thetester.me/api/register',
+      apiUrl: 'https://thetester.me/api/register',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -101,7 +59,7 @@ class LoginApiCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login api',
-      apiUrl: 'http://thetester.me/api/login',
+      apiUrl: 'https://thetester.me/api/login',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -116,10 +74,15 @@ class LoginApiCall {
     );
   }
 
-  static dynamic tokenlogin(dynamic response) => getJsonField(
+  static String? tokenlogin(dynamic response) =>
+      castToType<String>(getJsonField(
         response,
         r'''$.token''',
-      );
+      ));
+  static int? userid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.user.id''',
+      ));
 }
 
 class ApiLogoutCall {
@@ -128,7 +91,7 @@ class ApiLogoutCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'api logout',
-      apiUrl: 'http://thetester.me/api/logout',
+      apiUrl: 'https://thetester.me/api/logout',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -151,7 +114,7 @@ class ApiGetUserCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get User',
-      apiUrl: 'http://thetester.me/api/user',
+      apiUrl: 'https://thetester.me/api/user',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -207,7 +170,7 @@ class ApiProductCreateCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Create',
-      apiUrl: 'http://thetester.me/api/products',
+      apiUrl: 'https://thetester.me/api/products',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -223,6 +186,215 @@ class ApiProductCreateCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class ApiProductUpdateCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? name = '',
+    int? price,
+    String? unit = '',
+    String? imageUrl = '',
+    String? category = '',
+    bool? status = true,
+    String? productId = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "price": $price,
+  "unit": "$unit",
+  "image_url": "$imageUrl",
+  "category": "$category",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Product Update',
+      apiUrl: 'https://thetester.me/api/products/$productId',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiProductShowCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? productId = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Product Show',
+      apiUrl: 'https://thetester.me/api/products/$productId',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiGetListProductCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Get List Product',
+      apiUrl: 'https://thetester.me/api/products',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<String>? nameproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List? imageproduct(dynamic response) => getJsonField(
+        response,
+        r'''$[:].image_url''',
+        true,
+      ) as List?;
+  static List<String>? categoryproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].category''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<bool>? statusproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].status''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<bool>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? priceproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].price''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? unitproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].unit''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? userid(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].user_id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  static List<int>? idproduct(dynamic response) => (getJsonField(
+        response,
+        r'''$[:].id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+}
+
+class ApiDeleteProductCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? productId = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Delete Product',
+      apiUrl: 'https://thetester.me/api/products/$productId',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiUploudImageProductCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    FFUploadedFile? image,
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Uploud Image product',
+      apiUrl: 'https://thetester.me/api/upload-product-image',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {
+        'token': token,
+        'image': image,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static dynamic imageurl(dynamic response) => getJsonField(
+        response,
+        r'''$.image_url''',
+      );
 }
 
 class ApiPagingParams {

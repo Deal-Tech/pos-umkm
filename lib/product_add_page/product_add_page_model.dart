@@ -1,4 +1,6 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'product_add_page_widget.dart' show ProductAddPageWidget;
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,8 @@ class ProductAddPageModel extends FlutterFlowModel<ProductAddPageWidget> {
   FFUploadedFile uploadedLocalFile =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultuploudimage;
   // State field(s) for TextFieldHarga widget.
   FocusNode? textFieldHargaFocusNode;
   TextEditingController? textFieldHargaTextController;
@@ -23,6 +27,13 @@ class ProductAddPageModel extends FlutterFlowModel<ProductAddPageWidget> {
   TextEditingController? textFieldSatuanTextController;
   String? Function(BuildContext, String?)?
       textFieldSatuanTextControllerValidator;
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
+  // State field(s) for Switch widget.
+  bool? switchValue;
+  // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
+  ApiCallResponse? insertApiCall;
 
   @override
   void initState(BuildContext context) {}

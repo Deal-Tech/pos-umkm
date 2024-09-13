@@ -1,10 +1,13 @@
-import '/backend/supabase/supabase.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
+import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'product_edit_page_model.dart';
 export 'product_edit_page_model.dart';
 
@@ -15,12 +18,18 @@ class ProductEditPageWidget extends StatefulWidget {
     required this.price,
     required this.unit,
     required this.id,
-  });
+    required this.image,
+    required this.category,
+    bool? status,
+  }) : status = status ?? true;
 
   final String? name;
   final int? price;
   final String? unit;
   final int? id;
+  final String? image;
+  final String? category;
+  final bool status;
 
   @override
   State<ProductEditPageWidget> createState() => _ProductEditPageWidgetState();
@@ -58,6 +67,8 @@ class _ProductEditPageWidgetState extends State<ProductEditPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -271,12 +282,126 @@ class _ProductEditPageWidgetState extends State<ProductEditPageWidget> {
                           const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset(
-                          'assets/images/photo_(1).png',
+                        child: Image.memory(
+                          _model.uploadedLocalFile.bytes ??
+                              Uint8List.fromList([]),
                           width: 60.0,
                           height: 60.0,
                           fit: BoxFit.cover,
                         ),
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        _model.apiResulth96 =
+                            await ApiUploudImageProductCall.call(
+                          token: FFAppState().apilogin,
+                          image: _model.uploadedLocalFile,
+                        );
+
+                        if ((_model.apiResulth96?.succeeded ?? true)) {
+                          FFAppState().imageurl = ImageUrlStruct.maybeFromMap(
+                                  (_model.apiResulth96?.jsonBody ?? ''))!
+                              .imageUrl;
+                          safeSetState(() {});
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Gagal'),
+                                content: Text(
+                                    (_model.apiResulth96?.exceptionMessage ??
+                                        '')),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+
+                        safeSetState(() {});
+                      },
+                      child: Text(
+                        'Uploud',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        final selectedMedia =
+                            await selectMediaWithSourceBottomSheet(
+                          context: context,
+                          allowPhoto: true,
+                        );
+                        if (selectedMedia != null &&
+                            selectedMedia.every((m) =>
+                                validateFileFormat(m.storagePath, context))) {
+                          safeSetState(() => _model.isDataUploading = true);
+                          var selectedUploadedFiles = <FFUploadedFile>[];
+
+                          try {
+                            selectedUploadedFiles = selectedMedia
+                                .map((m) => FFUploadedFile(
+                                      name: m.storagePath.split('/').last,
+                                      bytes: m.bytes,
+                                      height: m.dimensions?.height,
+                                      width: m.dimensions?.width,
+                                      blurHash: m.blurHash,
+                                    ))
+                                .toList();
+                          } finally {
+                            _model.isDataUploading = false;
+                          }
+                          if (selectedUploadedFiles.length ==
+                              selectedMedia.length) {
+                            safeSetState(() {
+                              _model.uploadedLocalFile =
+                                  selectedUploadedFiles.first;
+                            });
+                          } else {
+                            safeSetState(() {});
+                            return;
+                          }
+                        }
+                      },
+                      child: Text(
+                        'up',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
                       ),
                     ),
                   ],
@@ -544,22 +669,20 @@ class _ProductEditPageWidgetState extends State<ProductEditPageWidget> {
                                       '') {
                                 if (_model.textFieldSatuanTextController.text !=
                                         '') {
-                                  await ProductsTable().update(
-                                    data: {
-                                      'name': _model
-                                          .textFieldNamaTextController.text,
-                                      'price': int.tryParse(_model
-                                          .textFieldHargaTextController.text),
-                                      'unit': _model
-                                          .textFieldSatuanTextController.text,
-                                      'image_url':
-                                          'https://images.pexels.com/photos/4025632/pexels-photo-4025632.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                                    },
-                                    matchingRows: (rows) => rows.eq(
-                                      'id',
-                                      widget.id,
-                                    ),
+                                  await ApiProductUpdateCall.call(
+                                    token: FFAppState().apilogin,
+                                    name:
+                                        _model.textFieldNamaTextController.text,
+                                    price: int.tryParse(_model
+                                        .textFieldHargaTextController.text),
+                                    productId: widget.id?.toString(),
+                                    unit: _model
+                                        .textFieldSatuanTextController.text,
+                                    status: widget.status,
+                                    imageUrl: FFAppState().imageurl,
+                                    category: widget.category,
                                   );
+
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();
                                   }

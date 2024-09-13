@@ -120,7 +120,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ProductAddPage',
           path: '/productAddPage',
-          builder: (context, params) => const ProductAddPageWidget(),
+          builder: (context, params) => ProductAddPageWidget(
+            userid: params.getParam(
+              'userid',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'ProductEditPage',
@@ -141,6 +146,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             id: params.getParam(
               'id',
               ParamType.int,
+            ),
+            image: params.getParam(
+              'image',
+              ParamType.String,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+            status: params.getParam(
+              'status',
+              ParamType.bool,
             ),
           ),
         ),

@@ -1,16 +1,24 @@
-import '/backend/supabase/supabase.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'product_add_page_model.dart';
 export 'product_add_page_model.dart';
 
 class ProductAddPageWidget extends StatefulWidget {
-  const ProductAddPageWidget({super.key});
+  const ProductAddPageWidget({
+    super.key,
+    required this.userid,
+  });
+
+  final String? userid;
 
   @override
   State<ProductAddPageWidget> createState() => _ProductAddPageWidgetState();
@@ -34,6 +42,8 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
 
     _model.textFieldSatuanTextController ??= TextEditingController();
     _model.textFieldSatuanFocusNode ??= FocusNode();
+
+    _model.switchValue = true;
   }
 
   @override
@@ -45,6 +55,8 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -259,10 +271,10 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        final selectedMedia = await selectMedia(
-                          imageQuality: 50,
-                          mediaSource: MediaSource.photoGallery,
-                          multiImage: false,
+                        final selectedMedia =
+                            await selectMediaWithSourceBottomSheet(
+                          context: context,
+                          allowPhoto: true,
                         );
                         if (selectedMedia != null &&
                             selectedMedia.every((m) =>
@@ -294,12 +306,53 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                             return;
                           }
                         }
+
+                        _model.apiResultuploudimage =
+                            await ApiUploudImageProductCall.call(
+                          token: FFAppState().apilogin,
+                          image: _model.uploadedLocalFile,
+                        );
+
+                        if ((_model.apiResultuploudimage?.succeeded ?? true)) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Gagal'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+
+                        safeSetState(() {});
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.memory(
-                          _model.uploadedLocalFile.bytes ??
-                              Uint8List.fromList([]),
+                        child: Image.asset(
+                          'assets/images/photo_(1).png',
                           width: 60.0,
                           height: 60.0,
                           fit: BoxFit.cover,
@@ -560,6 +613,55 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    FlutterFlowDropDown<String>(
+                      controller: _model.dropDownValueController ??=
+                          FormFieldController<String>(null),
+                      options: const ['Kaetgori 1', 'Kaetgori 2', 'Kaetgori 3'],
+                      onChanged: (val) =>
+                          safeSetState(() => _model.dropDownValue = val),
+                      width: 200.0,
+                      height: 40.0,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Readex Pro',
+                                letterSpacing: 0.0,
+                              ),
+                      hintText: 'Select...',
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 24.0,
+                      ),
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      elevation: 2.0,
+                      borderColor: Colors.transparent,
+                      borderWidth: 0.0,
+                      borderRadius: 8.0,
+                      margin:
+                          const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                      hidesUnderline: true,
+                      isOverButton: false,
+                      isSearchable: false,
+                      isMultiSelect: false,
+                    ),
+                    Switch.adaptive(
+                      value: _model.switchValue!,
+                      onChanged: (newValue) async {
+                        safeSetState(() => _model.switchValue = newValue);
+                      },
+                      activeColor: FlutterFlowTheme.of(context).primary,
+                      activeTrackColor: FlutterFlowTheme.of(context).primary,
+                      inactiveTrackColor:
+                          FlutterFlowTheme.of(context).alternate,
+                      inactiveThumbColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                    ),
+                  ].divide(const SizedBox(width: 16.0)),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
                     Expanded(
                       child: Padding(
                         padding:
@@ -571,20 +673,69 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                                       '') {
                                 if (_model.textFieldSatuanTextController.text !=
                                         '') {
-                                  await ProductsTable().insert({
-                                    'name':
+                                  _model.insertApiCall =
+                                      await ApiProductCreateCall.call(
+                                    token: FFAppState().apilogin,
+                                    userId: widget.userid,
+                                    name:
                                         _model.textFieldNamaTextController.text,
-                                    'price': int.tryParse(_model
+                                    price: int.tryParse(_model
                                         .textFieldHargaTextController.text),
-                                    'unit': _model
+                                    unit: _model
                                         .textFieldSatuanTextController.text,
-                                    'image_url':
-                                        _model.isDataUploading.toString(),
-                                  });
-                                  if (Navigator.of(context).canPop()) {
-                                    context.pop();
+                                    imageUrl:
+                                        ApiUploudImageProductCall.imageurl(
+                                      (_model.apiResultuploudimage?.jsonBody ??
+                                          ''),
+                                    ).toString(),
+                                    category: _model.dropDownValue,
+                                    status: _model.switchValue,
+                                  );
+
+                                  if ((_model.insertApiCall?.succeeded ??
+                                      true)) {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Sukses'),
+                                          content: Text(
+                                              (_model.insertApiCall?.bodyText ??
+                                                  '')),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    if (Navigator.of(context).canPop()) {
+                                      context.pop();
+                                    }
+                                    context.pushNamed('ProductPage');
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Gagal APi Call'),
+                                          content: Text((_model.insertApiCall
+                                                  ?.exceptionMessage ??
+                                              '')),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   }
-                                  context.pushNamed('ProductPage');
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -634,6 +785,8 @@ class _ProductAddPageWidgetState extends State<ProductAddPageWidget> {
                                 ),
                               );
                             }
+
+                            safeSetState(() {});
                           },
                           text: 'Simpan',
                           options: FFButtonOptions(

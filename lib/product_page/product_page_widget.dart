@@ -1,3 +1,4 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
@@ -7,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'product_page_model.dart';
 export 'product_page_model.dart';
 
@@ -40,6 +42,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -156,8 +160,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                     FutureBuilder<ApiCallResponse>(
                       future: (_model.apiRequestCompleter ??=
                               Completer<ApiCallResponse>()
-                                ..complete(GetListProductCall.call(
-                                  name: _model.textController.text,
+                                ..complete(ApiGetListProductCall.call(
+                                  token: FFAppState().apilogin,
                                 )))
                           .future,
                       builder: (context, snapshot) {
@@ -175,11 +179,12 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                             ),
                           );
                         }
-                        final listViewGetListProductResponse = snapshot.data!;
+                        final listViewApiGetListProductResponse =
+                            snapshot.data!;
 
                         return Builder(
                           builder: (context) {
-                            final product = (listViewGetListProductResponse
+                            final product = (listViewApiGetListProductResponse
                                         .jsonBody
                                         .toList()
                                         .map<ProductStruct?>(
@@ -332,6 +337,18 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                     productItem.id,
                                                     ParamType.int,
                                                   ),
+                                                  'image': serializeParam(
+                                                    productItem.imageUrl,
+                                                    ParamType.String,
+                                                  ),
+                                                  'category': serializeParam(
+                                                    'tes',
+                                                    ParamType.String,
+                                                  ),
+                                                  'status': serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
                                                 }.withoutNulls,
                                               );
                                             },
@@ -470,7 +487,15 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      context.pushNamed('ProductAddPage');
+                      context.pushNamed(
+                        'ProductAddPage',
+                        queryParameters: {
+                          'userid': serializeParam(
+                            currentUserUid,
+                            ParamType.String,
+                          ),
+                        }.withoutNulls,
+                      );
                     },
                     text: ' Tambah Produk',
                     icon: const Icon(

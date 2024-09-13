@@ -152,8 +152,8 @@ class _PosWidgetState extends State<PosWidget> {
                     FutureBuilder<ApiCallResponse>(
                       future: (_model.apiRequestCompleter ??=
                               Completer<ApiCallResponse>()
-                                ..complete(GetListProductCall.call(
-                                  name: _model.textController.text,
+                                ..complete(ApiGetListProductCall.call(
+                                  token: FFAppState().apilogin,
                                 )))
                           .future,
                       builder: (context, snapshot) {
@@ -171,11 +171,12 @@ class _PosWidgetState extends State<PosWidget> {
                             ),
                           );
                         }
-                        final listViewGetListProductResponse = snapshot.data!;
+                        final listViewApiGetListProductResponse =
+                            snapshot.data!;
 
                         return Builder(
                           builder: (context) {
-                            final product = (listViewGetListProductResponse
+                            final pos = (listViewApiGetListProductResponse
                                         .jsonBody
                                         .toList()
                                         .map<ProductStruct?>(
@@ -184,7 +185,7 @@ class _PosWidgetState extends State<PosWidget> {
                                     .withoutNulls
                                     .toList() ??
                                 [];
-                            if (product.isEmpty) {
+                            if (pos.isEmpty) {
                               return Center(
                                 child: Image.asset(
                                   'assets/images/undraw_empty_re_opql_3.png',
@@ -196,11 +197,11 @@ class _PosWidgetState extends State<PosWidget> {
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: product.length,
+                              itemCount: pos.length,
                               separatorBuilder: (_, __) =>
                                   const SizedBox(height: 16.0),
-                              itemBuilder: (context, productIndex) {
-                                final productItem = product[productIndex];
+                              itemBuilder: (context, posIndex) {
+                                final posItem = pos[posIndex];
                                 return Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -213,7 +214,7 @@ class _PosWidgetState extends State<PosWidget> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: Image.network(
-                                            productItem.imageUrl,
+                                            posItem.imageUrl,
                                             width: 74.0,
                                             height: 74.0,
                                             fit: BoxFit.fill,
@@ -230,7 +231,7 @@ class _PosWidgetState extends State<PosWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  productItem.name,
+                                                  posItem.name,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -250,7 +251,7 @@ class _PosWidgetState extends State<PosWidget> {
                                                     children: [
                                                       TextSpan(
                                                         text: formatNumber(
-                                                          productItem.price,
+                                                          posItem.price,
                                                           formatType: FormatType
                                                               .decimal,
                                                           decimalType:
@@ -277,7 +278,7 @@ class _PosWidgetState extends State<PosWidget> {
                                                       ),
                                                       TextSpan(
                                                         text:
-                                                            ' / ${productItem.unit}',
+                                                            ' / ${posItem.unit}',
                                                         style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.normal,

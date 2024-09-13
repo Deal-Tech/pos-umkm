@@ -1,3 +1,4 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -286,7 +287,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      _model.apiResultu1w =
+                                      _model.apiResult9j1 =
                                           await LoginApiCall.call(
                                         email: _model
                                             .emailAddressTextController.text,
@@ -294,50 +295,31 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             _model.passwordTextController.text,
                                       );
 
-                                      if ((_model.apiResultu1w?.succeeded ??
+                                      if ((_model.apiResult9j1?.succeeded ??
                                           true)) {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: const Text('Sukses'),
-                                              content: const Text('Login berhasil'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: const Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
+                                        GoRouter.of(context).prepareAuthEvent();
+                                        await authManager.signIn(
+                                          authenticationToken:
+                                              LoginApiCall.tokenlogin(
+                                            (_model.apiResult9j1?.jsonBody ??
+                                                ''),
+                                          ),
+                                          refreshToken: currentAuthRefreshToken,
+                                          tokenExpiration:
+                                              currentAuthTokenExpiration,
+                                          authUid: LoginApiCall.userid(
+                                            (_model.apiResult9j1?.jsonBody ??
+                                                ''),
+                                          )?.toString(),
                                         );
                                         FFAppState().apilogin =
                                             LoginApiCall.tokenlogin(
-                                          (_model.apiResultu1w?.jsonBody ?? ''),
-                                        ).toString();
+                                          (_model.apiResult9j1?.jsonBody ?? ''),
+                                        )!;
                                         safeSetState(() {});
 
-                                        context.pushNamed('HomePage');
-                                      } else {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: const Text('Gagal'),
-                                              content: const Text('Login Gagal'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: const Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
+                                        context.pushNamedAuth(
+                                            'HomePage', context.mounted);
                                       }
 
                                       safeSetState(() {});
