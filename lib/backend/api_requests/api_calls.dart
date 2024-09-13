@@ -365,6 +365,29 @@ class ApiDeleteProductCall {
   }
 }
 
+class ApiDeleteCategoryCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? categoryId = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Delete Category',
+      apiUrl: 'https://thetester.me/api/categories/$categoryId',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiUploudImageProductCall {
   static Future<ApiCallResponse> call({
     String? token = '',
@@ -395,6 +418,114 @@ class ApiUploudImageProductCall {
         response,
         r'''$.image_url''',
       );
+}
+
+class ApiDeleteImageProductCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? imageUrl = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Delete Image Product',
+      apiUrl: 'https://thetester.me/api/delete-product-image',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {
+        'image_url': imageUrl,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? imagemessage(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class ApiGetListCategoryCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Get List Category',
+      apiUrl: 'https://thetester.me/api/categories',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiCategoryCreateCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Category Create',
+      apiUrl: 'https://thetester.me/api/categories',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiUpdateCategoryCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? name = '',
+    bool? status,
+    String? categoryId = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "status": "$status"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Update Category',
+      apiUrl: 'https://thetester.me/api/categories/$categoryId',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 class ApiPagingParams {

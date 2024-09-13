@@ -1,7 +1,6 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
-import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -421,19 +420,78 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                       ) ??
                                                       false;
                                               if (confirmDialogResponse) {
-                                                await ProductsTable().delete(
-                                                  matchingRows: (rows) =>
-                                                      rows.eq(
-                                                    'id',
-                                                    productItem.id,
-                                                  ),
+                                                await ApiDeleteProductCall.call(
+                                                  token: FFAppState().apilogin,
+                                                  productId:
+                                                      productItem.id.toString(),
                                                 );
+
                                                 safeSetState(() =>
                                                     _model.apiRequestCompleter =
                                                         null);
                                                 await _model
                                                     .waitForApiRequestCompleted();
+                                                _model.apiResulttlm =
+                                                    await ApiDeleteImageProductCall
+                                                        .call(
+                                                  token: FFAppState().apilogin,
+                                                  imageUrl: ImageUrlStruct
+                                                          .maybeFromMap(
+                                                              productItem
+                                                                  .toMap())
+                                                      ?.imageUrl,
+                                                );
+
+                                                if ((_model.apiResulttlm
+                                                        ?.succeeded ??
+                                                    true)) {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Sukses'),
+                                                        content: Text((_model
+                                                                .apiResulttlm
+                                                                ?.bodyText ??
+                                                            '')),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Sukses'),
+                                                        content: Text((_model
+                                                                .apiResulttlm
+                                                                ?.bodyText ??
+                                                            '')),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }
                                               }
+
+                                              safeSetState(() {});
                                             },
                                             text: 'Delete',
                                             options: FFButtonOptions(

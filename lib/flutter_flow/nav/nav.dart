@@ -211,6 +211,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'LanggananPage',
           path: '/langgananPage',
           builder: (context, params) => const LanggananPageWidget(),
+        ),
+        FFRoute(
+          name: 'CategoryPage',
+          path: '/categoryPage',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'CategoryPage')
+              : const CategoryPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

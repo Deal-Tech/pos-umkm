@@ -121,6 +121,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'POS': const PosWidget(),
       'ProductPage': const ProductPageWidget(),
       'OtherPage': const OtherPageWidget(),
+      'CategoryPage': const CategoryPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -177,6 +178,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Other',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.box,
+              size: 24.0,
+            ),
+            label: 'Product',
             tooltip: '',
           )
         ],

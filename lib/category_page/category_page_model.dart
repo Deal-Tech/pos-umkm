@@ -1,10 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'category_page_widget.dart' show CategoryPageWidget;
 import 'dart:async';
-import 'product_page_widget.dart' show ProductPageWidget;
 import 'package:flutter/material.dart';
 
-class ProductPageModel extends FlutterFlowModel<ProductPageWidget> {
+class CategoryPageModel extends FlutterFlowModel<CategoryPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TextField widget.
@@ -12,8 +12,8 @@ class ProductPageModel extends FlutterFlowModel<ProductPageWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
   Completer<ApiCallResponse>? apiRequestCompleter;
-  // Stores action output result for [Backend Call - API (Api Delete Image Product)] action in Button widget.
-  ApiCallResponse? apiResulttlm;
+  // Stores action output result for [Backend Call - API (Api Delete Category)] action in Icon widget.
+  ApiCallResponse? apiResultqi9;
 
   @override
   void initState(BuildContext context) {}
