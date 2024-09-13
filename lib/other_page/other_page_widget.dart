@@ -1,3 +1,4 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -312,36 +313,45 @@ class _OtherPageWidgetState extends State<OtherPageWidget> {
                               thickness: 1.0,
                               color: Color(0xFFF5F5F5),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.category,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24.0,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Setting Kategory',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                context.pushNamed('CategoryPage');
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(
+                                    Icons.category,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 24.0,
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Setting Kategory',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.navigate_next,
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 24.0,
-                                ),
-                              ],
+                                  Icon(
+                                    Icons.navigate_next,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 24.0,
+                                  ),
+                                ],
+                              ),
                             ),
                             const Divider(
                               thickness: 1.0,
@@ -608,15 +618,20 @@ class _OtherPageWidgetState extends State<OtherPageWidget> {
                               );
                               FFAppState().apilogin = '';
                               FFAppState().update(() {});
+                              GoRouter.of(context).prepareAuthEvent();
+                              await authManager.signOut();
+                              GoRouter.of(context).clearRedirectLocation();
 
-                              context.goNamed('loginPage');
+                              context.goNamedAuth('loginPage', context.mounted);
                             } else {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
                                     title: const Text('Gagal Logout'),
-                                    content: const Text('Gagal Logout'),
+                                    content: Text((_model
+                                            .apiResult6dy?.exceptionMessage ??
+                                        '')),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>

@@ -9,6 +9,204 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
+/// Start Api Transaksi Group Code
+
+class ApiTransaksiGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static CreateTransactionCall createTransactionCall = CreateTransactionCall();
+  static UpdateTransactionCall updateTransactionCall = UpdateTransactionCall();
+  static GetTransactionsCall getTransactionsCall = GetTransactionsCall();
+  static GetTransactionIDCall getTransactionIDCall = GetTransactionIDCall();
+  static DeleteTransactionCall deleteTransactionCall = DeleteTransactionCall();
+}
+
+class CreateTransactionCall {
+  Future<ApiCallResponse> call({
+    String? productId = '',
+    String? nama = '',
+    int? price,
+    String? unit = '',
+    String? categoryId = '',
+    int? total,
+    String? paymentPosId = '',
+    String? paymentMethod = '',
+    String? status = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "product_id": "$productId",
+  "nama": "$nama",
+  "price": $price,
+  "unit": "$unit",
+  "category_id": "$categoryId",
+  "total": $total,
+  "payment_pos_id": "$paymentPosId",
+  "payment_method": "$paymentMethod",
+  "status": "$status"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Create Transaction',
+      apiUrl: '$baseUrl/transactions',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateTransactionCall {
+  Future<ApiCallResponse> call({
+    String? productId = '',
+    String? nama = '',
+    int? price,
+    String? unit = '',
+    String? categoryId = '',
+    int? total,
+    String? paymentPosId = '',
+    String? paymentMethod = '',
+    String? status = '',
+    String? transactionId = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "product_id": "$productId",
+  "nama": "$nama",
+  "price": $price,
+  "unit": "$unit",
+  "category_id": "$categoryId",
+  "total": $total,
+  "payment_pos_id": "$paymentPosId",
+  "payment_method": "$paymentMethod",
+  "status": "$status"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Transaction',
+      apiUrl: '$baseUrl/transactions/$transactionId',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetTransactionsCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get transactions',
+      apiUrl: '$baseUrl/transactions',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetTransactionIDCall {
+  Future<ApiCallResponse> call({
+    String? transactionId = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Transaction ID',
+      apiUrl: '$baseUrl/transactions/$transactionId',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteTransactionCall {
+  Future<ApiCallResponse> call({
+    String? transactionId = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Transaction ',
+      apiUrl: '$baseUrl/transactions/$transactionId',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Api Transaksi Group Code
+
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
     String? name = '',
