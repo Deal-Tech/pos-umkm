@@ -216,6 +216,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CategoryPage',
           path: '/categoryPage',
           builder: (context, params) => const CategoryPageWidget(),
+        ),
+        FFRoute(
+          name: 'QRISPage',
+          path: '/qRISPage',
+          builder: (context, params) => const QRISPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

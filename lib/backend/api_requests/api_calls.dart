@@ -726,6 +726,46 @@ class ApiUpdateCategoryCall {
   }
 }
 
+class ApiGetPaymentPOSCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Get Payment POS',
+      apiUrl: 'https://thetester.me/api/payment_pos',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: true,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? provider(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].provider''',
+      ));
+  static String? paymentmethod(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$[:].payment_method''',
+      ));
+  static String? qrisimage(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].qris_image''',
+      ));
+  static bool? status(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$[:].status''',
+      ));
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

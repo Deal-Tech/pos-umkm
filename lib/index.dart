@@ -25,3 +25,4 @@ export '/sigh_up_page/sigh_up_page_widget.dart' show SighUpPageWidget;
 export '/login_page/login_page_widget.dart' show LoginPageWidget;
 export '/langganan_page/langganan_page_widget.dart' show LanggananPageWidget;
 export '/category_page/category_page_widget.dart' show CategoryPageWidget;
+export '/q_r_i_s_page/q_r_i_s_page_widget.dart' show QRISPageWidget;

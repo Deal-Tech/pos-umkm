@@ -1,9 +1,11 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'q_r_i_s_payment_page_model.dart';
 export 'q_r_i_s_payment_page_model.dart';
 
@@ -34,6 +36,8 @@ class _QRISPaymentPageWidgetState extends State<QRISPaymentPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -116,19 +120,6 @@ class _QRISPaymentPageWidgetState extends State<QRISPaymentPageWidget> {
                                 thickness: 1.0,
                                 color: Color(0xFFF5F5F5),
                               ),
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 8.0),
-                                  child: Icon(
-                                    Icons.qr_code_2,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 278.0,
-                                  ),
-                                ),
-                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 0.0),
@@ -173,6 +164,47 @@ class _QRISPaymentPageWidgetState extends State<QRISPaymentPageWidget> {
                                               ),
                                             ),
                                           ],
+                                        ),
+                                        FutureBuilder<ApiCallResponse>(
+                                          future: ApiGetPaymentPOSCall.call(
+                                            token: FFAppState().apilogin,
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            final imageApiGetPaymentPOSResponse =
+                                                snapshot.data!;
+
+                                            return ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: Image.network(
+                                                ApiGetPaymentPOSCall.qrisimage(
+                                                  imageApiGetPaymentPOSResponse
+                                                      .jsonBody,
+                                                )!,
+                                                fit: BoxFit.cover,
+                                                alignment: const Alignment(0.0, 0.0),
+                                              ),
+                                            );
+                                          },
                                         ),
                                         const Divider(
                                           thickness: 1.0,
