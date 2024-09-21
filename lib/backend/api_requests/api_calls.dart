@@ -28,7 +28,6 @@ class ApiTransaksiGroup {
 
 class CreateTransactionCall {
   Future<ApiCallResponse> call({
-    String? productId = '',
     String? nama = '',
     int? price,
     String? unit = '',
@@ -37,6 +36,8 @@ class CreateTransactionCall {
     String? paymentPosId = '',
     String? paymentMethod = '',
     String? status = '',
+    String? productId = '',
+    int? quantity,
     String? token = '',
   }) async {
     final baseUrl = ApiTransaksiGroup.getBaseUrl(
@@ -45,15 +46,19 @@ class CreateTransactionCall {
 
     final ffApiRequestBody = '''
 {
-  "product_id": "$productId",
-  "nama": "$nama",
-  "price": $price,
-  "unit": "$unit",
-  "category_id": "$categoryId",
   "total": $total,
   "payment_pos_id": "$paymentPosId",
   "payment_method": "$paymentMethod",
-  "status": "$status"
+  "status": "$status",
+  "products": [
+    {
+      "product_id": "$productId",
+      "quantity": $quantity,
+      "price": $price,
+      "category_id": "$categoryId",
+      "unit": "$unit"
+    }
+  ]
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Create Transaction',
@@ -247,12 +252,12 @@ class ApiDaftarCall {
 
 class LoginApiCall {
   static Future<ApiCallResponse> call({
-    String? email = '',
+    String? phone = '',
     String? password = '',
   }) async {
     final ffApiRequestBody = '''
 {
-  "email": "$email",
+  "phone": "$phone",
   "password": "$password"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -343,6 +348,10 @@ class ApiGetUserCall {
         response,
         r'''$.plan''',
       ));
+  static String? resetcode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.reset_code''',
+      ));
 }
 
 class ApiProductCreateCall {
@@ -355,10 +364,14 @@ class ApiProductCreateCall {
     String? imageUrl = '',
     String? category = '',
     bool? status = true,
+    String? sku = '',
+    String? barcode = '',
   }) async {
     final ffApiRequestBody = '''
 {
   "user_id": "$userId",
+  "sku": "$sku",
+  "barcode": "$barcode",
   "name": "$name",
   "price": $price,
   "unit": "$unit",
@@ -396,9 +409,13 @@ class ApiProductUpdateCall {
     String? category = '',
     bool? status = true,
     String? productId = '',
+    String? sku = '',
+    String? barcode = '',
   }) async {
     final ffApiRequestBody = '''
 {
+  "sku": "$sku",
+  "barcode": "$barcode",
   "name": "$name",
   "price": $price,
   "unit": "$unit",
@@ -746,24 +763,64 @@ class ApiGetPaymentPOSCall {
       alwaysAllowBody: false,
     );
   }
+}
 
-  static String? provider(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$[:].provider''',
-      ));
-  static String? paymentmethod(dynamic response) =>
-      castToType<String>(getJsonField(
-        response,
-        r'''$[:].payment_method''',
-      ));
-  static String? qrisimage(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$[:].qris_image''',
-      ));
-  static bool? status(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$[:].status''',
-      ));
+class SendOTPCall {
+  static Future<ApiCallResponse> call({
+    String? phone = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "phone": "$phone"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Send OTP',
+      apiUrl: 'https://thetester.me/api/password/code',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiChangePasswordWithCodeCall {
+  static Future<ApiCallResponse> call({
+    String? phone = '',
+    String? resetCode = '',
+    String? password = '',
+    String? passwordConfirmation = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "phone": "$phone",
+  "reset_code": "$resetCode",
+  "password": "$password",
+  "password_confirmation": "$passwordConfirmation"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Change Password With Code',
+      apiUrl: 'https://thetester.me/api/password/reset-with-code',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 class ApiPagingParams {

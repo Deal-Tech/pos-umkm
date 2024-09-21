@@ -1,0 +1,71 @@
+import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
+import 'halaman_tambah_produk_widget.dart' show HalamanTambahProdukWidget;
+import 'package:flutter/material.dart';
+
+class HalamanTambahProdukModel
+    extends FlutterFlowModel<HalamanTambahProdukWidget> {
+  ///  State fields for stateful widgets in this page.
+
+  bool isDataUploading = false;
+  FFUploadedFile uploadedLocalFile =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage;
+  // State field(s) for NamaProduk widget.
+  FocusNode? namaProdukFocusNode;
+  TextEditingController? namaProdukTextController;
+  String? Function(BuildContext, String?)? namaProdukTextControllerValidator;
+  // State field(s) for HargaProduk widget.
+  FocusNode? hargaProdukFocusNode;
+  TextEditingController? hargaProdukTextController;
+  String? Function(BuildContext, String?)? hargaProdukTextControllerValidator;
+  // State field(s) for KategoriProduk widget.
+  FocusNode? kategoriProdukFocusNode;
+  TextEditingController? kategoriProdukTextController;
+  String? Function(BuildContext, String?)?
+      kategoriProdukTextControllerValidator;
+  // State field(s) for NilaiSatuan widget.
+  FocusNode? nilaiSatuanFocusNode;
+  TextEditingController? nilaiSatuanTextController;
+  String? Function(BuildContext, String?)? nilaiSatuanTextControllerValidator;
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
+  // State field(s) for SKUProduk widget.
+  FocusNode? sKUProdukFocusNode;
+  TextEditingController? sKUProdukTextController;
+  String? Function(BuildContext, String?)? sKUProdukTextControllerValidator;
+  // State field(s) for Barcode widget.
+  FocusNode? barcodeFocusNode;
+  TextEditingController? barcodeTextController;
+  String? Function(BuildContext, String?)? barcodeTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
+  ApiCallResponse? apiResultysp;
+
+  @override
+  void initState(BuildContext context) {}
+
+  @override
+  void dispose() {
+    namaProdukFocusNode?.dispose();
+    namaProdukTextController?.dispose();
+
+    hargaProdukFocusNode?.dispose();
+    hargaProdukTextController?.dispose();
+
+    kategoriProdukFocusNode?.dispose();
+    kategoriProdukTextController?.dispose();
+
+    nilaiSatuanFocusNode?.dispose();
+    nilaiSatuanTextController?.dispose();
+
+    sKUProdukFocusNode?.dispose();
+    sKUProdukTextController?.dispose();
+
+    barcodeFocusNode?.dispose();
+    barcodeTextController?.dispose();
+  }
+}

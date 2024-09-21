@@ -76,20 +76,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const HalamanLogin2Widget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const HalamanLogin2Widget(),
         ),
         FFRoute(
           name: 'HomePage',
           path: '/homePage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'HomePage')
-              : const HomePageWidget(),
+          builder: (context, params) => const HomePageWidget(),
         ),
         FFRoute(
           name: 'SplashPage',
@@ -203,11 +201,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SighUpPageWidget(),
         ),
         FFRoute(
-          name: 'loginPage',
-          path: '/loginPage',
-          builder: (context, params) => const LoginPageWidget(),
-        ),
-        FFRoute(
           name: 'LanggananPage',
           path: '/langgananPage',
           builder: (context, params) => const LanggananPageWidget(),
@@ -218,9 +211,195 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CategoryPageWidget(),
         ),
         FFRoute(
-          name: 'QRISPage',
-          path: '/qRISPage',
-          builder: (context, params) => const QRISPageWidget(),
+          name: 'Halaman_depan',
+          path: '/halamanDepan',
+          builder: (context, params) => const HalamanDepanWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_login_1',
+          path: '/halamanLogin1',
+          builder: (context, params) => const HalamanLogin1Widget(),
+        ),
+        FFRoute(
+          name: 'Halaman_login_2',
+          path: '/halamanLogin2',
+          builder: (context, params) => const HalamanLogin2Widget(),
+        ),
+        FFRoute(
+          name: 'Halaman_reset_password',
+          path: '/halamanResetPassword',
+          builder: (context, params) => const HalamanResetPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'HalamanBuatakun',
+          path: '/halamanBuatakun',
+          builder: (context, params) => const HalamanBuatakunWidget(),
+        ),
+        FFRoute(
+          name: 'Home',
+          path: '/home',
+          builder: (context, params) =>
+              params.isEmpty ? const NavBarPage(initialPage: 'Home') : const HomeWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_detail_list',
+          path: '/halamanDetailList',
+          builder: (context, params) => const HalamanDetailListWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_add_list',
+          path: '/halamanAddList',
+          builder: (context, params) => const HalamanAddListWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_entri_harga_manual',
+          path: '/halamanEntriHargaManual',
+          builder: (context, params) => const HalamanEntriHargaManualWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_metode_pembayaran',
+          path: '/halamanMetodePembayaran',
+          builder: (context, params) => HalamanMetodePembayaranWidget(
+            total: params.getParam(
+              'total',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'Halaman-pembayaran-non-cash',
+          path: '/halamanPembayaranNonCash',
+          builder: (context, params) => const HalamanPembayaranNonCashWidget(),
+        ),
+        FFRoute(
+          name: 'Bukti-pencatatan',
+          path: '/buktiPencatatan',
+          builder: (context, params) => const BuktiPencatatanWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-verifikasi-kode-reset',
+          path: '/halamanVerifikasiKodeReset',
+          builder: (context, params) => const HalamanVerifikasiKodeResetWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-set-password',
+          path: '/halamanSetPassword',
+          builder: (context, params) => HalamanSetPasswordWidget(
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'Halaman-sukses-set-password',
+          path: '/halamanSuksesSetPassword',
+          builder: (context, params) => const HalamanSuksesSetPasswordWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-list-suplier',
+          path: '/halamanListSuplier',
+          builder: (context, params) => const HalamanListSuplierWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_tambah-produk',
+          path: '/halamanTambahProduk',
+          builder: (context, params) => const HalamanTambahProdukWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-tambah-suplier',
+          path: '/halamanTambahSuplier',
+          builder: (context, params) => const HalamanTambahSuplierWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-riwayat-transaksi',
+          path: '/halamanRiwayatTransaksi',
+          builder: (context, params) => const HalamanRiwayatTransaksiWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-kelola-toko',
+          path: '/halamanKelolaToko',
+          builder: (context, params) => const HalamanKelolaTokoWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-akun',
+          path: '/halamanAkun',
+          builder: (context, params) => const HalamanAkunWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-detail-profil',
+          path: '/halamanDetailProfil',
+          builder: (context, params) => const HalamanDetailProfilWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-riwayat-langganan',
+          path: '/halamanRiwayatLangganan',
+          builder: (context, params) => const HalamanRiwayatLanggananWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-bantuan',
+          path: '/halamanBantuan',
+          builder: (context, params) => const HalamanBantuanWidget(),
+        ),
+        FFRoute(
+          name: 'halaman-catat-pengeluaran',
+          path: '/halamanCatatPengeluaran',
+          builder: (context, params) => const HalamanCatatPengeluaranWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-kategori-pengeluaran',
+          path: '/halamanKategoriPengeluaran',
+          builder: (context, params) => const HalamanKategoriPengeluaranWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-langganan',
+          path: '/halamanLangganan',
+          builder: (context, params) => const HalamanLanggananWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-Qris-merchant',
+          path: '/halamanQrisMerchant',
+          builder: (context, params) => const HalamanQrisMerchantWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-ajukan-qris',
+          path: '/halamanAjukanQris',
+          builder: (context, params) => const HalamanAjukanQrisWidget(),
+        ),
+        FFRoute(
+          name: 'Pending-pengajuan-qris',
+          path: '/pendingPengajuanQris',
+          builder: (context, params) => const PendingPengajuanQrisWidget(),
+        ),
+        FFRoute(
+          name: 'Sukses-pengajuan-qris',
+          path: '/suksesPengajuanQris',
+          builder: (context, params) => const SuksesPengajuanQrisWidget(),
+        ),
+        FFRoute(
+          name: 'gagal-pengajuan-qris',
+          path: '/gagalPengajuanQris',
+          builder: (context, params) => const GagalPengajuanQrisWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-printer',
+          path: '/halamanPrinter',
+          builder: (context, params) => const HalamanPrinterWidget(),
+        ),
+        FFRoute(
+          name: 'halaman-daftar-karyawan',
+          path: '/halamanDaftarKaryawan',
+          builder: (context, params) => const HalamanDaftarKaryawanWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-tambah-karyawan',
+          path: '/halamanTambahKaryawan',
+          builder: (context, params) => const HalamanTambahKaryawanWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman-kategori',
+          path: '/halamanKategori',
+          builder: (context, params) => const HalamanKategoriWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -391,7 +570,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/splashPage';
+            return '/halamanLogin2';
           }
           return null;
         },

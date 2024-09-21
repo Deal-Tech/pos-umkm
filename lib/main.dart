@@ -103,7 +103,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'HomePage';
+  String _currentPageName = 'Home';
   late Widget? _currentPage;
 
   @override
@@ -116,7 +116,7 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomePage': const HomePageWidget(),
+      'Home': const HomeWidget(),
       'TransactionPage': const TransactionPageWidget(),
       'POS': const PosWidget(),
       'ProductPage': const ProductPageWidget(),
@@ -141,7 +141,7 @@ class _NavBarPageState extends State<NavBarPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_outlined,
+              Icons.home,
               size: 24.0,
             ),
             label: 'Home',

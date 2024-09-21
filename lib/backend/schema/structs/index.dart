@@ -5,5 +5,6 @@ export 'apilogin_struct.dart';
 export 'cart_item_struct.dart';
 export 'categories_struct.dart';
 export 'image_url_struct.dart';
+export 'payment_method_struct.dart';
 export 'product_struct.dart';
 export 'summary_struct.dart';
