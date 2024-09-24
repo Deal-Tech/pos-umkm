@@ -469,6 +469,7 @@ class ApiProductShowCall {
 class ApiGetListProductCall {
   static Future<ApiCallResponse> call({
     String? token = '',
+    String? query = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get List Product',
@@ -477,7 +478,9 @@ class ApiGetListProductCall {
       headers: {
         'Authorization': 'Bearer $token',
       },
-      params: {},
+      params: {
+        'query': query,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

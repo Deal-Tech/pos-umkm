@@ -3,25 +3,27 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'halaman_add_list_model.dart';
-export 'halaman_add_list_model.dart';
+import 'n_o_t_u_s_e_halaman_add_list_model.dart';
+export 'n_o_t_u_s_e_halaman_add_list_model.dart';
 
-class HalamanAddListWidget extends StatefulWidget {
-  const HalamanAddListWidget({super.key});
+class NOTUSEHalamanAddListWidget extends StatefulWidget {
+  const NOTUSEHalamanAddListWidget({super.key});
 
   @override
-  State<HalamanAddListWidget> createState() => _HalamanAddListWidgetState();
+  State<NOTUSEHalamanAddListWidget> createState() =>
+      _NOTUSEHalamanAddListWidgetState();
 }
 
-class _HalamanAddListWidgetState extends State<HalamanAddListWidget> {
-  late HalamanAddListModel _model;
+class _NOTUSEHalamanAddListWidgetState
+    extends State<NOTUSEHalamanAddListWidget> {
+  late NOTUSEHalamanAddListModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HalamanAddListModel());
+    _model = createModel(context, () => NOTUSEHalamanAddListModel());
   }
 
   @override

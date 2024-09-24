@@ -247,9 +247,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const HalamanDetailListWidget(),
         ),
         FFRoute(
-          name: 'Halaman_add_list',
-          path: '/halamanAddList',
-          builder: (context, params) => const HalamanAddListWidget(),
+          name: 'NOTUSE-Halaman_add_list',
+          path: '/nOTUSEHalamanAddList',
+          builder: (context, params) => const NOTUSEHalamanAddListWidget(),
         ),
         FFRoute(
           name: 'Halaman_entri_harga_manual',

@@ -34,8 +34,8 @@ export '/halaman_buatakun/halaman_buatakun_widget.dart'
 export '/home/home_widget.dart' show HomeWidget;
 export '/halaman_detail_list/halaman_detail_list_widget.dart'
     show HalamanDetailListWidget;
-export '/halaman_add_list/halaman_add_list_widget.dart'
-    show HalamanAddListWidget;
+export '/n_o_t_u_s_e_halaman_add_list/n_o_t_u_s_e_halaman_add_list_widget.dart'
+    show NOTUSEHalamanAddListWidget;
 export '/halaman_entri_harga_manual/halaman_entri_harga_manual_widget.dart'
     show HalamanEntriHargaManualWidget;
 export '/halaman_metode_pembayaran/halaman_metode_pembayaran_widget.dart'

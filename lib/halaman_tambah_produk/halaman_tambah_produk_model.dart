@@ -8,12 +8,18 @@ class HalamanTambahProdukModel
     extends FlutterFlowModel<HalamanTambahProdukWidget> {
   ///  State fields for stateful widgets in this page.
 
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
+  bool isDataUploading1 = false;
+  FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
-  ApiCallResponse? apiResultUploudImage;
+  ApiCallResponse? apiResultUploudImage1;
+  bool isDataUploading2 = false;
+  FFUploadedFile uploadedLocalFile2 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage2;
   // State field(s) for NamaProduk widget.
   FocusNode? namaProdukFocusNode;
   TextEditingController? namaProdukTextController;
