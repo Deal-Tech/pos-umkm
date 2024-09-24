@@ -495,7 +495,7 @@ class _SighUpPageWidgetState extends State<SighUpPageWidget> {
                                         )!;
                                         safeSetState(() {});
 
-                                        context.pushNamed('HomePage');
+                                        context.pushNamed('Home');
                                       } else {
                                         await showDialog(
                                           context: context,
