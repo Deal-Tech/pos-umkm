@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 class HalamanKategoriModel extends FlutterFlowModel<HalamanKategoriWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
   // State field(s) for Switch widget.
   bool? switchValue1;
   // State field(s) for Switch widget.
@@ -16,5 +20,8 @@ class HalamanKategoriModel extends FlutterFlowModel<HalamanKategoriWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {}
+  void dispose() {
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
+  }
 }

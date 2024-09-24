@@ -218,37 +218,75 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            30.0, 0.0, 30.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: 'Catat transaksi baru',
-                          options: FFButtonOptions(
-                            width: 350.0,
-                            height: 57.0,
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: Colors.white,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  color: const Color(0xFF0EC244),
-                                  letterSpacing: 0.0,
+                                30.0, 0.0, 0.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'Transaksi Baru',
+                              options: FFButtonOptions(
+                                width: MediaQuery.sizeOf(context).width * 0.41,
+                                height: 57.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: Colors.white,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF0EC244),
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
                                 ),
-                            elevation: 0.0,
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 2.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 30.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                context.pushNamed('Detail_transaksi');
+                              },
+                              text: 'Lihat Struk',
+                              options: FFButtonOptions(
+                                width: MediaQuery.sizeOf(context).width * 0.41,
+                                height: 57.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: Colors.white,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF0EC244),
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ].divide(const SizedBox(height: 10.0)),
                   ),

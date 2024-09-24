@@ -256,6 +256,21 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   ),
                                 ),
                               ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Nama Produk',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
                             if ((_model.uploadedLocalFile1.bytes?.isNotEmpty ??
                                     false))
                               Padding(
@@ -372,21 +387,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   ),
                                 ),
                               ),
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Text(
-                                'Nama Produk',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      color: const Color(0xFF325681),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
                             Align(
                               alignment: const AlignmentDirectional(0.0, 0.0),
                               child: SizedBox(

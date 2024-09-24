@@ -337,9 +337,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const HalamanBantuanWidget(),
         ),
         FFRoute(
-          name: 'halaman-catat-pengeluaran',
-          path: '/halamanCatatPengeluaran',
-          builder: (context, params) => const HalamanCatatPengeluaranWidget(),
+          name: 'inputmanual',
+          path: '/inputmanual',
+          builder: (context, params) => const InputmanualWidget(),
         ),
         FFRoute(
           name: 'Halaman-kategori-pengeluaran',
@@ -395,6 +395,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Halaman-kategori',
           path: '/halamanKategori',
           builder: (context, params) => const HalamanKategoriWidget(),
+        ),
+        FFRoute(
+          name: 'Detail_transaksi',
+          path: '/detailTransaksi',
+          builder: (context, params) => const DetailTransaksiWidget(),
+        ),
+        FFRoute(
+          name: 'sukses_add-produk',
+          path: '/suksesAddProduk',
+          builder: (context, params) => const SuksesAddProdukWidget(),
+        ),
+        FFRoute(
+          name: 'gagal-add-produk',
+          path: '/gagalAddProduk',
+          builder: (context, params) => const GagalAddProdukWidget(),
+        ),
+        FFRoute(
+          name: 'Statistik',
+          path: '/statistik',
+          builder: (context, params) => const StatistikWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -2,27 +2,25 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'halaman_catat_pengeluaran_model.dart';
-export 'halaman_catat_pengeluaran_model.dart';
+import 'inputmanual_model.dart';
+export 'inputmanual_model.dart';
 
-class HalamanCatatPengeluaranWidget extends StatefulWidget {
-  const HalamanCatatPengeluaranWidget({super.key});
+class InputmanualWidget extends StatefulWidget {
+  const InputmanualWidget({super.key});
 
   @override
-  State<HalamanCatatPengeluaranWidget> createState() =>
-      _HalamanCatatPengeluaranWidgetState();
+  State<InputmanualWidget> createState() => _InputmanualWidgetState();
 }
 
-class _HalamanCatatPengeluaranWidgetState
-    extends State<HalamanCatatPengeluaranWidget> {
-  late HalamanCatatPengeluaranModel _model;
+class _InputmanualWidgetState extends State<InputmanualWidget> {
+  late InputmanualModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HalamanCatatPengeluaranModel());
+    _model = createModel(context, () => InputmanualModel());
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();

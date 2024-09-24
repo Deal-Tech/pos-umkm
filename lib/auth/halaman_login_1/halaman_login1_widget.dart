@@ -180,41 +180,6 @@ class _HalamanLogin1WidgetState extends State<HalamanLogin1Widget> {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      Text(
-                        'Atau',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Rubik',
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                      FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Saya seorang karyawan',
-                        icon: const Icon(
-                          Icons.groups,
-                          size: 25.0,
-                        ),
-                        options: FFButtonOptions(
-                          width: 327.0,
-                          height: 57.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: const Color(0xFF0EC244),
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Rubik',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          elevation: 0.0,
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                      ),
                       Container(
                         decoration: const BoxDecoration(),
                         child: Column(

@@ -1,10 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'halaman_catat_pengeluaran_widget.dart'
-    show HalamanCatatPengeluaranWidget;
+import 'inputmanual_widget.dart' show InputmanualWidget;
 import 'package:flutter/material.dart';
 
-class HalamanCatatPengeluaranModel
-    extends FlutterFlowModel<HalamanCatatPengeluaranWidget> {
+class InputmanualModel extends FlutterFlowModel<InputmanualWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TextField widget.
