@@ -235,7 +235,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                         _model.apiResultqi9 =
                                             await ApiDeleteCategoryCall.call(
                                           token: FFAppState().apilogin,
-                                          categoryId: categoryItem.id,
+                                          categoryId:
+                                              categoryItem.id.toString(),
                                         );
 
                                         if ((_model.apiResultqi9?.succeeded ??

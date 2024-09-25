@@ -28,21 +28,25 @@ class ApiTransaksiGroup {
 
 class CreateTransactionCall {
   Future<ApiCallResponse> call({
-    String? nama = '',
-    int? price,
-    String? unit = '',
-    String? categoryId = '',
+    List<int>? priceList,
+    List<String>? unitList,
+    List<String>? categoryIdList,
     int? total,
     String? paymentPosId = '',
     String? paymentMethod = '',
     String? status = '',
-    String? productId = '',
-    int? quantity,
+    List<String>? productIdList,
+    List<int>? quantityList,
     String? token = '',
   }) async {
     final baseUrl = ApiTransaksiGroup.getBaseUrl(
       token: token,
     );
+    final price = _serializeList(priceList);
+    final unit = _serializeList(unitList);
+    final categoryId = _serializeList(categoryIdList);
+    final productId = _serializeList(productIdList);
+    final quantity = _serializeList(quantityList);
 
     final ffApiRequestBody = '''
 {
@@ -366,6 +370,7 @@ class ApiProductCreateCall {
     bool? status = true,
     String? sku = '',
     String? barcode = '',
+    String? categoryId = '',
   }) async {
     final ffApiRequestBody = '''
 {
@@ -377,7 +382,8 @@ class ApiProductCreateCall {
   "unit": "$unit",
   "image_url": "$imageUrl",
   "category": "$category",
-  "status": $status
+  "status": $status,
+  "category_id": "$categoryId"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Create',
@@ -411,9 +417,12 @@ class ApiProductUpdateCall {
     String? productId = '',
     String? sku = '',
     String? barcode = '',
+    String? userId = '',
+    String? categoryId = '',
   }) async {
     final ffApiRequestBody = '''
 {
+  "user_id": "$userId",
   "sku": "$sku",
   "barcode": "$barcode",
   "name": "$name",
@@ -421,7 +430,8 @@ class ApiProductUpdateCall {
   "unit": "$unit",
   "image_url": "$imageUrl",
   "category": "$category",
-  "status": $status
+  "status": $status,
+  "category_id": "$categoryId"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Update',
@@ -694,7 +704,14 @@ class ApiGetListCategoryCall {
 class ApiCategoryCreateCall {
   static Future<ApiCallResponse> call({
     String? token = '',
+    String? name = '',
+    bool? status,
   }) async {
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "status": $status
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Category Create',
       apiUrl: 'https://thetester.me/api/categories',
@@ -703,6 +720,7 @@ class ApiCategoryCreateCall {
         'Authorization': 'Bearer $token',
       },
       params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,

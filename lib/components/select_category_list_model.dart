@@ -1,8 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'halaman_detail_list_widget.dart' show HalamanDetailListWidget;
+import 'select_category_list_widget.dart' show SelectCategoryListWidget;
 import 'package:flutter/material.dart';
 
-class HalamanDetailListModel extends FlutterFlowModel<HalamanDetailListWidget> {
+class SelectCategoryListModel
+    extends FlutterFlowModel<SelectCategoryListWidget> {
   @override
   void initState(BuildContext context) {}
 

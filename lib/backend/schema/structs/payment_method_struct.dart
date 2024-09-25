@@ -11,10 +11,12 @@ class PaymentMethodStruct extends BaseStruct {
     String? paymentMethod,
     bool? status,
     String? qrisImage,
+    int? id,
   })  : _provider = provider,
         _paymentMethod = paymentMethod,
         _status = status,
-        _qrisImage = qrisImage;
+        _qrisImage = qrisImage,
+        _id = id;
 
   // "provider" field.
   String? _provider;
@@ -44,12 +46,22 @@ class PaymentMethodStruct extends BaseStruct {
 
   bool hasQrisImage() => _qrisImage != null;
 
+  // "id" field.
+  int? _id;
+  int get id => _id ?? 0;
+  set id(int? val) => _id = val;
+
+  void incrementId(int amount) => id = id + amount;
+
+  bool hasId() => _id != null;
+
   static PaymentMethodStruct fromMap(Map<String, dynamic> data) =>
       PaymentMethodStruct(
         provider: data['provider'] as String?,
         paymentMethod: data['payment_method'] as String?,
         status: data['status'] as bool?,
         qrisImage: data['qris_image'] as String?,
+        id: castToType<int>(data['id']),
       );
 
   static PaymentMethodStruct? maybeFromMap(dynamic data) => data is Map
@@ -61,6 +73,7 @@ class PaymentMethodStruct extends BaseStruct {
         'payment_method': _paymentMethod,
         'status': _status,
         'qris_image': _qrisImage,
+        'id': _id,
       }.withoutNulls;
 
   @override
@@ -80,6 +93,10 @@ class PaymentMethodStruct extends BaseStruct {
         'qris_image': serializeParam(
           _qrisImage,
           ParamType.String,
+        ),
+        'id': serializeParam(
+          _id,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -105,6 +122,11 @@ class PaymentMethodStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        id: deserializeParam(
+          data['id'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -116,12 +138,13 @@ class PaymentMethodStruct extends BaseStruct {
         provider == other.provider &&
         paymentMethod == other.paymentMethod &&
         status == other.status &&
-        qrisImage == other.qrisImage;
+        qrisImage == other.qrisImage &&
+        id == other.id;
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([provider, paymentMethod, status, qrisImage]);
+  int get hashCode => const ListEquality()
+      .hash([provider, paymentMethod, status, qrisImage, id]);
 }
 
 PaymentMethodStruct createPaymentMethodStruct({
@@ -129,10 +152,12 @@ PaymentMethodStruct createPaymentMethodStruct({
   String? paymentMethod,
   bool? status,
   String? qrisImage,
+  int? id,
 }) =>
     PaymentMethodStruct(
       provider: provider,
       paymentMethod: paymentMethod,
       status: status,
       qrisImage: qrisImage,
+      id: id,
     );

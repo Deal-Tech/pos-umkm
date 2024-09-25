@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'halaman_kategori_widget.dart' show HalamanKategoriWidget;
 import 'package:flutter/material.dart';
@@ -9,12 +10,8 @@ class HalamanKategoriModel extends FlutterFlowModel<HalamanKategoriWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // State field(s) for Switch widget.
-  bool? switchValue1;
-  // State field(s) for Switch widget.
-  bool? switchValue2;
-  // State field(s) for Switch widget.
-  bool? switchValue3;
+  // Stores action output result for [Backend Call - API (Api Category Create)] action in Button widget.
+  ApiCallResponse? apiResultgqy;
 
   @override
   void initState(BuildContext context) {}

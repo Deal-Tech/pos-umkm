@@ -170,6 +170,16 @@ class FFAppState extends ChangeNotifier {
   set resetcode(String value) {
     _resetcode = value;
   }
+
+  CategoriesStruct _selectcategory = CategoriesStruct();
+  CategoriesStruct get selectcategory => _selectcategory;
+  set selectcategory(CategoriesStruct value) {
+    _selectcategory = value;
+  }
+
+  void updateSelectcategoryStruct(Function(CategoriesStruct) updateFn) {
+    updateFn(_selectcategory);
+  }
 }
 
 void _safeInit(Function() initializeField) {

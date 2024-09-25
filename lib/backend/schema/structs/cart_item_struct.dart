@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class CartItemStruct extends BaseStruct {
   CartItemStruct({
-    int? productId,
     int? quantity,
     int? price,
     String? name,
@@ -16,24 +15,18 @@ class CartItemStruct extends BaseStruct {
     String? imageUrl,
     String? paymentMethod,
     String? paymentPosId,
-  })  : _productId = productId,
-        _quantity = quantity,
+    String? productId,
+    String? categoryId,
+  })  : _quantity = quantity,
         _price = price,
         _name = name,
         _unit = unit,
         _category = category,
         _imageUrl = imageUrl,
         _paymentMethod = paymentMethod,
-        _paymentPosId = paymentPosId;
-
-  // "product_id" field.
-  int? _productId;
-  int get productId => _productId ?? 0;
-  set productId(int? val) => _productId = val;
-
-  void incrementProductId(int amount) => productId = productId + amount;
-
-  bool hasProductId() => _productId != null;
+        _paymentPosId = paymentPosId,
+        _productId = productId,
+        _categoryId = categoryId;
 
   // "quantity" field.
   int? _quantity;
@@ -95,8 +88,21 @@ class CartItemStruct extends BaseStruct {
 
   bool hasPaymentPosId() => _paymentPosId != null;
 
+  // "product_id" field.
+  String? _productId;
+  String get productId => _productId ?? '';
+  set productId(String? val) => _productId = val;
+
+  bool hasProductId() => _productId != null;
+
+  // "category_id" field.
+  String? _categoryId;
+  String get categoryId => _categoryId ?? '';
+  set categoryId(String? val) => _categoryId = val;
+
+  bool hasCategoryId() => _categoryId != null;
+
   static CartItemStruct fromMap(Map<String, dynamic> data) => CartItemStruct(
-        productId: castToType<int>(data['product_id']),
         quantity: castToType<int>(data['quantity']),
         price: castToType<int>(data['price']),
         name: data['name'] as String?,
@@ -105,13 +111,14 @@ class CartItemStruct extends BaseStruct {
         imageUrl: data['image_url'] as String?,
         paymentMethod: data['payment_method'] as String?,
         paymentPosId: data['payment_pos_id'] as String?,
+        productId: data['product_id'] as String?,
+        categoryId: data['category_id'] as String?,
       );
 
   static CartItemStruct? maybeFromMap(dynamic data) =>
       data is Map ? CartItemStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
-        'product_id': _productId,
         'quantity': _quantity,
         'price': _price,
         'name': _name,
@@ -120,14 +127,12 @@ class CartItemStruct extends BaseStruct {
         'image_url': _imageUrl,
         'payment_method': _paymentMethod,
         'payment_pos_id': _paymentPosId,
+        'product_id': _productId,
+        'category_id': _categoryId,
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'product_id': serializeParam(
-          _productId,
-          ParamType.int,
-        ),
         'quantity': serializeParam(
           _quantity,
           ParamType.int,
@@ -160,15 +165,18 @@ class CartItemStruct extends BaseStruct {
           _paymentPosId,
           ParamType.String,
         ),
+        'product_id': serializeParam(
+          _productId,
+          ParamType.String,
+        ),
+        'category_id': serializeParam(
+          _categoryId,
+          ParamType.String,
+        ),
       }.withoutNulls;
 
   static CartItemStruct fromSerializableMap(Map<String, dynamic> data) =>
       CartItemStruct(
-        productId: deserializeParam(
-          data['product_id'],
-          ParamType.int,
-          false,
-        ),
         quantity: deserializeParam(
           data['quantity'],
           ParamType.int,
@@ -209,6 +217,16 @@ class CartItemStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        productId: deserializeParam(
+          data['product_id'],
+          ParamType.String,
+          false,
+        ),
+        categoryId: deserializeParam(
+          data['category_id'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -217,7 +235,6 @@ class CartItemStruct extends BaseStruct {
   @override
   bool operator ==(Object other) {
     return other is CartItemStruct &&
-        productId == other.productId &&
         quantity == other.quantity &&
         price == other.price &&
         name == other.name &&
@@ -225,12 +242,13 @@ class CartItemStruct extends BaseStruct {
         category == other.category &&
         imageUrl == other.imageUrl &&
         paymentMethod == other.paymentMethod &&
-        paymentPosId == other.paymentPosId;
+        paymentPosId == other.paymentPosId &&
+        productId == other.productId &&
+        categoryId == other.categoryId;
   }
 
   @override
   int get hashCode => const ListEquality().hash([
-        productId,
         quantity,
         price,
         name,
@@ -238,12 +256,13 @@ class CartItemStruct extends BaseStruct {
         category,
         imageUrl,
         paymentMethod,
-        paymentPosId
+        paymentPosId,
+        productId,
+        categoryId
       ]);
 }
 
 CartItemStruct createCartItemStruct({
-  int? productId,
   int? quantity,
   int? price,
   String? name,
@@ -252,9 +271,10 @@ CartItemStruct createCartItemStruct({
   String? imageUrl,
   String? paymentMethod,
   String? paymentPosId,
+  String? productId,
+  String? categoryId,
 }) =>
     CartItemStruct(
-      productId: productId,
       quantity: quantity,
       price: price,
       name: name,
@@ -263,4 +283,6 @@ CartItemStruct createCartItemStruct({
       imageUrl: imageUrl,
       paymentMethod: paymentMethod,
       paymentPosId: paymentPosId,
+      productId: productId,
+      categoryId: categoryId,
     );

@@ -9,7 +9,7 @@ class CategoriesStruct extends BaseStruct {
   CategoriesStruct({
     String? name,
     bool? status,
-    String? id,
+    int? id,
   })  : _name = name,
         _status = status,
         _id = id;
@@ -29,9 +29,11 @@ class CategoriesStruct extends BaseStruct {
   bool hasStatus() => _status != null;
 
   // "id" field.
-  String? _id;
-  String get id => _id ?? '';
-  set id(String? val) => _id = val;
+  int? _id;
+  int get id => _id ?? 0;
+  set id(int? val) => _id = val;
+
+  void incrementId(int amount) => id = id + amount;
 
   bool hasId() => _id != null;
 
@@ -39,7 +41,7 @@ class CategoriesStruct extends BaseStruct {
       CategoriesStruct(
         name: data['name'] as String?,
         status: data['status'] as bool?,
-        id: data['id'] as String?,
+        id: castToType<int>(data['id']),
       );
 
   static CategoriesStruct? maybeFromMap(dynamic data) => data is Map
@@ -64,7 +66,7 @@ class CategoriesStruct extends BaseStruct {
         ),
         'id': serializeParam(
           _id,
-          ParamType.String,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -82,7 +84,7 @@ class CategoriesStruct extends BaseStruct {
         ),
         id: deserializeParam(
           data['id'],
-          ParamType.String,
+          ParamType.int,
           false,
         ),
       );
@@ -105,7 +107,7 @@ class CategoriesStruct extends BaseStruct {
 CategoriesStruct createCategoriesStruct({
   String? name,
   bool? status,
-  String? id,
+  int? id,
 }) =>
     CategoriesStruct(
       name: name,

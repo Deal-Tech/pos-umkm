@@ -9,7 +9,7 @@ import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/schema/structs/index.dart';
-import '/backend/supabase/supabase.dart';
+import '/backend/schema/enums/enums.dart';
 import '/auth/custom_auth/auth_util.dart';
 
 int calaculateTotalCartPrice(List<CartItemStruct> items) {

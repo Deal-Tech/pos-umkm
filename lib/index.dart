@@ -102,3 +102,5 @@ export '/produk/sukses_add_produk/sukses_add_produk_widget.dart'
 export '/produk/gagal_add_produk/gagal_add_produk_widget.dart'
     show GagalAddProdukWidget;
 export '/transaksi/statistik/statistik_widget.dart' show StatistikWidget;
+export '/produk/halaman_edit_produk/halaman_edit_produk_widget.dart'
+    show HalamanEditProdukWidget;

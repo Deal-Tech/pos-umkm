@@ -11,34 +11,58 @@ import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'halaman_tambah_produk_model.dart';
-export 'halaman_tambah_produk_model.dart';
+import 'halaman_edit_produk_model.dart';
+export 'halaman_edit_produk_model.dart';
 
-class HalamanTambahProdukWidget extends StatefulWidget {
-  const HalamanTambahProdukWidget({super.key});
+class HalamanEditProdukWidget extends StatefulWidget {
+  const HalamanEditProdukWidget({
+    super.key,
+    required this.name,
+    required this.price,
+    required this.category,
+    required this.categoryid,
+    required this.unit,
+    required this.sku,
+    required this.barcode,
+    required this.imageurl,
+    required this.productid,
+  });
+
+  final String? name;
+  final int? price;
+  final String? category;
+  final int? categoryid;
+  final String? unit;
+  final String? sku;
+  final String? barcode;
+  final String? imageurl;
+  final String? productid;
 
   @override
-  State<HalamanTambahProdukWidget> createState() =>
-      _HalamanTambahProdukWidgetState();
+  State<HalamanEditProdukWidget> createState() =>
+      _HalamanEditProdukWidgetState();
 }
 
-class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
-  late HalamanTambahProdukModel _model;
+class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
+  late HalamanEditProdukModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HalamanTambahProdukModel());
+    _model = createModel(context, () => HalamanEditProdukModel());
 
-    _model.namaProdukTextController ??= TextEditingController();
+    _model.namaProdukTextController ??=
+        TextEditingController(text: widget.name);
     _model.namaProdukFocusNode ??= FocusNode();
 
-    _model.hargaProdukTextController ??= TextEditingController();
+    _model.hargaProdukTextController ??=
+        TextEditingController(text: widget.price?.toString());
     _model.hargaProdukFocusNode ??= FocusNode();
 
-    _model.nilaiSatuanTextController ??= TextEditingController();
+    _model.nilaiSatuanTextController ??=
+        TextEditingController(text: widget.unit);
     _model.nilaiSatuanFocusNode ??= FocusNode();
 
     _model.sKUProdukTextController ??= TextEditingController();
@@ -115,7 +139,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                             ),
                           ),
                           Text(
-                            'Tambah Produk',
+                            'Edit Produk',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -140,8 +164,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            if ((_model.uploadedLocalFile1.bytes?.isEmpty ??
-                                    true))
+                            if ((_model.uploadedLocalFile2.bytes?.isNotEmpty ??
+                                    false))
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 50.0),
@@ -246,8 +270,9 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/images/Group_982.png',
+                                    child: Image.memory(
+                                      _model.uploadedLocalFile2.bytes ??
+                                          Uint8List.fromList([]),
                                       width: 152.0,
                                       height: 98.0,
                                       fit: BoxFit.cover,
@@ -255,8 +280,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   ),
                                 ),
                               ),
-                            if ((_model.uploadedLocalFile1.bytes?.isNotEmpty ??
-                                    false))
+                            if ((_model.uploadedLocalFile2.bytes?.isEmpty ??
+                                    true))
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 50.0),
@@ -361,9 +386,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.memory(
-                                      _model.uploadedLocalFile1.bytes ??
-                                          Uint8List.fromList([]),
+                                    child: Image.network(
+                                      widget.imageurl!,
                                       width: 152.0,
                                       height: 98.0,
                                       fit: BoxFit.cover,
@@ -611,8 +635,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                       children: [
                                         Text(
                                           valueOrDefault<String>(
-                                            FFAppState().selectcategory.name,
-                                            'Pilih Kategori',
+                                            widget.category,
+                                            'Uncategory',
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -983,24 +1007,30 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                         FFButtonWidget(
                           onPressed: () async {
                             _model.apiResultysp =
-                                await ApiProductCreateCall.call(
+                                await ApiProductUpdateCall.call(
+                              categoryId: FFAppState().selectcategory == null
+                                  ? widget.categoryid?.toString()
+                                  : FFAppState().selectcategory.id.toString(),
+                              category: FFAppState().selectcategory == null
+                                  ? widget.category
+                                  : FFAppState().selectcategory.name,
                               token: currentAuthenticationToken,
-                              userId: currentUserUid,
                               name: _model.namaProdukTextController.text,
                               price: int.tryParse(
                                   _model.hargaProdukTextController.text),
-                              unit:
-                                  '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                              unit: _model.dropDownValue == null ||
+                                      _model.dropDownValue == ''
+                                  ? widget.unit
+                                  : '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                              status: true,
+                              productId: widget.productid,
+                              sku: _model.sKUProdukTextController.text,
+                              barcode: _model.barcodeTextController.text,
+                              userId: currentUserUid,
                               imageUrl: ImageUrlStruct.maybeFromMap(
                                       (_model.apiResultUploudImage1?.jsonBody ??
                                           ''))
                                   ?.imageUrl,
-                              category: FFAppState().selectcategory.name,
-                              categoryId:
-                                  FFAppState().selectcategory.id.toString(),
-                              sku: _model.sKUProdukTextController.text,
-                              barcode: _model.barcodeTextController.text,
-                              status: true,
                             );
 
                             if ((_model.apiResultysp?.succeeded ?? true)) {

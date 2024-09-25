@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
 
-
 import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/index.dart';
@@ -259,6 +258,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'total',
               ParamType.int,
             ),
+            price: params.getParam<int>(
+              'price',
+              ParamType.int,
+              isList: true,
+            ),
+            unit: params.getParam<String>(
+              'unit',
+              ParamType.String,
+              isList: true,
+            ),
+            productid: params.getParam<String>(
+              'productid',
+              ParamType.String,
+              isList: true,
+            ),
+            categoryid: params.getParam<String>(
+              'categoryid',
+              ParamType.String,
+              isList: true,
+            ),
+            quantity: params.getParam<int>(
+              'quantity',
+              ParamType.int,
+              isList: true,
+            ),
           ),
         ),
         FFRoute(
@@ -415,6 +439,48 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Statistik',
           path: '/statistik',
           builder: (context, params) => const StatistikWidget(),
+        ),
+        FFRoute(
+          name: 'Halaman_edit_produk',
+          path: '/halamanEditProduk',
+          builder: (context, params) => HalamanEditProdukWidget(
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
+            price: params.getParam(
+              'price',
+              ParamType.int,
+            ),
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+            categoryid: params.getParam(
+              'categoryid',
+              ParamType.int,
+            ),
+            unit: params.getParam(
+              'unit',
+              ParamType.String,
+            ),
+            sku: params.getParam(
+              'sku',
+              ParamType.String,
+            ),
+            barcode: params.getParam(
+              'barcode',
+              ParamType.String,
+            ),
+            imageurl: params.getParam(
+              'imageurl',
+              ParamType.String,
+            ),
+            productid: params.getParam(
+              'productid',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

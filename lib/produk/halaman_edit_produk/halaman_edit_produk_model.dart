@@ -1,11 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'halaman_tambah_produk_widget.dart' show HalamanTambahProdukWidget;
+import 'halaman_edit_produk_widget.dart' show HalamanEditProdukWidget;
 import 'package:flutter/material.dart';
 
-class HalamanTambahProdukModel
-    extends FlutterFlowModel<HalamanTambahProdukWidget> {
+class HalamanEditProdukModel extends FlutterFlowModel<HalamanEditProdukWidget> {
   ///  State fields for stateful widgets in this page.
 
   bool isDataUploading1 = false;
@@ -43,7 +42,7 @@ class HalamanTambahProdukModel
   FocusNode? barcodeFocusNode;
   TextEditingController? barcodeTextController;
   String? Function(BuildContext, String?)? barcodeTextControllerValidator;
-  // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
+  // Stores action output result for [Backend Call - API (Api Product Update)] action in Button widget.
   ApiCallResponse? apiResultysp;
 
   @override

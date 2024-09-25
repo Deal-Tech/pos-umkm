@@ -1,4 +1,6 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,9 +14,19 @@ class HalamanMetodePembayaranWidget extends StatefulWidget {
   const HalamanMetodePembayaranWidget({
     super.key,
     required this.total,
+    required this.price,
+    required this.unit,
+    required this.productid,
+    required this.categoryid,
+    required this.quantity,
   });
 
   final int? total;
+  final List<int>? price;
+  final List<String>? unit;
+  final List<String>? productid;
+  final List<String>? categoryid;
+  final List<int>? quantity;
 
   @override
   State<HalamanMetodePembayaranWidget> createState() =>
@@ -73,6 +85,9 @@ class _HalamanMetodePembayaranWidgetState
                             child: FFButtonWidget(
                               onPressed: () async {
                                 context.safePop();
+                                FFAppState().pilihpayment = '';
+                                FFAppState().paymentmethod = [];
+                                safeSetState(() {});
                               },
                               text: '',
                               icon: const Icon(
@@ -270,6 +285,14 @@ class _HalamanMetodePembayaranWidgetState
                                           FFAppState().pilihpayment =
                                               listPaymentMethodItem.provider;
                                           FFAppState().update(() {});
+                                          FFAppState()
+                                              .insertAtIndexInPaymentmethod(
+                                                  listPaymentMethodIndex,
+                                                  PaymentMethodStruct(
+                                                    id: listPaymentMethodItem
+                                                        .id,
+                                                  ));
+                                          safeSetState(() {});
                                         },
                                         child: Container(
                                           width: 100.0,
@@ -326,8 +349,64 @@ class _HalamanMetodePembayaranWidgetState
                       if (FFAppState().pilihpayment == 'QRIS') {
                         context.pushNamed('Halaman-pembayaran-non-cash');
                       } else {
-                        context.pushNamed('SuccesCheckoutPage');
+                        _model.apiResultdpc =
+                            await ApiTransaksiGroup.createTransactionCall.call(
+                          paymentPosId:
+                              FFAppState().paymentmethod.first.id.toString(),
+                          paymentMethod: FFAppState().pilihpayment,
+                          total: widget.total,
+                          quantityList: widget.quantity,
+                          token: currentAuthenticationToken,
+                          status: Status.paid.name,
+                          priceList: widget.price,
+                          unitList: widget.unit,
+                          categoryIdList: widget.categoryid,
+                        );
+
+                        if ((_model.apiResultdpc?.succeeded ?? true)) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                content: Text(
+                                    (_model.apiResultdpc?.exceptionMessage ??
+                                        '')),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          context.pushNamed('SuccesCheckoutPage');
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Gagal'),
+                                content: Text(
+                                    (_model.apiResultdpc?.exceptionMessage ??
+                                        '')),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       }
+
+                      safeSetState(() {});
                     },
                     text: 'Simpan',
                     options: FFButtonOptions(
