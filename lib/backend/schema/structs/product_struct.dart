@@ -15,6 +15,7 @@ class ProductStruct extends BaseStruct {
     String? category,
     bool? status,
     int? userId,
+    int? categoryId,
   })  : _id = id,
         _name = name,
         _price = price,
@@ -22,7 +23,8 @@ class ProductStruct extends BaseStruct {
         _imageUrl = imageUrl,
         _category = category,
         _status = status,
-        _userId = userId;
+        _userId = userId,
+        _categoryId = categoryId;
 
   // "id" field.
   int? _id;
@@ -86,6 +88,15 @@ class ProductStruct extends BaseStruct {
 
   bool hasUserId() => _userId != null;
 
+  // "category_id" field.
+  int? _categoryId;
+  int get categoryId => _categoryId ?? 0;
+  set categoryId(int? val) => _categoryId = val;
+
+  void incrementCategoryId(int amount) => categoryId = categoryId + amount;
+
+  bool hasCategoryId() => _categoryId != null;
+
   static ProductStruct fromMap(Map<String, dynamic> data) => ProductStruct(
         id: castToType<int>(data['id']),
         name: data['name'] as String?,
@@ -95,6 +106,7 @@ class ProductStruct extends BaseStruct {
         category: data['category'] as String?,
         status: data['status'] as bool?,
         userId: castToType<int>(data['user_id']),
+        categoryId: castToType<int>(data['category_id']),
       );
 
   static ProductStruct? maybeFromMap(dynamic data) =>
@@ -109,6 +121,7 @@ class ProductStruct extends BaseStruct {
         'category': _category,
         'status': _status,
         'user_id': _userId,
+        'category_id': _categoryId,
       }.withoutNulls;
 
   @override
@@ -143,6 +156,10 @@ class ProductStruct extends BaseStruct {
         ),
         'user_id': serializeParam(
           _userId,
+          ParamType.int,
+        ),
+        'category_id': serializeParam(
+          _categoryId,
           ParamType.int,
         ),
       }.withoutNulls;
@@ -189,6 +206,11 @@ class ProductStruct extends BaseStruct {
           ParamType.int,
           false,
         ),
+        categoryId: deserializeParam(
+          data['category_id'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -204,12 +226,13 @@ class ProductStruct extends BaseStruct {
         imageUrl == other.imageUrl &&
         category == other.category &&
         status == other.status &&
-        userId == other.userId;
+        userId == other.userId &&
+        categoryId == other.categoryId;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([id, name, price, unit, imageUrl, category, status, userId]);
+  int get hashCode => const ListEquality().hash(
+      [id, name, price, unit, imageUrl, category, status, userId, categoryId]);
 }
 
 ProductStruct createProductStruct({
@@ -221,6 +244,7 @@ ProductStruct createProductStruct({
   String? category,
   bool? status,
   int? userId,
+  int? categoryId,
 }) =>
     ProductStruct(
       id: id,
@@ -231,4 +255,5 @@ ProductStruct createProductStruct({
       category: category,
       status: status,
       userId: userId,
+      categoryId: categoryId,
     );

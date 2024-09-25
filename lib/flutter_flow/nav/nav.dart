@@ -258,31 +258,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'total',
               ParamType.int,
             ),
-            price: params.getParam<int>(
-              'price',
-              ParamType.int,
-              isList: true,
-            ),
-            unit: params.getParam<String>(
-              'unit',
-              ParamType.String,
-              isList: true,
-            ),
-            productid: params.getParam<String>(
-              'productid',
-              ParamType.String,
-              isList: true,
-            ),
-            categoryid: params.getParam<String>(
-              'categoryid',
-              ParamType.String,
-              isList: true,
-            ),
-            quantity: params.getParam<int>(
-              'quantity',
-              ParamType.int,
-              isList: true,
-            ),
           ),
         ),
         FFRoute(

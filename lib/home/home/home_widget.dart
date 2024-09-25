@@ -455,11 +455,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       FFAppState().addToCart(CartItemStruct(
                                         quantity: 1,
                                         price: listProdukItem.price,
-                                        name: listProdukItem.name,
                                         unit: listProdukItem.unit,
-                                        category: listProdukItem.category,
-                                        imageUrl: listProdukItem.imageUrl,
-                                        productId: listProdukItem.id.toString(),
+                                        productId: listProdukItem.id,
+                                        categoryId: listProdukItem.categoryId,
+                                        name: listProdukItem.name,
+                                        productImageUrl:
+                                            listProdukItem.imageUrl,
                                       ));
                                       safeSetState(() {});
                                     },

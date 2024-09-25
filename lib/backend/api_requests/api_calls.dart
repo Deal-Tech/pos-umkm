@@ -28,41 +28,25 @@ class ApiTransaksiGroup {
 
 class CreateTransactionCall {
   Future<ApiCallResponse> call({
-    List<int>? priceList,
-    List<String>? unitList,
-    List<String>? categoryIdList,
     int? total,
-    String? paymentPosId = '',
+    int? paymentPosId,
     String? paymentMethod = '',
     String? status = '',
-    List<String>? productIdList,
-    List<int>? quantityList,
+    dynamic productsJson,
     String? token = '',
   }) async {
     final baseUrl = ApiTransaksiGroup.getBaseUrl(
       token: token,
     );
-    final price = _serializeList(priceList);
-    final unit = _serializeList(unitList);
-    final categoryId = _serializeList(categoryIdList);
-    final productId = _serializeList(productIdList);
-    final quantity = _serializeList(quantityList);
 
+    final products = _serializeJson(productsJson, true);
     final ffApiRequestBody = '''
 {
   "total": $total,
-  "payment_pos_id": "$paymentPosId",
+  "payment_pos_id": $paymentPosId,
   "payment_method": "$paymentMethod",
   "status": "$status",
-  "products": [
-    {
-      "product_id": "$productId",
-      "quantity": $quantity,
-      "price": $price,
-      "category_id": "$categoryId",
-      "unit": "$unit"
-    }
-  ]
+  "products": $products
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Create Transaction',
@@ -86,33 +70,26 @@ class CreateTransactionCall {
 
 class UpdateTransactionCall {
   Future<ApiCallResponse> call({
-    String? productId = '',
-    String? nama = '',
-    int? price,
-    String? unit = '',
-    String? categoryId = '',
     int? total,
-    String? paymentPosId = '',
+    int? paymentPosId,
     String? paymentMethod = '',
     String? status = '',
-    String? transactionId = '',
+    dynamic productsJson,
+    int? transactionId,
     String? token = '',
   }) async {
     final baseUrl = ApiTransaksiGroup.getBaseUrl(
       token: token,
     );
 
+    final products = _serializeJson(productsJson, true);
     final ffApiRequestBody = '''
 {
-  "product_id": "$productId",
-  "nama": "$nama",
-  "price": $price,
-  "unit": "$unit",
-  "category_id": "$categoryId",
   "total": $total,
-  "payment_pos_id": "$paymentPosId",
+  "payment_pos_id": $paymentPosId,
   "payment_method": "$paymentMethod",
-  "status": "$status"
+  "status": "$status",
+  "products": $products
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Update Transaction',
@@ -509,11 +486,15 @@ class ApiGetListProductCall {
           .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
-  static List? imageproduct(dynamic response) => getJsonField(
+  static List<String>? imageproduct(dynamic response) => (getJsonField(
         response,
         r'''$[:].image_url''',
         true,
-      ) as List?;
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
   static List<String>? categoryproduct(dynamic response) => (getJsonField(
         response,
         r'''$[:].category''',
@@ -829,6 +810,41 @@ class ApiChangePasswordWithCodeCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Change Password With Code',
       apiUrl: 'https://thetester.me/api/password/reset-with-code',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class TesapiCall {
+  static Future<ApiCallResponse> call({
+    int? total,
+    int? paymentPosId,
+    dynamic productsJson,
+    String? status = '',
+    String? paymentMethod = '',
+  }) async {
+    final products = _serializeJson(productsJson, true);
+    final ffApiRequestBody = '''
+{
+  "total": $total,
+  "payment_pos_id": $paymentPosId,
+  "payment_method": "$paymentMethod",
+  "status": "$status",
+  "products": $products
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'tesapi',
+      apiUrl: 'https://webhook.site/6ee8cb57-5f46-4a07-8cbe-fc8f17841730',
       callType: ApiCallType.POST,
       headers: {},
       params: {},

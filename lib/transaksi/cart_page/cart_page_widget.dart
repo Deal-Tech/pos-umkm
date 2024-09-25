@@ -164,7 +164,7 @@ class _CartPageWidgetState extends State<CartPageWidget> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              cartitemItem.name,
+                                              'Nama Produk',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium

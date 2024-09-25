@@ -132,8 +132,8 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                       decoration: const BoxDecoration(),
                       child: Builder(
                         builder: (context) {
-                          final listcart = FFAppState().cart.toList();
-                          if (listcart.isEmpty) {
+                          final listCart = FFAppState().cart.toList();
+                          if (listCart.isEmpty) {
                             return Image.asset(
                               'assets/images/icons8-empty-192_1_(1).png',
                               width: MediaQuery.sizeOf(context).width * 0.3,
@@ -145,10 +145,10 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listcart.length,
+                            itemCount: listCart.length,
                             separatorBuilder: (_, __) => const SizedBox(height: 15.0),
-                            itemBuilder: (context, listcartIndex) {
-                              final listcartItem = listcart[listcartIndex];
+                            itemBuilder: (context, listCartIndex) {
+                              final listCartItem = listCart[listCartIndex];
                               return Container(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 height: 86.0,
@@ -191,7 +191,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                             ) ??
                                             false;
                                     FFAppState()
-                                        .removeAtIndexFromCart(listcartIndex);
+                                        .removeAtIndexFromCart(listCartIndex);
                                     safeSetState(() {});
                                   },
                                   child: Row(
@@ -202,10 +202,9 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                         child: Image.network(
-                                          listcartItem.imageUrl,
+                                          listCartItem.productImageUrl,
                                           width: 100.0,
-                                          height: 86.0,
-                                          fit: BoxFit.contain,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                       Container(
@@ -225,7 +224,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                             children: [
                                               Flexible(
                                                 child: Text(
-                                                  listcartItem.name,
+                                                  listCartItem.name,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -256,7 +255,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                               ),
                                               Text(
                                                 formatNumber(
-                                                  listcartItem.price,
+                                                  listCartItem.price,
                                                   formatType:
                                                       FormatType.decimal,
                                                   decimalType:
@@ -331,7 +330,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                                       onTap: () async {
                                                         FFAppState()
                                                             .updateCartAtIndex(
-                                                          listcartIndex,
+                                                          listCartIndex,
                                                           (e) => e
                                                             ..incrementQuantity(
                                                                 -1),
@@ -358,7 +357,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                                               12.0),
                                                     ),
                                                     child: Text(
-                                                      listcartItem.quantity
+                                                      listCartItem.quantity
                                                           .toString(),
                                                       textAlign:
                                                           TextAlign.center,
@@ -397,7 +396,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                                       onTap: () async {
                                                         FFAppState()
                                                             .updateCartAtIndex(
-                                                          listcartIndex,
+                                                          listCartIndex,
                                                           (e) => e
                                                             ..incrementQuantity(
                                                                 1),
@@ -498,43 +497,6 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                   functions.calaculateTotalCartPrice(
                                       FFAppState().cart.toList()),
                                   ParamType.int,
-                                ),
-                                'price': serializeParam(
-                                  FFAppState()
-                                      .cart
-                                      .map((e) => e.price)
-                                      .toList(),
-                                  ParamType.int,
-                                  isList: true,
-                                ),
-                                'unit': serializeParam(
-                                  FFAppState().cart.map((e) => e.unit).toList(),
-                                  ParamType.String,
-                                  isList: true,
-                                ),
-                                'productid': serializeParam(
-                                  FFAppState()
-                                      .cart
-                                      .map((e) => e.productId)
-                                      .toList(),
-                                  ParamType.String,
-                                  isList: true,
-                                ),
-                                'categoryid': serializeParam(
-                                  FFAppState()
-                                      .cart
-                                      .map((e) => e.categoryId)
-                                      .toList(),
-                                  ParamType.String,
-                                  isList: true,
-                                ),
-                                'quantity': serializeParam(
-                                  FFAppState()
-                                      .cart
-                                      .map((e) => e.quantity)
-                                      .toList(),
-                                  ParamType.int,
-                                  isList: true,
                                 ),
                               }.withoutNulls,
                             );

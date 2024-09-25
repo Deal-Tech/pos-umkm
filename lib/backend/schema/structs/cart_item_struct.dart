@@ -9,24 +9,18 @@ class CartItemStruct extends BaseStruct {
   CartItemStruct({
     int? quantity,
     int? price,
-    String? name,
     String? unit,
-    String? category,
-    String? imageUrl,
-    String? paymentMethod,
-    String? paymentPosId,
-    String? productId,
-    String? categoryId,
+    int? productId,
+    int? categoryId,
+    String? name,
+    String? productImageUrl,
   })  : _quantity = quantity,
         _price = price,
-        _name = name,
         _unit = unit,
-        _category = category,
-        _imageUrl = imageUrl,
-        _paymentMethod = paymentMethod,
-        _paymentPosId = paymentPosId,
         _productId = productId,
-        _categoryId = categoryId;
+        _categoryId = categoryId,
+        _name = name,
+        _productImageUrl = productImageUrl;
 
   // "quantity" field.
   int? _quantity;
@@ -46,13 +40,6 @@ class CartItemStruct extends BaseStruct {
 
   bool hasPrice() => _price != null;
 
-  // "name" field.
-  String? _name;
-  String get name => _name ?? '';
-  set name(String? val) => _name = val;
-
-  bool hasName() => _name != null;
-
   // "unit" field.
   String? _unit;
   String get unit => _unit ?? '';
@@ -60,59 +47,46 @@ class CartItemStruct extends BaseStruct {
 
   bool hasUnit() => _unit != null;
 
-  // "category" field.
-  String? _category;
-  String get category => _category ?? '';
-  set category(String? val) => _category = val;
-
-  bool hasCategory() => _category != null;
-
-  // "image_url" field.
-  String? _imageUrl;
-  String get imageUrl => _imageUrl ?? '';
-  set imageUrl(String? val) => _imageUrl = val;
-
-  bool hasImageUrl() => _imageUrl != null;
-
-  // "payment_method" field.
-  String? _paymentMethod;
-  String get paymentMethod => _paymentMethod ?? '';
-  set paymentMethod(String? val) => _paymentMethod = val;
-
-  bool hasPaymentMethod() => _paymentMethod != null;
-
-  // "payment_pos_id" field.
-  String? _paymentPosId;
-  String get paymentPosId => _paymentPosId ?? '';
-  set paymentPosId(String? val) => _paymentPosId = val;
-
-  bool hasPaymentPosId() => _paymentPosId != null;
-
   // "product_id" field.
-  String? _productId;
-  String get productId => _productId ?? '';
-  set productId(String? val) => _productId = val;
+  int? _productId;
+  int get productId => _productId ?? 0;
+  set productId(int? val) => _productId = val;
+
+  void incrementProductId(int amount) => productId = productId + amount;
 
   bool hasProductId() => _productId != null;
 
   // "category_id" field.
-  String? _categoryId;
-  String get categoryId => _categoryId ?? '';
-  set categoryId(String? val) => _categoryId = val;
+  int? _categoryId;
+  int get categoryId => _categoryId ?? 0;
+  set categoryId(int? val) => _categoryId = val;
+
+  void incrementCategoryId(int amount) => categoryId = categoryId + amount;
 
   bool hasCategoryId() => _categoryId != null;
+
+  // "name" field.
+  String? _name;
+  String get name => _name ?? '';
+  set name(String? val) => _name = val;
+
+  bool hasName() => _name != null;
+
+  // "product_image_url" field.
+  String? _productImageUrl;
+  String get productImageUrl => _productImageUrl ?? '';
+  set productImageUrl(String? val) => _productImageUrl = val;
+
+  bool hasProductImageUrl() => _productImageUrl != null;
 
   static CartItemStruct fromMap(Map<String, dynamic> data) => CartItemStruct(
         quantity: castToType<int>(data['quantity']),
         price: castToType<int>(data['price']),
-        name: data['name'] as String?,
         unit: data['unit'] as String?,
-        category: data['category'] as String?,
-        imageUrl: data['image_url'] as String?,
-        paymentMethod: data['payment_method'] as String?,
-        paymentPosId: data['payment_pos_id'] as String?,
-        productId: data['product_id'] as String?,
-        categoryId: data['category_id'] as String?,
+        productId: castToType<int>(data['product_id']),
+        categoryId: castToType<int>(data['category_id']),
+        name: data['name'] as String?,
+        productImageUrl: data['product_image_url'] as String?,
       );
 
   static CartItemStruct? maybeFromMap(dynamic data) =>
@@ -121,14 +95,11 @@ class CartItemStruct extends BaseStruct {
   Map<String, dynamic> toMap() => {
         'quantity': _quantity,
         'price': _price,
-        'name': _name,
         'unit': _unit,
-        'category': _category,
-        'image_url': _imageUrl,
-        'payment_method': _paymentMethod,
-        'payment_pos_id': _paymentPosId,
         'product_id': _productId,
         'category_id': _categoryId,
+        'name': _name,
+        'product_image_url': _productImageUrl,
       }.withoutNulls;
 
   @override
@@ -141,36 +112,24 @@ class CartItemStruct extends BaseStruct {
           _price,
           ParamType.int,
         ),
-        'name': serializeParam(
-          _name,
-          ParamType.String,
-        ),
         'unit': serializeParam(
           _unit,
           ParamType.String,
         ),
-        'category': serializeParam(
-          _category,
-          ParamType.String,
-        ),
-        'image_url': serializeParam(
-          _imageUrl,
-          ParamType.String,
-        ),
-        'payment_method': serializeParam(
-          _paymentMethod,
-          ParamType.String,
-        ),
-        'payment_pos_id': serializeParam(
-          _paymentPosId,
-          ParamType.String,
-        ),
         'product_id': serializeParam(
           _productId,
-          ParamType.String,
+          ParamType.int,
         ),
         'category_id': serializeParam(
           _categoryId,
+          ParamType.int,
+        ),
+        'name': serializeParam(
+          _name,
+          ParamType.String,
+        ),
+        'product_image_url': serializeParam(
+          _productImageUrl,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -187,43 +146,28 @@ class CartItemStruct extends BaseStruct {
           ParamType.int,
           false,
         ),
-        name: deserializeParam(
-          data['name'],
-          ParamType.String,
-          false,
-        ),
         unit: deserializeParam(
           data['unit'],
           ParamType.String,
           false,
         ),
-        category: deserializeParam(
-          data['category'],
-          ParamType.String,
-          false,
-        ),
-        imageUrl: deserializeParam(
-          data['image_url'],
-          ParamType.String,
-          false,
-        ),
-        paymentMethod: deserializeParam(
-          data['payment_method'],
-          ParamType.String,
-          false,
-        ),
-        paymentPosId: deserializeParam(
-          data['payment_pos_id'],
-          ParamType.String,
-          false,
-        ),
         productId: deserializeParam(
           data['product_id'],
-          ParamType.String,
+          ParamType.int,
           false,
         ),
         categoryId: deserializeParam(
           data['category_id'],
+          ParamType.int,
+          false,
+        ),
+        name: deserializeParam(
+          data['name'],
+          ParamType.String,
+          false,
+        ),
+        productImageUrl: deserializeParam(
+          data['product_image_url'],
           ParamType.String,
           false,
         ),
@@ -237,52 +181,33 @@ class CartItemStruct extends BaseStruct {
     return other is CartItemStruct &&
         quantity == other.quantity &&
         price == other.price &&
-        name == other.name &&
         unit == other.unit &&
-        category == other.category &&
-        imageUrl == other.imageUrl &&
-        paymentMethod == other.paymentMethod &&
-        paymentPosId == other.paymentPosId &&
         productId == other.productId &&
-        categoryId == other.categoryId;
+        categoryId == other.categoryId &&
+        name == other.name &&
+        productImageUrl == other.productImageUrl;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([
-        quantity,
-        price,
-        name,
-        unit,
-        category,
-        imageUrl,
-        paymentMethod,
-        paymentPosId,
-        productId,
-        categoryId
-      ]);
+  int get hashCode => const ListEquality().hash(
+      [quantity, price, unit, productId, categoryId, name, productImageUrl]);
 }
 
 CartItemStruct createCartItemStruct({
   int? quantity,
   int? price,
-  String? name,
   String? unit,
-  String? category,
-  String? imageUrl,
-  String? paymentMethod,
-  String? paymentPosId,
-  String? productId,
-  String? categoryId,
+  int? productId,
+  int? categoryId,
+  String? name,
+  String? productImageUrl,
 }) =>
     CartItemStruct(
       quantity: quantity,
       price: price,
-      name: name,
       unit: unit,
-      category: category,
-      imageUrl: imageUrl,
-      paymentMethod: paymentMethod,
-      paymentPosId: paymentPosId,
       productId: productId,
       categoryId: categoryId,
+      name: name,
+      productImageUrl: productImageUrl,
     );

@@ -1,6 +1,5 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,19 +13,9 @@ class HalamanMetodePembayaranWidget extends StatefulWidget {
   const HalamanMetodePembayaranWidget({
     super.key,
     required this.total,
-    required this.price,
-    required this.unit,
-    required this.productid,
-    required this.categoryid,
-    required this.quantity,
   });
 
   final int? total;
-  final List<int>? price;
-  final List<String>? unit;
-  final List<String>? productid;
-  final List<String>? categoryid;
-  final List<int>? quantity;
 
   @override
   State<HalamanMetodePembayaranWidget> createState() =>
@@ -86,7 +75,6 @@ class _HalamanMetodePembayaranWidgetState
                               onPressed: () async {
                                 context.safePop();
                                 FFAppState().pilihpayment = '';
-                                FFAppState().paymentmethod = [];
                                 safeSetState(() {});
                               },
                               text: '',
@@ -282,25 +270,23 @@ class _HalamanMetodePembayaranWidgetState
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          FFAppState().pilihpayment =
-                                              listPaymentMethodItem.provider;
+                                          FFAppState().paymentmethod =
+                                              PaymentMethodStruct(
+                                            paymentMethod: listPaymentMethodItem
+                                                .paymentMethod,
+                                            id: listPaymentMethodItem.id,
+                                          );
                                           FFAppState().update(() {});
-                                          FFAppState()
-                                              .insertAtIndexInPaymentmethod(
-                                                  listPaymentMethodIndex,
-                                                  PaymentMethodStruct(
-                                                    id: listPaymentMethodItem
-                                                        .id,
-                                                  ));
-                                          safeSetState(() {});
                                         },
                                         child: Container(
                                           width: 100.0,
                                           height: 100.0,
                                           decoration: BoxDecoration(
-                                            color: FFAppState().pilihpayment ==
+                                            color: FFAppState()
+                                                        .paymentmethod
+                                                        .paymentMethod ==
                                                     listPaymentMethodItem
-                                                        .provider
+                                                        .paymentMethod
                                                 ? FlutterFlowTheme.of(context)
                                                     .primary
                                                 : FlutterFlowTheme.of(context)
@@ -338,6 +324,75 @@ class _HalamanMetodePembayaranWidgetState
                       ],
                     ),
                   ),
+                  FFButtonWidget(
+                    onPressed: () async {
+                      _model.apiResultp34 = await TesapiCall.call(
+                        total: widget.total,
+                        paymentPosId: FFAppState().paymentmethod.id,
+                        paymentMethod: FFAppState().paymentmethod.paymentMethod,
+                        status: 'paid',
+                        productsJson:
+                            FFAppState().cart.map((e) => e.toMap()).toList(),
+                      );
+
+                      if ((_model.apiResultp34?.succeeded ?? true)) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Sukses'),
+                              content:
+                                  Text((_model.apiResultp34?.bodyText ?? '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('gagal'),
+                              content:
+                                  Text((_model.apiResultp34?.bodyText ?? '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+
+                      safeSetState(() {});
+                    },
+                    text: 'Button',
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
                 ],
               ),
               Align(
@@ -351,16 +406,14 @@ class _HalamanMetodePembayaranWidgetState
                       } else {
                         _model.apiResultdpc =
                             await ApiTransaksiGroup.createTransactionCall.call(
-                          paymentPosId:
-                              FFAppState().paymentmethod.first.id.toString(),
-                          paymentMethod: FFAppState().pilihpayment,
+                          paymentPosId: FFAppState().paymentmethod.id,
+                          paymentMethod:
+                              FFAppState().paymentmethod.paymentMethod,
                           total: widget.total,
-                          quantityList: widget.quantity,
                           token: currentAuthenticationToken,
-                          status: Status.paid.name,
-                          priceList: widget.price,
-                          unitList: widget.unit,
-                          categoryIdList: widget.categoryid,
+                          status: 'paid',
+                          productsJson:
+                              FFAppState().cart.map((e) => e.toMap()).toList(),
                         );
 
                         if ((_model.apiResultdpc?.succeeded ?? true)) {
@@ -369,9 +422,8 @@ class _HalamanMetodePembayaranWidgetState
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: const Text('Sukses'),
-                                content: Text(
-                                    (_model.apiResultdpc?.exceptionMessage ??
-                                        '')),
+                                content:
+                                    Text((_model.apiResultdpc?.bodyText ?? '')),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -390,9 +442,8 @@ class _HalamanMetodePembayaranWidgetState
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: const Text('Gagal'),
-                                content: Text(
-                                    (_model.apiResultdpc?.exceptionMessage ??
-                                        '')),
+                                content:
+                                    Text((_model.apiResultdpc?.bodyText ?? '')),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>

@@ -39,21 +39,6 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _userid = prefs.getString('ff_userid') ?? _userid;
     });
-    _safeInit(() {
-      _paymentmethod = prefs
-              .getStringList('ff_paymentmethod')
-              ?.map((x) {
-                try {
-                  return PaymentMethodStruct.fromSerializableMap(jsonDecode(x));
-                } catch (e) {
-                  print("Can't decode persisted data type. Error: $e.");
-                  return null;
-                }
-              })
-              .withoutNulls
-              .toList() ??
-          _paymentmethod;
-    });
   }
 
   void update(VoidCallback callback) {
@@ -118,47 +103,6 @@ class FFAppState extends ChangeNotifier {
     _imageurl = value;
   }
 
-  List<PaymentMethodStruct> _paymentmethod = [];
-  List<PaymentMethodStruct> get paymentmethod => _paymentmethod;
-  set paymentmethod(List<PaymentMethodStruct> value) {
-    _paymentmethod = value;
-    prefs.setStringList(
-        'ff_paymentmethod', value.map((x) => x.serialize()).toList());
-  }
-
-  void addToPaymentmethod(PaymentMethodStruct value) {
-    paymentmethod.add(value);
-    prefs.setStringList(
-        'ff_paymentmethod', _paymentmethod.map((x) => x.serialize()).toList());
-  }
-
-  void removeFromPaymentmethod(PaymentMethodStruct value) {
-    paymentmethod.remove(value);
-    prefs.setStringList(
-        'ff_paymentmethod', _paymentmethod.map((x) => x.serialize()).toList());
-  }
-
-  void removeAtIndexFromPaymentmethod(int index) {
-    paymentmethod.removeAt(index);
-    prefs.setStringList(
-        'ff_paymentmethod', _paymentmethod.map((x) => x.serialize()).toList());
-  }
-
-  void updatePaymentmethodAtIndex(
-    int index,
-    PaymentMethodStruct Function(PaymentMethodStruct) updateFn,
-  ) {
-    paymentmethod[index] = updateFn(_paymentmethod[index]);
-    prefs.setStringList(
-        'ff_paymentmethod', _paymentmethod.map((x) => x.serialize()).toList());
-  }
-
-  void insertAtIndexInPaymentmethod(int index, PaymentMethodStruct value) {
-    paymentmethod.insert(index, value);
-    prefs.setStringList(
-        'ff_paymentmethod', _paymentmethod.map((x) => x.serialize()).toList());
-  }
-
   String _pilihpayment = '';
   String get pilihpayment => _pilihpayment;
   set pilihpayment(String value) {
@@ -179,6 +123,16 @@ class FFAppState extends ChangeNotifier {
 
   void updateSelectcategoryStruct(Function(CategoriesStruct) updateFn) {
     updateFn(_selectcategory);
+  }
+
+  PaymentMethodStruct _paymentmethod = PaymentMethodStruct();
+  PaymentMethodStruct get paymentmethod => _paymentmethod;
+  set paymentmethod(PaymentMethodStruct value) {
+    _paymentmethod = value;
+  }
+
+  void updatePaymentmethodStruct(Function(PaymentMethodStruct) updateFn) {
+    updateFn(_paymentmethod);
   }
 }
 
