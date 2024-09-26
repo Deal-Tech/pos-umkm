@@ -12,6 +12,8 @@ class HalamanKategoriModel extends FlutterFlowModel<HalamanKategoriWidget> {
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (Api Category Create)] action in Button widget.
   ApiCallResponse? apiResultgqy;
+  // Stores action output result for [Backend Call - API (Api Delete Category)] action in Icon widget.
+  ApiCallResponse? apiResultqqe;
 
   @override
   void initState(BuildContext context) {}

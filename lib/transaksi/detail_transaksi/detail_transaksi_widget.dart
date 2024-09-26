@@ -52,9 +52,9 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFF0EC244),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -63,18 +63,18 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).secondaryBackground,
+              color: FlutterFlowTheme.of(context).primary,
               size: 30.0,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('Home');
             },
           ),
           title: Text(
             'Kembali',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Poppins',
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  color: FlutterFlowTheme.of(context).primary,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
                 ),
@@ -117,7 +117,7 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 10.0, 20.0, 10.0),
+                                    20.0, 20.0, 20.0, 20.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -328,8 +328,11 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          productlistdetailItem
-                                                              .name,
+                                                          productlistdetailIndex ==
+                                                                  null
+                                                              ? 'Produk dihapus'
+                                                              : productlistdetailItem
+                                                                  .name,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium

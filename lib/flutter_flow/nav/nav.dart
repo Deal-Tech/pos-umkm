@@ -91,16 +91,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'TransactionPage',
           path: '/transactionPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'TransactionPage')
-              : const TransactionPageWidget(),
+          builder: (context, params) => const TransactionPageWidget(),
         ),
         FFRoute(
           name: 'ProductPage',
           path: '/productPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'ProductPage')
-              : const ProductPageWidget(),
+          builder: (context, params) => const ProductPageWidget(),
         ),
         FFRoute(
           name: 'OtherPage',
@@ -338,7 +334,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-riwayat-transaksi',
           path: '/halamanRiwayatTransaksi',
-          builder: (context, params) => const HalamanRiwayatTransaksiWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Halaman-riwayat-transaksi')
+              : const HalamanRiwayatTransaksiWidget(),
         ),
         FFRoute(
           name: 'Halaman-kelola-toko',
@@ -499,6 +497,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'List-produk',
+          path: '/listProduk',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'List-produk')
+              : const ListProdukWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

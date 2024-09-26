@@ -104,3 +104,4 @@ export '/produk/gagal_add_produk/gagal_add_produk_widget.dart'
 export '/transaksi/statistik/statistik_widget.dart' show StatistikWidget;
 export '/produk/halaman_edit_produk/halaman_edit_produk_widget.dart'
     show HalamanEditProdukWidget;
+export '/produk/list_produk/list_produk_widget.dart' show ListProdukWidget;
