@@ -263,7 +263,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-pembayaran-non-cash',
           path: '/halamanPembayaranNonCash',
-          builder: (context, params) => const HalamanPembayaranNonCashWidget(),
+          builder: (context, params) => HalamanPembayaranNonCashWidget(
+            total: params.getParam(
+              'total',
+              ParamType.int,
+            ),
+            idtransactions: params.getParam(
+              'idtransactions',
+              ParamType.int,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Bukti-pencatatan',

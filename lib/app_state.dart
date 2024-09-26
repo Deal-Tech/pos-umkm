@@ -115,16 +115,6 @@ class FFAppState extends ChangeNotifier {
     _resetcode = value;
   }
 
-  CategoriesStruct _selectcategory = CategoriesStruct();
-  CategoriesStruct get selectcategory => _selectcategory;
-  set selectcategory(CategoriesStruct value) {
-    _selectcategory = value;
-  }
-
-  void updateSelectcategoryStruct(Function(CategoriesStruct) updateFn) {
-    updateFn(_selectcategory);
-  }
-
   PaymentMethodStruct _paymentmethod = PaymentMethodStruct();
   PaymentMethodStruct get paymentmethod => _paymentmethod;
   set paymentmethod(PaymentMethodStruct value) {
@@ -133,6 +123,16 @@ class FFAppState extends ChangeNotifier {
 
   void updatePaymentmethodStruct(Function(PaymentMethodStruct) updateFn) {
     updateFn(_paymentmethod);
+  }
+
+  CategoriesStruct _selectcategory = CategoriesStruct();
+  CategoriesStruct get selectcategory => _selectcategory;
+  set selectcategory(CategoriesStruct value) {
+    _selectcategory = value;
+  }
+
+  void updateSelectcategoryStruct(Function(CategoriesStruct) updateFn) {
+    updateFn(_selectcategory);
   }
 }
 

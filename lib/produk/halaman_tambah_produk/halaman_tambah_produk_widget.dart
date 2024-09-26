@@ -610,10 +610,9 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          valueOrDefault<String>(
-                                            FFAppState().selectcategory.name,
-                                            'Pilih Kategori',
-                                          ),
+                                          FFAppState().selectcategory != null
+                                              ? FFAppState().selectcategory.name
+                                              : 'Pilih Kategori',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(

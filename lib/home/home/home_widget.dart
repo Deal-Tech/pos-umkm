@@ -279,14 +279,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onChanged: (val) async {
                                   safeSetState(
                                       () => _model.dropDownValue = val);
-                                  safeSetState(() {
-                                    _model.textController?.text =
-                                        _model.dropDownValue!;
-                                    _model.textController?.selection =
-                                        TextSelection.collapsed(
-                                            offset: _model
-                                                .textController!.text.length);
-                                  });
                                   safeSetState(
                                       () => _model.apiRequestCompleter = null);
                                   await _model.waitForApiRequestCompleted();
@@ -387,6 +379,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ..complete(ApiGetListProductCall.call(
                                     token: FFAppState().apilogin,
                                     query: _model.textController.text,
+                                    category: _model.dropDownValue,
+                                    barcode: _model.outputScanBarcode,
                                   )))
                             .future,
                         builder: (context, snapshot) {

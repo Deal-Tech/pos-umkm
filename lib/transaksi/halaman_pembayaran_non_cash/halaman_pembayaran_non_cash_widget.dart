@@ -1,15 +1,22 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'halaman_pembayaran_non_cash_model.dart';
 export 'halaman_pembayaran_non_cash_model.dart';
 
 class HalamanPembayaranNonCashWidget extends StatefulWidget {
-  const HalamanPembayaranNonCashWidget({super.key});
+  const HalamanPembayaranNonCashWidget({
+    super.key,
+    required this.total,
+    required this.idtransactions,
+  });
+
+  final int? total;
+  final int? idtransactions;
 
   @override
   State<HalamanPembayaranNonCashWidget> createState() =>
@@ -154,7 +161,12 @@ class _HalamanPembayaranNonCashWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 20.0, 0.0),
                             child: Text(
-                              'Rp632.000',
+                              formatNumber(
+                                widget.total,
+                                formatType: FormatType.decimal,
+                                decimalType: DecimalType.automatic,
+                                currency: 'Rp ',
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -224,16 +236,7 @@ class _HalamanPembayaranNonCashWidgetState
                                   return ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.network(
-                                      (imageApiGetPaymentPOSResponse.jsonBody
-                                                  .toList()
-                                                  .map<PaymentMethodStruct?>(
-                                                      PaymentMethodStruct
-                                                          .maybeFromMap)
-                                                  .toList()
-                                              as Iterable<PaymentMethodStruct?>)
-                                          .withoutNulls
-                                          .first
-                                          .qrisImage,
+                                      FFAppState().paymentmethod.qrisImage,
                                       width: MediaQuery.sizeOf(context).width *
                                           1.0,
                                       fit: BoxFit.contain,
@@ -254,8 +257,76 @@ class _HalamanPembayaranNonCashWidgetState
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      _model.apiResultcektransaksi =
+                          await ApiTransaksiGroup.getTransactionIDCall.call(
+                        transactionId: widget.idtransactions?.toString(),
+                        token: currentAuthenticationToken,
+                      );
+
+                      if ((_model.apiResultcektransaksi?.succeeded ?? true)) {
+                        if (ApiTransaksiGroup.getTransactionIDCall.status(
+                              (_model.apiResultcektransaksi?.jsonBody ?? ''),
+                            ) ==
+                            'paid') {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                content: const Text('Pembayaran telah diterima'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          context.pushNamed('SuccesCheckoutPage');
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Belum dibayar'),
+                                content: const Text('Pembayaran belum diterima'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Error'),
+                              content: Text(
+                                  (_model.apiResultcektransaksi?.bodyText ??
+                                      '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+
+                      safeSetState(() {});
                     },
                     text: 'Cek dan Simpan',
                     options: FFButtonOptions(

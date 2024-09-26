@@ -66,6 +66,40 @@ class CreateTransactionCall {
       alwaysAllowBody: false,
     );
   }
+
+  int? transactionsid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.transaction.id''',
+      ));
+  String? paymentmethod(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.transaction.payment_method''',
+      ));
+  int? paymentposid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.transaction.payment_pos_id''',
+      ));
+  int? transactionuserid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.transaction.user_id''',
+      ));
+  int? transacionstotal(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.transaction.total''',
+      ));
+  String? transactionstatus(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.transaction.status''',
+      ));
+  String? createdat(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.transaction.created_at''',
+      ));
+  String? updatedat(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.transaction.updated_at''',
+      ));
 }
 
 class UpdateTransactionCall {
@@ -162,6 +196,39 @@ class GetTransactionIDCall {
       alwaysAllowBody: false,
     );
   }
+
+  String? paymentmethod(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.payment_method''',
+      ));
+  String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.status''',
+      ));
+  int? paymentposid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.payment_pos_id''',
+      ));
+  int? total(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.total''',
+      ));
+  int? userid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.user_id''',
+      ));
+  int? id(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? createdat(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.created_at''',
+      ));
+  String? updatedat(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.updated_at''',
+      ));
 }
 
 class DeleteTransactionCall {
@@ -457,6 +524,9 @@ class ApiGetListProductCall {
   static Future<ApiCallResponse> call({
     String? token = '',
     String? query = '',
+    String? category = '',
+    String? sku = '',
+    String? barcode = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get List Product',
@@ -467,6 +537,9 @@ class ApiGetListProductCall {
       },
       params: {
         'query': query,
+        'category': sku,
+        'sku': sku,
+        'barcode': barcode,
       },
       returnBody: true,
       encodeBodyUtf8: false,

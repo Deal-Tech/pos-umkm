@@ -275,6 +275,8 @@ class _HalamanMetodePembayaranWidgetState
                                             paymentMethod: listPaymentMethodItem
                                                 .paymentMethod,
                                             id: listPaymentMethodItem.id,
+                                            qrisImage:
+                                                listPaymentMethodItem.qrisImage,
                                           );
                                           FFAppState().update(() {});
                                         },
@@ -401,8 +403,79 @@ class _HalamanMetodePembayaranWidgetState
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (FFAppState().pilihpayment == 'QRIS') {
-                        context.pushNamed('Halaman-pembayaran-non-cash');
+                      if (FFAppState().paymentmethod.paymentMethod == 'QRIS') {
+                        _model.apiResultqristransactions =
+                            await ApiTransaksiGroup.createTransactionCall.call(
+                          paymentPosId: FFAppState().paymentmethod.id,
+                          paymentMethod:
+                              FFAppState().paymentmethod.paymentMethod,
+                          total: widget.total,
+                          token: currentAuthenticationToken,
+                          status: 'pending',
+                          productsJson:
+                              FFAppState().cart.map((e) => e.toMap()).toList(),
+                        );
+
+                        if ((_model.apiResultqristransactions?.succeeded ??
+                            true)) {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                content: Text((_model
+                                        .apiResultqristransactions?.bodyText ??
+                                    '')),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          FFAppState().cart = [];
+                          safeSetState(() {});
+
+                          context.pushNamed(
+                            'Halaman-pembayaran-non-cash',
+                            queryParameters: {
+                              'total': serializeParam(
+                                widget.total,
+                                ParamType.int,
+                              ),
+                              'idtransactions': serializeParam(
+                                ApiTransaksiGroup.createTransactionCall
+                                    .transactionsid(
+                                  (_model.apiResultqristransactions?.jsonBody ??
+                                      ''),
+                                ),
+                                ParamType.int,
+                              ),
+                            }.withoutNulls,
+                          );
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Sukses'),
+                                content: Text((_model
+                                        .apiResultqristransactions?.bodyText ??
+                                    '')),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       } else {
                         _model.apiResultdpc =
                             await ApiTransaksiGroup.createTransactionCall.call(
@@ -434,6 +507,8 @@ class _HalamanMetodePembayaranWidgetState
                               );
                             },
                           );
+                          FFAppState().cart = [];
+                          safeSetState(() {});
 
                           context.pushNamed('SuccesCheckoutPage');
                         } else {
@@ -459,7 +534,9 @@ class _HalamanMetodePembayaranWidgetState
 
                       safeSetState(() {});
                     },
-                    text: 'Simpan',
+                    text: FFAppState().paymentmethod.paymentMethod == 'QRIS'
+                        ? 'Lanjut'
+                        : 'Simpan',
                     options: FFButtonOptions(
                       width: 327.0,
                       height: 60.0,

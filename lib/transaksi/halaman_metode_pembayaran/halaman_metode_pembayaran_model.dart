@@ -11,6 +11,8 @@ class HalamanMetodePembayaranModel
   // Stores action output result for [Backend Call - API (tesapi)] action in Button widget.
   ApiCallResponse? apiResultp34;
   // Stores action output result for [Backend Call - API (Create Transaction)] action in Button widget.
+  ApiCallResponse? apiResultqristransactions;
+  // Stores action output result for [Backend Call - API (Create Transaction)] action in Button widget.
   ApiCallResponse? apiResultdpc;
 
   @override
