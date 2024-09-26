@@ -20,3 +20,12 @@ int calaculateTotalCartPrice(List<CartItemStruct> items) {
   }
   return total;
 }
+
+int? totalperlistitemproduct(TransactionDetailsStruct? productdetail) {
+  // sum quantity x price
+  if (productdetail != null) {
+    return productdetail.quantity * productdetail.price;
+  } else {
+    return null;
+  }
+}

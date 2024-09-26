@@ -100,6 +100,11 @@ class CreateTransactionCall {
         response,
         r'''$.transaction.updated_at''',
       ));
+  List? transactionsdetail(dynamic response) => getJsonField(
+        response,
+        r'''$.transaction.transaction_details''',
+        true,
+      ) as List?;
 }
 
 class UpdateTransactionCall {
@@ -217,7 +222,7 @@ class GetTransactionIDCall {
         response,
         r'''$.user_id''',
       ));
-  int? id(dynamic response) => castToType<int>(getJsonField(
+  int? idtransactions(dynamic response) => castToType<int>(getJsonField(
         response,
         r'''$.id''',
       ));
@@ -229,6 +234,49 @@ class GetTransactionIDCall {
         response,
         r'''$.updated_at''',
       ));
+  List? transactionsdetail(dynamic response) => getJsonField(
+        response,
+        r'''$.transaction_details''',
+        true,
+      ) as List?;
+  int? transactionsdetailid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.transaction_details[:].id''',
+      ));
+  int? transactionsdetailproductid(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.transaction_details[:].product_id''',
+      ));
+  String? transactionsdetailname(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.transaction_details[:].name''',
+      ));
+  String? transactionsdetailunit(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.transaction_details[:].unit''',
+      ));
+  int? transactionsdetailquantity(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.transaction_details[:].quantity''',
+      ));
+  String? transactionsdetailprice(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.transaction_details[:].price''',
+      ));
+  int? transactionsdetailcategoryid(dynamic response) =>
+      castToType<int>(getJsonField(
+        response,
+        r'''$.transaction_details[:].category_id''',
+      ));
+  dynamic transactionsdetailproduct(dynamic response) => getJsonField(
+        response,
+        r'''$.transaction_details[:].product''',
+      );
 }
 
 class DeleteTransactionCall {

@@ -7,7 +7,18 @@ import 'bukti_pencatatan_model.dart';
 export 'bukti_pencatatan_model.dart';
 
 class BuktiPencatatanWidget extends StatefulWidget {
-  const BuktiPencatatanWidget({super.key});
+  const BuktiPencatatanWidget({
+    super.key,
+    required this.paymentmethod,
+    required this.total,
+    required this.transactionsid,
+    required this.datetransactions,
+  });
+
+  final String? paymentmethod;
+  final int? total;
+  final int? transactionsid;
+  final String? datetransactions;
 
   @override
   State<BuktiPencatatanWidget> createState() => _BuktiPencatatanWidgetState();
@@ -130,7 +141,10 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                                         ),
                                   ),
                                   Text(
-                                    'CASH',
+                                    valueOrDefault<String>(
+                                      widget.paymentmethod,
+                                      'Metode Pembayaran',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -162,7 +176,12 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                                         ),
                                   ),
                                   Text(
-                                    'Rp235.000',
+                                    formatNumber(
+                                      widget.total,
+                                      formatType: FormatType.decimal,
+                                      decimalType: DecimalType.automatic,
+                                      currency: 'Rp ',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -259,7 +278,23 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                                 0.0, 0.0, 30.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('Detail_transaksi');
+                                context.pushNamed(
+                                  'Detail_transaksi',
+                                  queryParameters: {
+                                    'transactionsid': serializeParam(
+                                      widget.transactionsid,
+                                      ParamType.int,
+                                    ),
+                                    'datetransactions': serializeParam(
+                                      widget.datetransactions,
+                                      ParamType.String,
+                                    ),
+                                    'total': serializeParam(
+                                      widget.total,
+                                      ParamType.int,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               },
                               text: 'Lihat Struk',
                               options: FFButtonOptions(

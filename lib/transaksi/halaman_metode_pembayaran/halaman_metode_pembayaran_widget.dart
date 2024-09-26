@@ -454,6 +454,14 @@ class _HalamanMetodePembayaranWidgetState
                                 ),
                                 ParamType.int,
                               ),
+                              'datetransactions': serializeParam(
+                                ApiTransaksiGroup.createTransactionCall
+                                    .createdat(
+                                  (_model.apiResultqristransactions?.jsonBody ??
+                                      ''),
+                                ),
+                                ParamType.String,
+                              ),
                             }.withoutNulls,
                           );
                         } else {
@@ -510,7 +518,33 @@ class _HalamanMetodePembayaranWidgetState
                           FFAppState().cart = [];
                           safeSetState(() {});
 
-                          context.pushNamed('SuccesCheckoutPage');
+                          context.pushNamed(
+                            'Bukti-pencatatan',
+                            queryParameters: {
+                              'paymentmethod': serializeParam(
+                                'Cash',
+                                ParamType.String,
+                              ),
+                              'total': serializeParam(
+                                widget.total,
+                                ParamType.int,
+                              ),
+                              'transactionsid': serializeParam(
+                                ApiTransaksiGroup.createTransactionCall
+                                    .transactionsid(
+                                  (_model.apiResultdpc?.jsonBody ?? ''),
+                                ),
+                                ParamType.int,
+                              ),
+                              'datetransactions': serializeParam(
+                                ApiTransaksiGroup.createTransactionCall
+                                    .createdat(
+                                  (_model.apiResultdpc?.jsonBody ?? ''),
+                                ),
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
                         } else {
                           await showDialog(
                             context: context,

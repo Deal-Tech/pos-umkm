@@ -272,12 +272,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'idtransactions',
               ParamType.int,
             ),
+            datetransactions: params.getParam(
+              'datetransactions',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'Bukti-pencatatan',
           path: '/buktiPencatatan',
-          builder: (context, params) => const BuktiPencatatanWidget(),
+          builder: (context, params) => BuktiPencatatanWidget(
+            paymentmethod: params.getParam(
+              'paymentmethod',
+              ParamType.String,
+            ),
+            total: params.getParam(
+              'total',
+              ParamType.int,
+            ),
+            transactionsid: params.getParam(
+              'transactionsid',
+              ParamType.int,
+            ),
+            datetransactions: params.getParam(
+              'datetransactions',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Halaman-verifikasi-kode-reset',
@@ -407,7 +428,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Detail_transaksi',
           path: '/detailTransaksi',
-          builder: (context, params) => const DetailTransaksiWidget(),
+          builder: (context, params) => DetailTransaksiWidget(
+            transactionsid: params.getParam(
+              'transactionsid',
+              ParamType.int,
+            ),
+            datetransactions: params.getParam(
+              'datetransactions',
+              ParamType.String,
+            ),
+            total: params.getParam(
+              'total',
+              ParamType.int,
+            ),
+          ),
         ),
         FFRoute(
           name: 'sukses_add-produk',

@@ -13,10 +13,12 @@ class HalamanPembayaranNonCashWidget extends StatefulWidget {
     super.key,
     required this.total,
     required this.idtransactions,
+    required this.datetransactions,
   });
 
   final int? total;
   final int? idtransactions;
+  final String? datetransactions;
 
   @override
   State<HalamanPembayaranNonCashWidget> createState() =>
@@ -286,7 +288,27 @@ class _HalamanPembayaranNonCashWidgetState
                             },
                           );
 
-                          context.pushNamed('SuccesCheckoutPage');
+                          context.pushNamed(
+                            'Bukti-pencatatan',
+                            queryParameters: {
+                              'paymentmethod': serializeParam(
+                                'QRIS',
+                                ParamType.String,
+                              ),
+                              'total': serializeParam(
+                                widget.total,
+                                ParamType.int,
+                              ),
+                              'transactionsid': serializeParam(
+                                widget.idtransactions,
+                                ParamType.int,
+                              ),
+                              'datetransactions': serializeParam(
+                                widget.datetransactions,
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
                         } else {
                           await showDialog(
                             context: context,
