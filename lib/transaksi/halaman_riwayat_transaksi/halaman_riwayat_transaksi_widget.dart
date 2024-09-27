@@ -1,11 +1,14 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/filter_transaksi_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'halaman_riwayat_transaksi_model.dart';
 export 'halaman_riwayat_transaksi_model.dart';
 
@@ -38,6 +41,8 @@ class _HalamanRiwayatTransaksiWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -64,8 +69,8 @@ class _HalamanRiwayatTransaksiWidgetState
                         Align(
                           alignment: const AlignmentDirectional(0.0, 0.0),
                           child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              context.pushNamed('Home');
                             },
                             text: '',
                             icon: const Icon(
@@ -126,28 +131,55 @@ class _HalamanRiwayatTransaksiWidgetState
                   child: Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: SvgPicture.asset(
-                            'assets/images/Filter.svg',
-                            width: 25.0,
-                            height: 25.0,
-                            fit: BoxFit.cover,
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return GestureDetector(
+                              onTap: () => FocusScope.of(context).unfocus(),
+                              child: Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: const FilterTransaksiWidget(),
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
+
+                        safeSetState(() => _model.apiRequestCompleter = null);
+                        await _model.waitForApiRequestCompleted();
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/Filter.svg',
+                              width: 25.0,
+                              height: 25.0,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Filter brdasarkan tanggal',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Rubik',
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                      ].divide(const SizedBox(width: 10.0)),
+                          Text(
+                            'Filter brdasarkan tanggal',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Rubik',
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ].divide(const SizedBox(width: 10.0)),
+                      ),
                     ),
                   ),
                 ),
@@ -160,9 +192,21 @@ class _HalamanRiwayatTransaksiWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         FutureBuilder<ApiCallResponse>(
-                          future: ApiTransaksiGroup.getTransactionsCall.call(
-                            token: currentAuthenticationToken,
-                          ),
+                          future: (_model.apiRequestCompleter ??= Completer<
+                                  ApiCallResponse>()
+                                ..complete(
+                                    ApiTransaksiGroup.getTransactionsCall.call(
+                                  token: currentAuthenticationToken,
+                                  startDate: FFAppState()
+                                      .filtertransactionsdate
+                                      .datestart
+                                      .toString(),
+                                  endDate: FFAppState()
+                                      .filtertransactionsdate
+                                      .dateend
+                                      .toString(),
+                                )))
+                              .future,
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {

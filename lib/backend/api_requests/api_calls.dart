@@ -152,6 +152,8 @@ class UpdateTransactionCall {
 
 class GetTransactionsCall {
   Future<ApiCallResponse> call({
+    String? startDate = '',
+    String? endDate = '',
     String? token = '',
   }) async {
     final baseUrl = ApiTransaksiGroup.getBaseUrl(
@@ -165,7 +167,10 @@ class GetTransactionsCall {
       headers: {
         'Authorization': 'Bearer $token',
       },
-      params: {},
+      params: {
+        'start_date': startDate,
+        'end_date': endDate,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -584,9 +589,8 @@ class ApiGetListProductCall {
         'Authorization': 'Bearer $token',
       },
       params: {
-        'query': query,
         'category': sku,
-        'sku': sku,
+        'query': query,
         'barcode': barcode,
       },
       returnBody: true,
@@ -971,6 +975,33 @@ class TesapiCall {
       params: {},
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiListProductFixedBugCall {
+  static Future<ApiCallResponse> call({
+    String? category = '',
+    String? token = '',
+    String? query = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api List Product Fixed Bug',
+      apiUrl: 'https://thetester.me/api/products',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {
+        'category': category,
+        'query': query,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

@@ -9,7 +9,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'halaman_tambah_produk_model.dart';
 export 'halaman_tambah_produk_model.dart';
@@ -140,250 +139,294 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            if ((_model.uploadedLocalFile1.bytes?.isEmpty ??
-                                    true))
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 50.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    final selectedMedia =
-                                        await selectMediaWithSourceBottomSheet(
-                                      context: context,
-                                      allowPhoto: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      safeSetState(
-                                          () => _model.isDataUploading1 = true);
-                                      var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                if ((_model.uploadedLocalFile1.bytes?.isEmpty ??
+                                        true))
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                        context: context,
+                                        allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath, context))) {
+                                        safeSetState(() =>
+                                            _model.isDataUploading1 = true);
+                                        var selectedUploadedFiles =
+                                            <FFUploadedFile>[];
 
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                ))
-                                            .toList();
-                                      } finally {
-                                        _model.isDataUploading1 = false;
+                                        try {
+                                          selectedUploadedFiles = selectedMedia
+                                              .map((m) => FFUploadedFile(
+                                                    name: m.storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height:
+                                                        m.dimensions?.height,
+                                                    width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
+                                                  ))
+                                              .toList();
+                                        } finally {
+                                          _model.isDataUploading1 = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                            selectedMedia.length) {
+                                          safeSetState(() {
+                                            _model.uploadedLocalFile1 =
+                                                selectedUploadedFiles.first;
+                                          });
+                                        } else {
+                                          safeSetState(() {});
+                                          return;
+                                        }
                                       }
-                                      if (selectedUploadedFiles.length ==
-                                          selectedMedia.length) {
-                                        safeSetState(() {
-                                          _model.uploadedLocalFile1 =
-                                              selectedUploadedFiles.first;
-                                        });
+
+                                      _model.apiResultUploudImage1 =
+                                          await ApiUploudImageProductCall.call(
+                                        token: FFAppState().apilogin,
+                                        image: _model.uploadedLocalFile1,
+                                      );
+
+                                      if ((_model.apiResultUploudImage1
+                                              ?.succeeded ??
+                                          true)) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Sukses'),
+                                              content: Text((_model
+                                                      .apiResultUploudImage1
+                                                      ?.exceptionMessage ??
+                                                  '')),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       } else {
-                                        safeSetState(() {});
-                                        return;
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('gagal'),
+                                              content: Text((_model
+                                                      .apiResultUploudImage1
+                                                      ?.exceptionMessage ??
+                                                  '')),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       }
-                                    }
 
-                                    _model.apiResultUploudImage1 =
-                                        await ApiUploudImageProductCall.call(
-                                      token: FFAppState().apilogin,
-                                      image: _model.uploadedLocalFile1,
-                                    );
-
-                                    if ((_model
-                                            .apiResultUploudImage1?.succeeded ??
-                                        true)) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Sukses'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage1
-                                                    ?.bodyText ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    } else {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('gagal'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage1
-                                                    ?.bodyText ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                      'assets/images/Group_982.png',
-                                      width: 152.0,
-                                      height: 98.0,
-                                      fit: BoxFit.cover,
+                                      safeSetState(() {});
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/images/Group_982.png',
+                                        width: 152.0,
+                                        height: 98.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            if ((_model.uploadedLocalFile1.bytes?.isNotEmpty ??
-                                    false))
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 50.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    final selectedMedia =
-                                        await selectMediaWithSourceBottomSheet(
-                                      context: context,
-                                      allowPhoto: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      safeSetState(
-                                          () => _model.isDataUploading2 = true);
-                                      var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
+                                if ((_model.uploadedLocalFile1.bytes
+                                            ?.isNotEmpty ??
+                                        false))
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      final selectedMedia =
+                                          await selectMediaWithSourceBottomSheet(
+                                        context: context,
+                                        allowPhoto: true,
+                                      );
+                                      if (selectedMedia != null &&
+                                          selectedMedia.every((m) =>
+                                              validateFileFormat(
+                                                  m.storagePath, context))) {
+                                        safeSetState(() =>
+                                            _model.isDataUploading2 = true);
+                                        var selectedUploadedFiles =
+                                            <FFUploadedFile>[];
 
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                ))
-                                            .toList();
-                                      } finally {
-                                        _model.isDataUploading2 = false;
+                                        try {
+                                          selectedUploadedFiles = selectedMedia
+                                              .map((m) => FFUploadedFile(
+                                                    name: m.storagePath
+                                                        .split('/')
+                                                        .last,
+                                                    bytes: m.bytes,
+                                                    height:
+                                                        m.dimensions?.height,
+                                                    width: m.dimensions?.width,
+                                                    blurHash: m.blurHash,
+                                                  ))
+                                              .toList();
+                                        } finally {
+                                          _model.isDataUploading2 = false;
+                                        }
+                                        if (selectedUploadedFiles.length ==
+                                            selectedMedia.length) {
+                                          safeSetState(() {
+                                            _model.uploadedLocalFile2 =
+                                                selectedUploadedFiles.first;
+                                          });
+                                        } else {
+                                          safeSetState(() {});
+                                          return;
+                                        }
                                       }
-                                      if (selectedUploadedFiles.length ==
-                                          selectedMedia.length) {
-                                        safeSetState(() {
-                                          _model.uploadedLocalFile2 =
-                                              selectedUploadedFiles.first;
-                                        });
+
+                                      _model.apiResultUploudImage2 =
+                                          await ApiUploudImageProductCall.call(
+                                        token: FFAppState().apilogin,
+                                        image: _model.uploadedLocalFile2,
+                                      );
+
+                                      if ((_model.apiResultUploudImage2
+                                              ?.succeeded ??
+                                          true)) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Sukses'),
+                                              content: Text((_model
+                                                      .apiResultUploudImage2
+                                                      ?.exceptionMessage ??
+                                                  '')),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       } else {
-                                        safeSetState(() {});
-                                        return;
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('gagal'),
+                                              content: Text((_model
+                                                      .apiResultUploudImage2
+                                                      ?.bodyText ??
+                                                  '')),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       }
-                                    }
 
-                                    _model.apiResultUploudImage2 =
-                                        await ApiUploudImageProductCall.call(
-                                      token: FFAppState().apilogin,
-                                      image: _model.uploadedLocalFile2,
-                                    );
-
-                                    if ((_model
-                                            .apiResultUploudImage2?.succeeded ??
-                                        true)) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Sukses'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage2
-                                                    ?.exceptionMessage ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    } else {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('gagal'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage2
-                                                    ?.bodyText ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-
-                                    safeSetState(() {});
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.memory(
-                                      _model.uploadedLocalFile1.bytes ??
-                                          Uint8List.fromList([]),
-                                      width: 152.0,
-                                      height: 98.0,
-                                      fit: BoxFit.cover,
+                                      safeSetState(() {});
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.memory(
+                                        _model.uploadedLocalFile1.bytes ??
+                                            Uint8List.fromList([]),
+                                        width: 152.0,
+                                        height: 98.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Maks ukuran 3 MB',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0xFF999999),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                                 ),
-                              ),
+                              ],
+                            ),
                             Align(
                               alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Text(
-                                'Nama Produk',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      color: const Color(0xFF325681),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
+                              child: RichText(
+                                textScaler: MediaQuery.of(context).textScaler,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Nama Produk',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Rubik',
+                                            color: const Color(0xFF325681),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
+                                    TextSpan(
+                                      text: '   Wajib Diisi',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 10.0,
+                                      ),
+                                    )
+                                  ],
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        color: const Color(0xFF325681),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               ),
                             ),
                             Align(
@@ -397,6 +440,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
+                                    labelText: 'Masukkan Nama Produk',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -464,17 +508,41 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                             ),
                             Align(
                               alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Text(
-                                'Harga Produk',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      color: const Color(0xFF325681),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
+                              child: RichText(
+                                textScaler: MediaQuery.of(context).textScaler,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'Harga Produk',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Rubik',
+                                            color: const Color(0xFF325681),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                     ),
+                                    TextSpan(
+                                      text: '  Wajib Diisi',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontSize: 10.0,
+                                      ),
+                                    )
+                                  ],
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        color: const Color(0xFF325681),
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               ),
                             ),
                             Align(
@@ -488,6 +556,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
+                                    labelText: 'Masukkan Harga',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -610,9 +679,12 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          FFAppState().selectcategory != null
-                                              ? FFAppState().selectcategory.name
-                                              : 'Pilih Kategori',
+                                          FFAppState().selectcategory.status ==
+                                                  false
+                                              ? 'Pilih Kategori'
+                                              : FFAppState()
+                                                  .selectcategory
+                                                  .name,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -635,57 +707,65 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Text(
-                                'Satuan produk',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      color: const Color(0xFF325681),
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
                             Container(
                               height: 100.0,
                               decoration: const BoxDecoration(),
-                              child: Row(
+                              child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
+                                  Align(
+                                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 20.0),
+                                      child: Text(
+                                        'Satuan produk',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Rubik',
+                                              color: const Color(0xFF325681),
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Align(
+                                          alignment:
+                                              const AlignmentDirectional(0.0, 0.0),
+                                          child: SizedBox(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
                                                 1.0,
-                                        child: TextFormField(
-                                          controller:
-                                              _model.nilaiSatuanTextController,
-                                          focusNode:
-                                              _model.nilaiSatuanFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Rubik',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                            child: TextFormField(
+                                              controller: _model
+                                                  .nilaiSatuanTextController,
+                                              focusNode:
+                                                  _model.nilaiSatuanFocusNode,
+                                              autofocus: false,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                labelText: 'Masukkan Satuan',
+                                                labelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .secondaryText,
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                hintStyle: FlutterFlowTheme.of(
+                                                        context)
                                                     .labelMedium
                                                     .override(
                                                       fontFamily: 'Readex Pro',
@@ -694,97 +774,106 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                                       letterSpacing: 0.0,
                                                       lineHeight: 2.5,
                                                     ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .error,
-                                                width: 1.0,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                filled: true,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Rubik',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              maxLines: null,
+                                              cursorColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              validator: _model
+                                                  .nilaiSatuanTextControllerValidator
+                                                  .asValidator(context),
                                             ),
-                                            filled: true,
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          maxLines: null,
-                                          cursorColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          validator: _model
-                                              .nilaiSatuanTextControllerValidator
-                                              .asValidator(context),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController ??=
+                                      FlutterFlowDropDown<String>(
+                                        controller: _model
+                                                .dropDownValueController ??=
                                             FormFieldController<String>(null),
-                                    options: const ['KG', 'ML', 'L'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue = val),
-                                    width: 111.0,
-                                    height: 40.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
+                                        options: const ['KG', 'ML', 'L'],
+                                        onChanged: (val) => safeSetState(
+                                            () => _model.dropDownValue = val),
+                                        width: 111.0,
+                                        height: 40.0,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Select...',
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_down_rounded,
                                           color: Colors.white,
-                                          letterSpacing: 0.0,
+                                          size: 24.0,
                                         ),
-                                    hintText: 'Select...',
-                                    icon: const Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: Colors.white,
-                                      size: 24.0,
-                                    ),
-                                    fillColor: const Color(0xFF0EC244),
-                                    elevation: 2.0,
-                                    borderColor: Colors.transparent,
-                                    borderWidth: 0.0,
-                                    borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 12.0, 0.0),
-                                    hidesUnderline: true,
-                                    isOverButton: false,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
+                                        fillColor: const Color(0xFF0EC244),
+                                        elevation: 2.0,
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 0.0,
+                                        borderRadius: 8.0,
+                                        margin: const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 12.0, 0.0),
+                                        hidesUnderline: true,
+                                        isOverButton: false,
+                                        isSearchable: false,
+                                        isMultiSelect: false,
+                                      ),
+                                    ].divide(const SizedBox(width: 10.0)),
                                   ),
-                                ].divide(const SizedBox(width: 10.0)),
+                                ],
                               ),
                             ),
                             Align(
@@ -813,6 +902,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
+                                    labelText: 'Masukkan Kode SKU (Wajib Unik)',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -904,6 +994,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
+                                    labelText:
+                                        'Masukkan Kode Barcode (Wajib Unik)',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -990,10 +1082,17 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   _model.hargaProdukTextController.text),
                               unit:
                                   '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
-                              imageUrl: ImageUrlStruct.maybeFromMap(
-                                      (_model.apiResultUploudImage1?.jsonBody ??
+                              imageUrl: _model.apiResultUploudImage1 != null
+                                  ? ImageUrlStruct.maybeFromMap((_model
+                                              .apiResultUploudImage1
+                                              ?.jsonBody ??
                                           ''))
-                                  ?.imageUrl,
+                                      ?.imageUrl
+                                  : ImageUrlStruct.maybeFromMap((_model
+                                              .apiResultUploudImage2
+                                              ?.jsonBody ??
+                                          ''))
+                                      ?.imageUrl,
                               category: FFAppState().selectcategory.name,
                               categoryId:
                                   FFAppState().selectcategory.id.toString(),
@@ -1065,27 +1164,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                             elevation: 0.0,
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.trash,
-                              color: FlutterFlowTheme.of(context).error,
-                              size: 20.0,
-                            ),
-                            Text(
-                              'Hapus Produk',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ].divide(const SizedBox(width: 10.0)),
                         ),
                       ].divide(const SizedBox(height: 15.0)),
                     ),

@@ -3,13 +3,7 @@ export '/splash_screen/splash_page/splash_page_widget.dart'
     show SplashPageWidget;
 export '/transaksi/transaction_page/transaction_page_widget.dart'
     show TransactionPageWidget;
-export '/produk/product_page/product_page_widget.dart' show ProductPageWidget;
 export '/akun/other_page/other_page_widget.dart' show OtherPageWidget;
-export '/produk/product_add_page/product_add_page_widget.dart'
-    show ProductAddPageWidget;
-export '/produk/product_edit_page/product_edit_page_widget.dart'
-    show ProductEditPageWidget;
-export '/home/pos/pos_widget.dart' show PosWidget;
 export '/transaksi/cart_page/cart_page_widget.dart' show CartPageWidget;
 export '/transaksi/payment_method_page/payment_method_page_widget.dart'
     show PaymentMethodPageWidget;
@@ -21,7 +15,6 @@ export '/qris/q_r_i_s_payment_page/q_r_i_s_payment_page_widget.dart'
     show QRISPaymentPageWidget;
 export '/transaksi/transaction_detail_page/transaction_detail_page_widget.dart'
     show TransactionDetailPageWidget;
-export '/auth/sigh_up_page/sigh_up_page_widget.dart' show SighUpPageWidget;
 export '/akun/langganan_page/langganan_page_widget.dart'
     show LanggananPageWidget;
 export '/produk/category_page/category_page_widget.dart'

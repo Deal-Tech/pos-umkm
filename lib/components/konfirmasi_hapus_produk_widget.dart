@@ -11,9 +11,11 @@ class KonfirmasiHapusProdukWidget extends StatefulWidget {
   const KonfirmasiHapusProdukWidget({
     super.key,
     required this.productid,
+    required this.imageurl,
   });
 
   final int? productid;
+  final String? imageurl;
 
   @override
   State<KonfirmasiHapusProdukWidget> createState() =>
@@ -125,6 +127,11 @@ class _KonfirmasiHapusProdukWidgetState
                       _model.apiResultw38 = await ApiDeleteProductCall.call(
                         token: currentAuthenticationToken,
                         productId: widget.productid?.toString(),
+                      );
+
+                      await ApiDeleteImageProductCall.call(
+                        token: currentAuthenticationToken,
+                        imageUrl: widget.imageurl,
                       );
 
                       if ((_model.apiResultw38?.succeeded ?? true)) {

@@ -350,7 +350,7 @@ class _HalamanPembayaranNonCashWidgetState
 
                       safeSetState(() {});
                     },
-                    text: 'Cek dan Simpan',
+                    text: 'Cek Pembayaran',
                     options: FFButtonOptions(
                       width: 327.0,
                       height: 60.0,

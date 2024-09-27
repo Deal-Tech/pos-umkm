@@ -1,5 +1,6 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/select_category_list_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -7,9 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'halaman_edit_produk_model.dart';
 export 'halaman_edit_produk_model.dart';
@@ -65,10 +64,11 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
         TextEditingController(text: widget.unit);
     _model.nilaiSatuanFocusNode ??= FocusNode();
 
-    _model.sKUProdukTextController ??= TextEditingController();
+    _model.sKUProdukTextController ??= TextEditingController(text: widget.sku);
     _model.sKUProdukFocusNode ??= FocusNode();
 
-    _model.barcodeTextController ??= TextEditingController();
+    _model.barcodeTextController ??=
+        TextEditingController(text: widget.barcode);
     _model.barcodeFocusNode ??= FocusNode();
   }
 
@@ -110,6 +110,9 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
+                                FFAppState().selectcategory =
+                                    CategoriesStruct();
+                                safeSetState(() {});
                                 context.safePop();
                               },
                               text: '',
@@ -387,7 +390,9 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.network(
-                                      widget.imageurl!,
+                                      widget.imageurl == 'null'
+                                          ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                          : widget.imageurl!,
                                       width: 152.0,
                                       height: 98.0,
                                       fit: BoxFit.cover,
@@ -780,8 +785,25 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                         _model.dropDownValueController ??=
                                             FormFieldController<String>(null),
                                     options: const ['KG', 'ML', 'L'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue = val),
+                                    onChanged: (val) async {
+                                      safeSetState(
+                                          () => _model.dropDownValue = val);
+                                      safeSetState(() {
+                                        _model.nilaiSatuanTextController
+                                            ?.clear();
+                                      });
+                                      safeSetState(() {
+                                        _model.nilaiSatuanTextController?.text =
+                                            _model.dropDownValue!;
+                                        _model.nilaiSatuanTextController
+                                                ?.selection =
+                                            TextSelection.collapsed(
+                                                offset: _model
+                                                    .nilaiSatuanTextController!
+                                                    .text
+                                                    .length);
+                                      });
+                                    },
                                     width: 111.0,
                                     height: 40.0,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -1008,10 +1030,10 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                           onPressed: () async {
                             _model.apiResultysp =
                                 await ApiProductUpdateCall.call(
-                              categoryId: FFAppState().selectcategory == null
+                              categoryId: FFAppState().selectcategory.id == 0
                                   ? widget.categoryid?.toString()
                                   : FFAppState().selectcategory.id.toString(),
-                              category: FFAppState().selectcategory == null
+                              category: FFAppState().selectcategory.id == 0
                                   ? widget.category
                                   : FFAppState().selectcategory.name,
                               token: currentAuthenticationToken,
@@ -1021,16 +1043,23 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                               unit: _model.dropDownValue == null ||
                                       _model.dropDownValue == ''
                                   ? widget.unit
-                                  : '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                                  : _model.nilaiSatuanTextController.text,
                               status: true,
                               productId: widget.productid,
                               sku: _model.sKUProdukTextController.text,
                               barcode: _model.barcodeTextController.text,
                               userId: currentUserUid,
-                              imageUrl: ImageUrlStruct.maybeFromMap(
-                                      (_model.apiResultUploudImage1?.jsonBody ??
+                              imageUrl: _model.apiResultUploudImage1 == null
+                                  ? ImageUrlStruct.maybeFromMap((_model
+                                              .apiResultUploudImage2
+                                              ?.jsonBody ??
                                           ''))
-                                  ?.imageUrl,
+                                      ?.imageUrl
+                                  : ImageUrlStruct.maybeFromMap((_model
+                                              .apiResultUploudImage1
+                                              ?.jsonBody ??
+                                          ''))
+                                      ?.imageUrl,
                             );
 
                             if ((_model.apiResultysp?.succeeded ?? true)) {
@@ -1051,8 +1080,10 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                   );
                                 },
                               );
+                              FFAppState().selectcategory = CategoriesStruct();
+                              safeSetState(() {});
 
-                              context.pushNamed('Home');
+                              context.pushNamed('List-produk');
                             } else {
                               await showDialog(
                                 context: context,
@@ -1075,7 +1106,7 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
 
                             safeSetState(() {});
                           },
-                          text: 'Tambahkan Produk',
+                          text: 'Update Produk',
                           options: FFButtonOptions(
                             width: 327.0,
                             height: 57.0,
@@ -1094,27 +1125,6 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                             elevation: 0.0,
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.trash,
-                              color: FlutterFlowTheme.of(context).error,
-                              size: 20.0,
-                            ),
-                            Text(
-                              'Hapus Produk',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ].divide(const SizedBox(width: 10.0)),
                         ),
                       ].divide(const SizedBox(height: 15.0)),
                     ),

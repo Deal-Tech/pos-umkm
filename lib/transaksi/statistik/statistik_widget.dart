@@ -1,6 +1,9 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,99 +142,146 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                       ],
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              15.0, 15.0, 15.0, 15.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Total Penjualan',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                              Text(
-                                'Rp1.500.000',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              15.0, 10.0, 15.0, 10.0),
-                          child: SizedBox(
-                            width: 370.0,
-                            height: 180.0,
-                            child: FlutterFlowLineChart(
-                              data: [
-                                FFLineChartData(
-                                  xData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 10)),
-                                  yData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 10)),
-                                  settings: LineChartBarData(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    barWidth: 1.0,
-                                    isCurved: true,
-                                    dotData: const FlDotData(show: false),
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      color: const Color(0x260EC244),
-                                    ),
-                                  ),
-                                )
-                              ],
-                              chartStylingInfo: const ChartStylingInfo(
-                                backgroundColor: Color(0x000EC244),
-                                showBorder: false,
-                              ),
-                              axisBounds: const AxisBounds(),
-                              xAxisLabelInfo: AxisLabelInfo(
-                                showLabels: true,
-                                labelTextStyle: GoogleFonts.getFont(
-                                  'Rubik',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 10.0,
+                    child: FutureBuilder<ApiCallResponse>(
+                      future: ApiTransaksiGroup.getTransactionsCall.call(
+                        token: currentAuthenticationToken,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
-                                labelInterval: 10.0,
-                                reservedSize: 32.0,
-                              ),
-                              yAxisLabelInfo: AxisLabelInfo(
-                                showLabels: true,
-                                labelTextStyle: GoogleFonts.getFont(
-                                  'Rubik',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 10.0,
-                                ),
-                                labelInterval: 10.0,
-                                reservedSize: 40.0,
                               ),
                             ),
-                          ),
-                        ),
-                      ],
+                          );
+                        }
+                        final columnGetTransactionsResponse = snapshot.data!;
+
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15.0, 15.0, 15.0, 15.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Total Penjualan',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                  Text(
+                                    'Rp1.500.000',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15.0, 10.0, 15.0, 10.0),
+                              child: SizedBox(
+                                width: 370.0,
+                                height: 180.0,
+                                child: FlutterFlowLineChart(
+                                  data: [
+                                    FFLineChartData(
+                                      xData: (columnGetTransactionsResponse
+                                                  .jsonBody
+                                                  .toList()
+                                                  .map<TransactionsDetailStruct?>(
+                                                      TransactionsDetailStruct
+                                                          .maybeFromMap)
+                                                  .toList()
+                                              as Iterable<
+                                                  TransactionsDetailStruct?>)
+                                          .withoutNulls
+                                          .map((e) => e.createdAt)
+                                          .toList(),
+                                      yData: (columnGetTransactionsResponse
+                                                  .jsonBody
+                                                  .toList()
+                                                  .map<TransactionsDetailStruct?>(
+                                                      TransactionsDetailStruct
+                                                          .maybeFromMap)
+                                                  .toList()
+                                              as Iterable<
+                                                  TransactionsDetailStruct?>)
+                                          .withoutNulls
+                                          .map((e) => formatNumber(
+                                                e.total,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.automatic,
+                                                currency: 'Rp ',
+                                              ))
+                                          .toList(),
+                                      settings: LineChartBarData(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        barWidth: 1.0,
+                                        isCurved: true,
+                                        dotData: const FlDotData(show: false),
+                                        belowBarData: BarAreaData(
+                                          show: true,
+                                          color: const Color(0x260EC244),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                  chartStylingInfo: const ChartStylingInfo(
+                                    backgroundColor: Color(0x000EC244),
+                                    showBorder: false,
+                                  ),
+                                  axisBounds: const AxisBounds(),
+                                  xAxisLabelInfo: AxisLabelInfo(
+                                    showLabels: true,
+                                    labelTextStyle: GoogleFonts.getFont(
+                                      'Rubik',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontSize: 10.0,
+                                    ),
+                                    labelInterval: 10.0,
+                                    reservedSize: 32.0,
+                                  ),
+                                  yAxisLabelInfo: AxisLabelInfo(
+                                    showLabels: true,
+                                    labelTextStyle: GoogleFonts.getFont(
+                                      'Rubik',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      fontSize: 10.0,
+                                    ),
+                                    labelInterval: 10.0,
+                                    reservedSize: 40.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),

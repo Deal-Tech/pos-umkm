@@ -94,66 +94,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const TransactionPageWidget(),
         ),
         FFRoute(
-          name: 'ProductPage',
-          path: '/productPage',
-          builder: (context, params) => const ProductPageWidget(),
-        ),
-        FFRoute(
           name: 'OtherPage',
           path: '/otherPage',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'OtherPage')
               : const OtherPageWidget(),
-        ),
-        FFRoute(
-          name: 'ProductAddPage',
-          path: '/productAddPage',
-          builder: (context, params) => ProductAddPageWidget(
-            userid: params.getParam(
-              'userid',
-              ParamType.String,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'ProductEditPage',
-          path: '/productEditPage',
-          builder: (context, params) => ProductEditPageWidget(
-            name: params.getParam(
-              'name',
-              ParamType.String,
-            ),
-            price: params.getParam(
-              'price',
-              ParamType.int,
-            ),
-            unit: params.getParam(
-              'unit',
-              ParamType.String,
-            ),
-            id: params.getParam(
-              'id',
-              ParamType.int,
-            ),
-            image: params.getParam(
-              'image',
-              ParamType.String,
-            ),
-            category: params.getParam(
-              'category',
-              ParamType.String,
-            ),
-            status: params.getParam(
-              'status',
-              ParamType.bool,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: 'POS',
-          path: '/pos',
-          builder: (context, params) =>
-              params.isEmpty ? const NavBarPage(initialPage: 'POS') : const PosWidget(),
         ),
         FFRoute(
           name: 'CartPage',
@@ -184,11 +129,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'TransactionDetailPage',
           path: '/transactionDetailPage',
           builder: (context, params) => const TransactionDetailPageWidget(),
-        ),
-        FFRoute(
-          name: 'SighUpPage',
-          path: '/sighUpPage',
-          builder: (context, params) => const SighUpPageWidget(),
         ),
         FFRoute(
           name: 'LanggananPage',
@@ -454,7 +394,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Statistik',
           path: '/statistik',
-          builder: (context, params) => const StatistikWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Statistik')
+              : const StatistikWidget(),
         ),
         FFRoute(
           name: 'Halaman_edit_produk',

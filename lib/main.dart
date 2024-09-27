@@ -115,7 +115,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Home': const HomeWidget(),
       'Halaman-riwayat-transaksi': const HalamanRiwayatTransaksiWidget(),
-      'POS': const PosWidget(),
+      'Statistik': const StatistikWidget(),
       'List-produk': const ListProdukWidget(),
       'OtherPage': const OtherPageWidget(),
     };
@@ -154,10 +154,10 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.calculate,
+              Icons.analytics_outlined,
               size: 24.0,
             ),
-            label: 'POS',
+            label: 'Data',
             tooltip: '',
           ),
           BottomNavigationBarItem(

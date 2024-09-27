@@ -76,13 +76,13 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Stack(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Stack(
+                  children: [
+                    Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -102,15 +102,41 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Daftar Produk',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Rubik',
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                      ),
+                                FutureBuilder<ApiCallResponse>(
+                                  future: ApiListProductFixedBugCall.call(
+                                    token: currentAuthenticationToken,
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final textApiListProductFixedBugResponse =
+                                        snapshot.data!;
+
+                                    return Text(
+                                      '${(textApiListProductFixedBugResponse.jsonBody.toList().map<ProductStruct?>(ProductStruct.maybeFromMap).toList() as Iterable<ProductStruct?>).withoutNulls.length.toString()} Produk',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Rubik',
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    );
+                                  },
                                 ),
                                 Container(
                                   width: 100.0,
@@ -148,7 +174,8 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                               child: FutureBuilder<ApiCallResponse>(
                                 future: (_model.apiRequestCompleter ??=
                                         Completer<ApiCallResponse>()
-                                          ..complete(ApiGetListProductCall.call(
+                                          ..complete(
+                                              ApiListProductFixedBugCall.call(
                                             token: currentAuthenticationToken,
                                           )))
                                     .future,
@@ -169,13 +196,13 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                       ),
                                     );
                                   }
-                                  final listViewApiGetListProductResponse =
+                                  final listViewApiListProductFixedBugResponse =
                                       snapshot.data!;
 
                                   return Builder(
                                     builder: (context) {
                                       final listProduct =
-                                          (listViewApiGetListProductResponse
+                                          (listViewApiListProductFixedBugResponse
                                                           .jsonBody
                                                           .toList()
                                                           .map<ProductStruct?>(
@@ -259,7 +286,11 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                                                 child: Image
                                                                     .network(
                                                                   listProductItem
-                                                                      .imageUrl,
+                                                                              .imageUrl ==
+                                                                          'null'
+                                                                      ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                                                      : listProductItem
+                                                                          .imageUrl,
                                                                   width: 80.0,
                                                                   height: 80.0,
                                                                   fit: BoxFit
@@ -490,6 +521,8 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                                                           KonfirmasiHapusProdukWidget(
                                                                         productid:
                                                                             listProductItem.id,
+                                                                        imageurl:
+                                                                            listProductItem.imageUrl,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -573,10 +606,10 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

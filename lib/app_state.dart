@@ -134,6 +134,24 @@ class FFAppState extends ChangeNotifier {
   void updateSelectcategoryStruct(Function(CategoriesStruct) updateFn) {
     updateFn(_selectcategory);
   }
+
+  String _filtercategory = '';
+  String get filtercategory => _filtercategory;
+  set filtercategory(String value) {
+    _filtercategory = value;
+  }
+
+  FiltertransactionsStruct _filtertransactionsdate = FiltertransactionsStruct();
+  FiltertransactionsStruct get filtertransactionsdate =>
+      _filtertransactionsdate;
+  set filtertransactionsdate(FiltertransactionsStruct value) {
+    _filtertransactionsdate = value;
+  }
+
+  void updateFiltertransactionsdateStruct(
+      Function(FiltertransactionsStruct) updateFn) {
+    updateFn(_filtertransactionsdate);
+  }
 }
 
 void _safeInit(Function() initializeField) {

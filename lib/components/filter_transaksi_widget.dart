@@ -28,12 +28,6 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FilterTransaksiModel());
-
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
   }
 
   @override
@@ -169,71 +163,80 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                     ),
                     SizedBox(
                       width: 120.0,
-                      child: SizedBox(
-                        width: 100.0,
-                        child: TextFormField(
-                          controller: _model.textController1,
-                          focusNode: _model.textFieldFocusNode1,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            hintText: 'Pilih tanggal',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  fontSize: 12.0,
-                                  letterSpacing: 0.0,
-                                ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1.0,
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          final datePicked1Date = await showDatePicker(
+                            context: context,
+                            initialDate: getCurrentTimestamp,
+                            firstDate: (DateTime.fromMicrosecondsSinceEpoch(
+                                    1727370000000000) ??
+                                DateTime(1900)),
+                            lastDate: (getCurrentTimestamp ?? DateTime(2050)),
+                            builder: (context, child) {
+                              return wrapInMaterialDatePickerTheme(
+                                context,
+                                child!,
+                                headerBackgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                headerForegroundColor:
+                                    FlutterFlowTheme.of(context).info,
+                                headerTextStyle: FlutterFlowTheme.of(context)
+                                    .headlineLarge
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 32.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                pickerBackgroundColor:
+                                    FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                pickerForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                selectedDateTimeBackgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                selectedDateTimeForegroundColor:
+                                    FlutterFlowTheme.of(context).info,
+                                actionButtonForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 24.0,
+                              );
+                            },
+                          );
+
+                          if (datePicked1Date != null) {
+                            safeSetState(() {
+                              _model.datePicked1 = DateTime(
+                                datePicked1Date.year,
+                                datePicked1Date.month,
+                                datePicked1Date.day,
+                              );
+                            });
+                          }
+                          FFAppState().updateFiltertransactionsdateStruct(
+                            (e) => e..datestart = _model.datePicked1,
+                          );
+                          safeSetState(() {});
+                        },
+                        text: dateTimeFormat("d/MMM/y", _model.datePicked1),
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0.0, 16.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 12.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.normal,
                               ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0x1A57636C),
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Rubik',
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                          keyboardType: TextInputType.datetime,
-                          cursorColor: FlutterFlowTheme.of(context).primaryText,
-                          validator: _model.textController1Validator
-                              .asValidator(context),
-                          inputFormatters: [_model.textFieldMask1],
+                          elevation: 0.0,
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),
@@ -253,71 +256,78 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                     ),
                     SizedBox(
                       width: 120.0,
-                      child: SizedBox(
-                        width: 100.0,
-                        child: TextFormField(
-                          controller: _model.textController2,
-                          focusNode: _model.textFieldFocusNode2,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            hintText: 'Pilih tanggal',
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  fontSize: 12.0,
-                                  letterSpacing: 0.0,
-                                ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1.0,
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          final datePicked2Date = await showDatePicker(
+                            context: context,
+                            initialDate: getCurrentTimestamp,
+                            firstDate: getCurrentTimestamp,
+                            lastDate: DateTime(2050),
+                            builder: (context, child) {
+                              return wrapInMaterialDatePickerTheme(
+                                context,
+                                child!,
+                                headerBackgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                headerForegroundColor:
+                                    FlutterFlowTheme.of(context).info,
+                                headerTextStyle: FlutterFlowTheme.of(context)
+                                    .headlineLarge
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 32.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                pickerBackgroundColor:
+                                    FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                pickerForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                selectedDateTimeBackgroundColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                selectedDateTimeForegroundColor:
+                                    FlutterFlowTheme.of(context).info,
+                                actionButtonForegroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                iconSize: 24.0,
+                              );
+                            },
+                          );
+
+                          if (datePicked2Date != null) {
+                            safeSetState(() {
+                              _model.datePicked2 = DateTime(
+                                datePicked2Date.year,
+                                datePicked2Date.month,
+                                datePicked2Date.day,
+                              );
+                            });
+                          }
+                          FFAppState().updateFiltertransactionsdateStruct(
+                            (e) => e..dateend = _model.datePicked2,
+                          );
+                          safeSetState(() {});
+                        },
+                        text: dateTimeFormat("d/MMM/y", _model.datePicked2),
+                        options: FFButtonOptions(
+                          height: 40.0,
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 0.0, 16.0, 0.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 12.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.normal,
                               ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0x1A57636C),
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Rubik',
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                          keyboardType: TextInputType.datetime,
-                          cursorColor: FlutterFlowTheme.of(context).primaryText,
-                          validator: _model.textController2Validator
-                              .asValidator(context),
-                          inputFormatters: [_model.textFieldMask2],
+                          elevation: 0.0,
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),
@@ -329,8 +339,8 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
             child: FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
+              onPressed: () async {
+                Navigator.pop(context);
               },
               text: 'Tetapkan',
               options: FFButtonOptions(
