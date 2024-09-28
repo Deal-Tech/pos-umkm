@@ -313,19 +313,148 @@ class DeleteTransactionCall {
 
 /// End Api Transaksi Group Code
 
+/// Start Expense Group Code
+
+class ExpenseGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static GetListCall getListCall = GetListCall();
+  static AddExpenseCall addExpenseCall = AddExpenseCall();
+}
+
+class GetListCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = ExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get List',
+      apiUrl: '$baseUrl/expenses',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddExpenseCall {
+  Future<ApiCallResponse> call({
+    String? tanggal = '',
+    String? waktu = '',
+    int? nominal,
+    int? categoryExpenseId,
+    String? catatan = '',
+    String? categoryName = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "tanggal": "$tanggal",
+  "waktu": "$waktu",
+  "nominal": $nominal,
+  "category_expense_id": $categoryExpenseId,
+  "category_name": "$categoryName",
+  "catatan": "$catatan"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add Expense',
+      apiUrl: '$baseUrl/expenses',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Expense Group Code
+
+/// Start Category Expense Group Code
+
+class CategoryExpenseGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static GetCategoryExpenseCall getCategoryExpenseCall =
+      GetCategoryExpenseCall();
+}
+
+class GetCategoryExpenseCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = CategoryExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Category Expense',
+      apiUrl: '$baseUrl/category-expenses',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Category Expense Group Code
+
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
     String? name = '',
     String? email = '',
     String? password = '',
     String? passwordConfirmation = '',
+    String? phone = '',
   }) async {
     final ffApiRequestBody = '''
 {
   "name": "$name",
   "email": "$email",
+  "phone": "$phone",
   "password": "$password",
-"password_confirmation": "$passwordConfirmation"
+  "password_confirmation": "$passwordConfirmation"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'api daftar',
@@ -348,6 +477,10 @@ class ApiDaftarCall {
       castToType<String>(getJsonField(
         response,
         r'''$.token''',
+      ));
+  static int? userid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.user.id''',
       ));
 }
 
@@ -386,6 +519,11 @@ class LoginApiCall {
   static int? userid(dynamic response) => castToType<int>(getJsonField(
         response,
         r'''$.user.id''',
+      ));
+  static String? expiredtoken(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.expires_at''',
       ));
 }
 

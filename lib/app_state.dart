@@ -152,6 +152,17 @@ class FFAppState extends ChangeNotifier {
       Function(FiltertransactionsStruct) updateFn) {
     updateFn(_filtertransactionsdate);
   }
+
+  CategoryExpenseStruct _selectcategoryexpense = CategoryExpenseStruct();
+  CategoryExpenseStruct get selectcategoryexpense => _selectcategoryexpense;
+  set selectcategoryexpense(CategoryExpenseStruct value) {
+    _selectcategoryexpense = value;
+  }
+
+  void updateSelectcategoryexpenseStruct(
+      Function(CategoryExpenseStruct) updateFn) {
+    updateFn(_selectcategoryexpense);
+  }
 }
 
 void _safeInit(Function() initializeField) {

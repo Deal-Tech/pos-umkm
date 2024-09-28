@@ -206,6 +206,43 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      context.pushNamed('Transaksi-keluar');
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.outbox_sharp,
+                                          color: Colors.white,
+                                          size: 24.0,
+                                        ),
+                                        Text(
+                                          'Transaksi keluar',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Rubik',
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ].divide(const SizedBox(width: 20.0)),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 20.0, 20.0, 10.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
                                       context.pushNamed('List-produk');
                                     },
                                     child: Row(

@@ -6,48 +6,85 @@ import 'package:flutter/material.dart';
 class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode5;
-  TextEditingController? textController5;
-  String? Function(BuildContext, String?)? textController5Validator;
+  // State field(s) for nama_usaha widget.
+  FocusNode? namaUsahaFocusNode;
+  TextEditingController? namaUsahaTextController;
+  String? Function(BuildContext, String?)? namaUsahaTextControllerValidator;
+  // State field(s) for pemilik_usaha widget.
+  FocusNode? pemilikUsahaFocusNode;
+  TextEditingController? pemilikUsahaTextController;
+  String? Function(BuildContext, String?)? pemilikUsahaTextControllerValidator;
+  // State field(s) for alamat_usaha widget.
+  FocusNode? alamatUsahaFocusNode;
+  TextEditingController? alamatUsahaTextController;
+  String? Function(BuildContext, String?)? alamatUsahaTextControllerValidator;
+  // State field(s) for nomor_telepon widget.
+  FocusNode? nomorTeleponFocusNode;
+  TextEditingController? nomorTeleponTextController;
+  String? Function(BuildContext, String?)? nomorTeleponTextControllerValidator;
+  // State field(s) for kategori_usaha widget.
+  String? kategoriUsahaValue;
+  FormFieldController<String>? kategoriUsahaValueController;
+  // State field(s) for penjelasan_usaha widget.
+  FocusNode? penjelasanUsahaFocusNode;
+  TextEditingController? penjelasanUsahaTextController;
+  String? Function(BuildContext, String?)?
+      penjelasanUsahaTextControllerValidator;
+  // State field(s) for jenis_dokumen widget.
+  String? jenisDokumenValue;
+  FormFieldController<String>? jenisDokumenValueController;
+  // State field(s) for nomor_identitas widget.
+  FocusNode? nomorIdentitasFocusNode;
+  TextEditingController? nomorIdentitasTextController;
+  String? Function(BuildContext, String?)?
+      nomorIdentitasTextControllerValidator;
+  // State field(s) for nama_lengkap widget.
+  FocusNode? namaLengkapFocusNode;
+  TextEditingController? namaLengkapTextController;
+  String? Function(BuildContext, String?)? namaLengkapTextControllerValidator;
+  // State field(s) for rekening_bank widget.
+  String? rekeningBankValue;
+  FormFieldController<String>? rekeningBankValueController;
+  // State field(s) for nomor_rekening widget.
+  FocusNode? nomorRekeningFocusNode;
+  TextEditingController? nomorRekeningTextController;
+  String? Function(BuildContext, String?)? nomorRekeningTextControllerValidator;
+  // State field(s) for pemilik_rekening widget.
+  FocusNode? pemilikRekeningFocusNode;
+  TextEditingController? pemilikRekeningTextController;
+  String? Function(BuildContext, String?)?
+      pemilikRekeningTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    namaUsahaFocusNode?.dispose();
+    namaUsahaTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    pemilikUsahaFocusNode?.dispose();
+    pemilikUsahaTextController?.dispose();
 
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
+    alamatUsahaFocusNode?.dispose();
+    alamatUsahaTextController?.dispose();
 
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
+    nomorTeleponFocusNode?.dispose();
+    nomorTeleponTextController?.dispose();
 
-    textFieldFocusNode5?.dispose();
-    textController5?.dispose();
+    penjelasanUsahaFocusNode?.dispose();
+    penjelasanUsahaTextController?.dispose();
+
+    nomorIdentitasFocusNode?.dispose();
+    nomorIdentitasTextController?.dispose();
+
+    namaLengkapFocusNode?.dispose();
+    namaLengkapTextController?.dispose();
+
+    nomorRekeningFocusNode?.dispose();
+    nomorRekeningTextController?.dispose();
+
+    pemilikRekeningFocusNode?.dispose();
+    pemilikRekeningTextController?.dispose();
   }
 }

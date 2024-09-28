@@ -342,55 +342,36 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                           child: SizedBox(
                             width: 370.0,
                             height: 180.0,
-                            child: FlutterFlowLineChart(
-                              data: [
-                                FFLineChartData(
-                                  xData: List.generate(
-                                      random_data.randomInteger(5, 5),
-                                      (index) =>
-                                          random_data.randomInteger(0, 10)),
+                            child: FlutterFlowBarChart(
+                              barData: [
+                                FFBarChartData(
                                   yData: List.generate(
                                       random_data.randomInteger(5, 5),
                                       (index) =>
                                           random_data.randomInteger(0, 10)),
-                                  settings: LineChartBarData(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    barWidth: 1.0,
-                                    isCurved: true,
-                                    dotData: const FlDotData(show: false),
-                                    belowBarData: BarAreaData(
-                                      show: true,
-                                      color: const Color(0x25FF5963),
-                                    ),
-                                  ),
+                                  color: FlutterFlowTheme.of(context).error,
                                 )
                               ],
+                              xLabels: List.generate(
+                                      random_data.randomInteger(5, 5),
+                                      (index) =>
+                                          random_data.randomInteger(0, 10))
+                                  .map((e) => e.toString())
+                                  .toList(),
+                              barWidth: 16.0,
+                              barBorderRadius: BorderRadius.circular(8.0),
+                              groupSpace: 8.0,
+                              alignment: BarChartAlignment.spaceAround,
                               chartStylingInfo: const ChartStylingInfo(
                                 backgroundColor: Color(0x000EC244),
                                 showBorder: false,
                               ),
                               axisBounds: const AxisBounds(),
-                              xAxisLabelInfo: AxisLabelInfo(
-                                showLabels: true,
-                                labelTextStyle: GoogleFonts.getFont(
-                                  'Rubik',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 10.0,
-                                ),
-                                labelInterval: 10.0,
-                                reservedSize: 32.0,
+                              xAxisLabelInfo: const AxisLabelInfo(
+                                reservedSize: 28.0,
                               ),
-                              yAxisLabelInfo: AxisLabelInfo(
-                                showLabels: true,
-                                labelTextStyle: GoogleFonts.getFont(
-                                  'Rubik',
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  fontSize: 10.0,
-                                ),
-                                labelInterval: 10.0,
-                                reservedSize: 40.0,
+                              yAxisLabelInfo: const AxisLabelInfo(
+                                reservedSize: 42.0,
                               ),
                             ),
                           ),

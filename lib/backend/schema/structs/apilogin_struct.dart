@@ -8,7 +8,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 class ApiloginStruct extends BaseStruct {
   ApiloginStruct({
     String? apilogin,
-  }) : _apilogin = apilogin;
+    DateTime? expiredtoken,
+  })  : _apilogin = apilogin,
+        _expiredtoken = expiredtoken;
 
   // "apilogin" field.
   String? _apilogin;
@@ -17,8 +19,16 @@ class ApiloginStruct extends BaseStruct {
 
   bool hasApilogin() => _apilogin != null;
 
+  // "expiredtoken" field.
+  DateTime? _expiredtoken;
+  DateTime? get expiredtoken => _expiredtoken;
+  set expiredtoken(DateTime? val) => _expiredtoken = val;
+
+  bool hasExpiredtoken() => _expiredtoken != null;
+
   static ApiloginStruct fromMap(Map<String, dynamic> data) => ApiloginStruct(
         apilogin: data['apilogin'] as String?,
+        expiredtoken: data['expiredtoken'] as DateTime?,
       );
 
   static ApiloginStruct? maybeFromMap(dynamic data) =>
@@ -26,6 +36,7 @@ class ApiloginStruct extends BaseStruct {
 
   Map<String, dynamic> toMap() => {
         'apilogin': _apilogin,
+        'expiredtoken': _expiredtoken,
       }.withoutNulls;
 
   @override
@@ -33,6 +44,10 @@ class ApiloginStruct extends BaseStruct {
         'apilogin': serializeParam(
           _apilogin,
           ParamType.String,
+        ),
+        'expiredtoken': serializeParam(
+          _expiredtoken,
+          ParamType.DateTime,
         ),
       }.withoutNulls;
 
@@ -43,6 +58,11 @@ class ApiloginStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        expiredtoken: deserializeParam(
+          data['expiredtoken'],
+          ParamType.DateTime,
+          false,
+        ),
       );
 
   @override
@@ -50,16 +70,20 @@ class ApiloginStruct extends BaseStruct {
 
   @override
   bool operator ==(Object other) {
-    return other is ApiloginStruct && apilogin == other.apilogin;
+    return other is ApiloginStruct &&
+        apilogin == other.apilogin &&
+        expiredtoken == other.expiredtoken;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([apilogin]);
+  int get hashCode => const ListEquality().hash([apilogin, expiredtoken]);
 }
 
 ApiloginStruct createApiloginStruct({
   String? apilogin,
+  DateTime? expiredtoken,
 }) =>
     ApiloginStruct(
       apilogin: apilogin,
+      expiredtoken: expiredtoken,
     );

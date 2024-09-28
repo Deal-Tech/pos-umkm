@@ -130,7 +130,7 @@ class _HalamanRiwayatTransaksiWidgetState
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -158,25 +158,66 @@ class _HalamanRiwayatTransaksiWidgetState
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: SvgPicture.asset(
-                              'assets/images/Filter.svg',
-                              width: 25.0,
-                              height: 25.0,
-                              fit: BoxFit.cover,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: SvgPicture.asset(
+                                    'assets/images/Filter.svg',
+                                    width: 25.0,
+                                    height: 25.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Text(
+                                  'Filter Tanggal',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ].divide(const SizedBox(width: 5.0)),
                             ),
                           ),
-                          Text(
-                            'Filter brdasarkan tanggal',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'Reset',
+                              options: FFButtonOptions(
+                                height: 40.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
                           ),
                         ].divide(const SizedBox(width: 10.0)),
                       ),

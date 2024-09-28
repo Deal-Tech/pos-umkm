@@ -98,3 +98,9 @@ export '/transaksi/statistik/statistik_widget.dart' show StatistikWidget;
 export '/produk/halaman_edit_produk/halaman_edit_produk_widget.dart'
     show HalamanEditProdukWidget;
 export '/produk/list_produk/list_produk_widget.dart' show ListProdukWidget;
+export '/akun/informasi_bisnis/informasi_bisnis_widget.dart'
+    show InformasiBisnisWidget;
+export '/transaksi/transaksi_keluar/transaksi_keluar_widget.dart'
+    show TransaksiKeluarWidget;
+export '/transaksi/expens_detail/expens_detail_widget.dart'
+    show ExpensDetailWidget;

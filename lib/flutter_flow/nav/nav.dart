@@ -446,6 +446,38 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'List-produk')
               : const ListProdukWidget(),
+        ),
+        FFRoute(
+          name: 'Informasi_bisnis',
+          path: '/informasiBisnis',
+          builder: (context, params) => const InformasiBisnisWidget(),
+        ),
+        FFRoute(
+          name: 'Transaksi-keluar',
+          path: '/transaksiKeluar',
+          builder: (context, params) => const TransaksiKeluarWidget(),
+        ),
+        FFRoute(
+          name: 'Expens_detail',
+          path: '/expensDetail',
+          builder: (context, params) => ExpensDetailWidget(
+            paymentmethod: params.getParam(
+              'paymentmethod',
+              ParamType.String,
+            ),
+            total: params.getParam(
+              'total',
+              ParamType.int,
+            ),
+            transactionsid: params.getParam(
+              'transactionsid',
+              ParamType.int,
+            ),
+            datetransactions: params.getParam(
+              'datetransactions',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

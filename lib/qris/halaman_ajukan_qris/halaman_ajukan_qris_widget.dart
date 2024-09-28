@@ -25,20 +25,32 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
     super.initState();
     _model = createModel(context, () => HalamanAjukanQrisModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.namaUsahaTextController ??= TextEditingController();
+    _model.namaUsahaFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.pemilikUsahaTextController ??= TextEditingController();
+    _model.pemilikUsahaFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.alamatUsahaTextController ??= TextEditingController();
+    _model.alamatUsahaFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
+    _model.nomorTeleponTextController ??= TextEditingController();
+    _model.nomorTeleponFocusNode ??= FocusNode();
 
-    _model.textController5 ??= TextEditingController();
-    _model.textFieldFocusNode5 ??= FocusNode();
+    _model.penjelasanUsahaTextController ??= TextEditingController();
+    _model.penjelasanUsahaFocusNode ??= FocusNode();
+
+    _model.nomorIdentitasTextController ??= TextEditingController();
+    _model.nomorIdentitasFocusNode ??= FocusNode();
+
+    _model.namaLengkapTextController ??= TextEditingController();
+    _model.namaLengkapFocusNode ??= FocusNode();
+
+    _model.nomorRekeningTextController ??= TextEditingController();
+    _model.nomorRekeningFocusNode ??= FocusNode();
+
+    _model.pemilikRekeningTextController ??= TextEditingController();
+    _model.pemilikRekeningFocusNode ??= FocusNode();
   }
 
   @override
@@ -183,8 +195,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
-                                  controller: _model.textController1,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: _model.namaUsahaTextController,
+                                  focusNode: _model.namaUsahaFocusNode,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -248,7 +260,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   maxLines: null,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController1Validator
+                                  validator: _model
+                                      .namaUsahaTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -273,8 +286,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
-                                  controller: _model.textController2,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: _model.pemilikUsahaTextController,
+                                  focusNode: _model.pemilikUsahaFocusNode,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -338,7 +351,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   maxLines: null,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController2Validator
+                                  validator: _model
+                                      .pemilikUsahaTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -363,8 +377,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
-                                  controller: _model.textController3,
-                                  focusNode: _model.textFieldFocusNode3,
+                                  controller: _model.alamatUsahaTextController,
+                                  focusNode: _model.alamatUsahaFocusNode,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -428,7 +442,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   maxLines: null,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController3Validator
+                                  validator: _model
+                                      .alamatUsahaTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -453,8 +468,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
-                                  controller: _model.textController4,
-                                  focusNode: _model.textFieldFocusNode4,
+                                  controller: _model.nomorTeleponTextController,
+                                  focusNode: _model.nomorTeleponFocusNode,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -518,7 +533,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   maxLines: null,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController4Validator
+                                  validator: _model
+                                      .nomorTeleponTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -539,11 +555,12 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               ),
                             ),
                             FlutterFlowDropDown<String>(
-                              controller: _model.dropDownValueController ??=
-                                  FormFieldController<String>(null),
+                              controller:
+                                  _model.kategoriUsahaValueController ??=
+                                      FormFieldController<String>(null),
                               options: const ['Option 1', 'Option 2', 'Option 3'],
                               onChanged: (val) => safeSetState(
-                                  () => _model.dropDownValue = val),
+                                  () => _model.kategoriUsahaValue = val),
                               width: MediaQuery.sizeOf(context).width * 0.9,
                               height: 60.0,
                               textStyle: FlutterFlowTheme.of(context)
@@ -593,8 +610,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                               child: SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.9,
                                 child: TextFormField(
-                                  controller: _model.textController5,
-                                  focusNode: _model.textFieldFocusNode5,
+                                  controller:
+                                      _model.penjelasanUsahaTextController,
+                                  focusNode: _model.penjelasanUsahaFocusNode,
                                   autofocus: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -658,7 +676,512 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   maxLines: null,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
-                                  validator: _model.textController5Validator
+                                  validator: _model
+                                      .penjelasanUsahaTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              thickness: 2.0,
+                              color: FlutterFlowTheme.of(context).alternate,
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Dokumen Identitas',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            FlutterFlowDropDown<String>(
+                              controller: _model.jenisDokumenValueController ??=
+                                  FormFieldController<String>(null),
+                              options: const ['KTP', 'SIM', 'PASPOR'],
+                              onChanged: (val) => safeSetState(
+                                  () => _model.jenisDokumenValue = val),
+                              width: MediaQuery.sizeOf(context).width * 0.9,
+                              height: 60.0,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Rubik',
+                                    color: const Color(0xFF325681),
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              hintText: 'Pilih jenis dokumen',
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                              fillColor: const Color(0xFFE6E8ED),
+                              elevation: 2.0,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0.0,
+                              borderRadius: 8.0,
+                              margin: const EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 12.0, 0.0),
+                              hidesUnderline: true,
+                              isOverButton: false,
+                              isSearchable: false,
+                              isMultiSelect: false,
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Nomor Identitas',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.9,
+                                child: TextFormField(
+                                  controller:
+                                      _model.nomorIdentitasTextController,
+                                  focusNode: _model.nomorIdentitasFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0x752A3357),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 2.5,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .nomorIdentitasTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Nama Lengkap',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.9,
+                                child: TextFormField(
+                                  controller: _model.namaLengkapTextController,
+                                  focusNode: _model.namaLengkapFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0x752A3357),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 2.5,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .namaLengkapTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/Group_982.png',
+                                width: 152.0,
+                                height: 98.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text(
+                              'Unggah foto identitas anda',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Rubik',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    fontSize: 10.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                            Divider(
+                              thickness: 2.0,
+                              color: FlutterFlowTheme.of(context).alternate,
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Rekening Pencairan',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            FlutterFlowDropDown<String>(
+                              controller: _model.rekeningBankValueController ??=
+                                  FormFieldController<String>(null),
+                              options: const [
+                                'BRI',
+                                'BCA',
+                                'BNI',
+                                'CIMB NIAGA',
+                                'SEABANK',
+                                'Bank BTPN'
+                              ],
+                              onChanged: (val) => safeSetState(
+                                  () => _model.rekeningBankValue = val),
+                              width: MediaQuery.sizeOf(context).width * 0.9,
+                              height: 60.0,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Rubik',
+                                    color: const Color(0xFF325681),
+                                    fontSize: 16.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                              hintText: 'Pilih Bank',
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                              fillColor: const Color(0xFFE6E8ED),
+                              elevation: 2.0,
+                              borderColor: Colors.transparent,
+                              borderWidth: 0.0,
+                              borderRadius: 8.0,
+                              margin: const EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 12.0, 0.0),
+                              hidesUnderline: true,
+                              isOverButton: false,
+                              isSearchable: false,
+                              isMultiSelect: false,
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Nomor Rekening',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.9,
+                                child: TextFormField(
+                                  controller:
+                                      _model.nomorRekeningTextController,
+                                  focusNode: _model.nomorRekeningFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0x752A3357),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 2.5,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .nomorRekeningTextControllerValidator
+                                      .asValidator(context),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Text(
+                                'Pemilik Rekening',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      color: const Color(0xFF325681),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.9,
+                                child: TextFormField(
+                                  controller:
+                                      _model.pemilikRekeningTextController,
+                                  focusNode: _model.pemilikRekeningFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0x752A3357),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 2.5,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .pemilikRekeningTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),

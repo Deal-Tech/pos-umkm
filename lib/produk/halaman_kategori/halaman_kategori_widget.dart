@@ -98,7 +98,7 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 20.0, 0.0),
+                                    0.0, 0.0, 30.0, 0.0),
                                 child: Text(
                                   'Kategori',
                                   style: FlutterFlowTheme.of(context)
@@ -129,13 +129,10 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                         ),
                       ),
                       Container(
-                        height: MediaQuery.sizeOf(context).height * 0.07,
+                        height: MediaQuery.sizeOf(context).height * 0.06,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          border: Border.all(
-                            color: const Color(0x1E3E3E3E),
-                          ),
                         ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
