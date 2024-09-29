@@ -1,22 +1,7 @@
 // Export pages
 export '/splash_screen/splash_page/splash_page_widget.dart'
     show SplashPageWidget;
-export '/transaksi/transaction_page/transaction_page_widget.dart'
-    show TransactionPageWidget;
 export '/akun/other_page/other_page_widget.dart' show OtherPageWidget;
-export '/transaksi/cart_page/cart_page_widget.dart' show CartPageWidget;
-export '/transaksi/payment_method_page/payment_method_page_widget.dart'
-    show PaymentMethodPageWidget;
-export '/transaksi/cash_payment_page/cash_payment_page_widget.dart'
-    show CashPaymentPageWidget;
-export '/transaksi/succes_checkout_page/succes_checkout_page_widget.dart'
-    show SuccesCheckoutPageWidget;
-export '/transaksi/transaction_detail_page/transaction_detail_page_widget.dart'
-    show TransactionDetailPageWidget;
-export '/akun/langganan_page/langganan_page_widget.dart'
-    show LanggananPageWidget;
-export '/produk/category_page/category_page_widget.dart'
-    show CategoryPageWidget;
 export '/splash_screen/halaman_depan/halaman_depan_widget.dart'
     show HalamanDepanWidget;
 export '/auth/halaman_login_1/halaman_login1_widget.dart'

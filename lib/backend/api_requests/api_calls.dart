@@ -456,6 +456,7 @@ class QrisGroup {
     'Authorization': 'Bearer [token]',
   };
   static AddQrisCall addQrisCall = AddQrisCall();
+  static UpdateQrisCall updateQrisCall = UpdateQrisCall();
   static GetQrisCall getQrisCall = GetQrisCall();
 }
 
@@ -520,6 +521,68 @@ class AddQrisCall {
   }
 }
 
+class UpdateQrisCall {
+  Future<ApiCallResponse> call({
+    String? fotoKtp = '',
+    String? fotoUsaha = '',
+    String? namaUsaha = '',
+    String? namaPemilik = '',
+    String? alamatUsaha = '',
+    String? nomorTelepon = '',
+    String? kategoriUsaha = '',
+    String? deskripsiUsaha = '',
+    String? rekeningPencairan = '',
+    String? nomorRekening = '',
+    String? pemilikRekening = '',
+    String? linkQris = 'null',
+    bool? status,
+    String? jenisDokumen = '',
+    String? nomorIdentitas = '',
+    String? qrisId = '',
+    String? token = '',
+  }) async {
+    final baseUrl = QrisGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "foto_ktp": "$fotoKtp",
+  "foto_usaha": "$fotoUsaha",
+  "nama_usaha": "$namaUsaha",
+  "nama_pemilik": "$namaPemilik",
+  "alamat_usaha": "$alamatUsaha",
+  "nomor_telepon": "$nomorTelepon",
+  "kategori_usaha": "$kategoriUsaha",
+  "deskripsi_usaha": "$deskripsiUsaha",
+"jenis_dokumen": "$jenisDokumen",
+"nomor_identitas": "$nomorIdentitas",
+  "rekening_pencairan": "$rekeningPencairan",
+  "nomor_rekening": "$nomorRekening",
+  "pemilik_rekening": "$pemilikRekening",
+  "link_qris": "$linkQris",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Qris ',
+      apiUrl: '$baseUrl/qris/$qrisId',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class GetQrisCall {
   Future<ApiCallResponse> call({
     String? token = '',
@@ -564,6 +627,50 @@ class GetQrisCall {
   String? atasnama(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$[:].pemilik_rekening''',
+      ));
+  String? fotoktp(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].foto_ktp''',
+      ));
+  String? fotousaha(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].foto_usaha''',
+      ));
+  String? namausaha(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nama_usaha''',
+      ));
+  String? namapemilik(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nama_pemilik''',
+      ));
+  String? alamatusaha(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].alamat_usaha''',
+      ));
+  String? nomortelephon(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nomor_telepon''',
+      ));
+  String? kategoriusaha(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].kategori_usaha''',
+      ));
+  String? deskripsiusaha(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].deskripsi_usaha''',
+      ));
+  String? jenisdokumen(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].jenis_dokumen''',
+      ));
+  String? nomoridentitas(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nomor_identitas''',
+      ));
+  int? qirsid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].id''',
       ));
 }
 
@@ -1339,6 +1446,37 @@ class SupportsCall {
         response,
         r'''$[:].contact''',
       ));
+}
+
+class ApiUpdateUserCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? email = '',
+    String? phone = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "phone": "$phone",
+  "email": "$phone"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Update User',
+      apiUrl: 'https://thetester.me/api/user/update',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 class ApiPagingParams {

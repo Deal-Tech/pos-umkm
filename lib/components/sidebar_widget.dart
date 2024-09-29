@@ -475,7 +475,69 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed(
-                                          'Halaman-detail-profil',
+                                          'Informasi_bisnis',
+                                          queryParameters: {
+                                            'namapemilik': serializeParam(
+                                              ApiGetUserCall.nama(
+                                                columnApiGetUserResponse
+                                                    .jsonBody,
+                                              ),
+                                              ParamType.String,
+                                            ),
+                                            'email': serializeParam(
+                                              ApiGetUserCall.email(
+                                                columnApiGetUserResponse
+                                                    .jsonBody,
+                                              ),
+                                              ParamType.String,
+                                            ),
+                                            'phone': serializeParam(
+                                              ApiGetUserCall.phone(
+                                                columnApiGetUserResponse
+                                                    .jsonBody,
+                                              ),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.business_center_outlined,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                          Text(
+                                            'Informasi Bisnis',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(width: 20.0)),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          'Halaman-akun',
                                           queryParameters: {
                                             'email': serializeParam(
                                               ApiGetUserCall.email(
@@ -543,6 +605,51 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                           ),
                                           Text(
                                             'Bantuan',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(width: 20.0)),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        FFAppState().apilogin = '';
+                                        safeSetState(() {});
+                                        GoRouter.of(context).prepareAuthEvent();
+                                        await authManager.signOut();
+                                        GoRouter.of(context)
+                                            .clearRedirectLocation();
+
+                                        context.pushNamedAuth(
+                                            'Halaman_login_2', context.mounted);
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.login_outlined,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                          Text(
+                                            'Keluar',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

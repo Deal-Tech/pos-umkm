@@ -75,13 +75,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const HalamanLogin2Widget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const HalamanLogin2Widget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
         ),
         FFRoute(
           name: 'SplashPage',
@@ -89,49 +89,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const SplashPageWidget(),
         ),
         FFRoute(
-          name: 'TransactionPage',
-          path: '/transactionPage',
-          builder: (context, params) => const TransactionPageWidget(),
-        ),
-        FFRoute(
           name: 'OtherPage',
           path: '/otherPage',
           builder: (context, params) => const OtherPageWidget(),
-        ),
-        FFRoute(
-          name: 'CartPage',
-          path: '/cartPage',
-          builder: (context, params) => const CartPageWidget(),
-        ),
-        FFRoute(
-          name: 'PaymentMethodPage',
-          path: '/paymentMethodPage',
-          builder: (context, params) => const PaymentMethodPageWidget(),
-        ),
-        FFRoute(
-          name: 'CashPaymentPage',
-          path: '/cashPaymentPage',
-          builder: (context, params) => const CashPaymentPageWidget(),
-        ),
-        FFRoute(
-          name: 'SuccesCheckoutPage',
-          path: '/succesCheckoutPage',
-          builder: (context, params) => const SuccesCheckoutPageWidget(),
-        ),
-        FFRoute(
-          name: 'TransactionDetailPage',
-          path: '/transactionDetailPage',
-          builder: (context, params) => const TransactionDetailPageWidget(),
-        ),
-        FFRoute(
-          name: 'LanggananPage',
-          path: '/langgananPage',
-          builder: (context, params) => const LanggananPageWidget(),
-        ),
-        FFRoute(
-          name: 'CategoryPage',
-          path: '/categoryPage',
-          builder: (context, params) => const CategoryPageWidget(),
         ),
         FFRoute(
           name: 'Halaman_depan',
@@ -279,7 +239,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-akun',
           path: '/halamanAkun',
-          builder: (context, params) => const HalamanAkunWidget(),
+          builder: (context, params) => HalamanAkunWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Halaman-detail-profil',
@@ -454,7 +423,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Informasi_bisnis',
           path: '/informasiBisnis',
-          builder: (context, params) => const InformasiBisnisWidget(),
+          builder: (context, params) => InformasiBisnisWidget(
+            namapemilik: params.getParam(
+              'namapemilik',
+              ParamType.String,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Transaksi-keluar',
@@ -490,22 +472,54 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'edit_pemilik',
           path: '/editPemilik',
-          builder: (context, params) => const EditPemilikWidget(),
+          builder: (context, params) => EditPemilikWidget(
+            pemilik: params.getParam(
+              'pemilik',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'edit_nomor',
           path: '/editNomor',
-          builder: (context, params) => const EditNomorWidget(),
+          builder: (context, params) => EditNomorWidget(
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'edit_alamat',
           path: '/editAlamat',
-          builder: (context, params) => const EditAlamatWidget(),
+          builder: (context, params) => EditAlamatWidget(
+            alamat: params.getParam(
+              'alamat',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'edit_rekening',
           path: '/editRekening',
-          builder: (context, params) => const EditRekeningWidget(),
+          builder: (context, params) => EditRekeningWidget(
+            bank: params.getParam(
+              'bank',
+              ParamType.String,
+            ),
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+            nama: params.getParam(
+              'nama',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'expense_history',
@@ -681,7 +695,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/halamanLogin2';
+            return '/halamanDepan';
           }
           return null;
         },

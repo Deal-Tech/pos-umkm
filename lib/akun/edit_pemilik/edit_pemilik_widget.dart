@@ -6,7 +6,12 @@ import 'edit_pemilik_model.dart';
 export 'edit_pemilik_model.dart';
 
 class EditPemilikWidget extends StatefulWidget {
-  const EditPemilikWidget({super.key});
+  const EditPemilikWidget({
+    super.key,
+    required this.pemilik,
+  });
+
+  final String? pemilik;
 
   @override
   State<EditPemilikWidget> createState() => _EditPemilikWidgetState();
@@ -229,26 +234,30 @@ class _EditPemilikWidgetState extends State<EditPemilikWidget> {
               ),
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Simpan Perubahan',
-                  options: FFButtonOptions(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 50.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Rubik',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 0.0,
-                    borderRadius: BorderRadius.circular(8.0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  child: FFButtonWidget(
+                    onPressed: () {
+                      print('Button pressed ...');
+                    },
+                    text: 'Simpan Perubahan',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      height: 50.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Rubik',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                 ),
               ),

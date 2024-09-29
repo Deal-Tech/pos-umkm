@@ -1,14 +1,26 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'edit_rekening_model.dart';
 export 'edit_rekening_model.dart';
 
 class EditRekeningWidget extends StatefulWidget {
-  const EditRekeningWidget({super.key});
+  const EditRekeningWidget({
+    super.key,
+    required this.bank,
+    required this.nomor,
+    required this.nama,
+  });
+
+  final String? bank;
+  final String? nomor;
+  final String? nama;
 
   @override
   State<EditRekeningWidget> createState() => _EditRekeningWidgetState();
@@ -24,10 +36,21 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
     super.initState();
     _model = createModel(context, () => EditRekeningModel());
 
-    _model.nomorRekeningTextController ??= TextEditingController();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultgetqr = await QrisGroup.getQrisCall.call(
+        token: currentAuthenticationToken,
+      );
+
+      context.safePop();
+    });
+
+    _model.nomorRekeningTextController ??=
+        TextEditingController(text: widget.nomor);
     _model.nomorRekeningFocusNode ??= FocusNode();
 
-    _model.namaPemegangTextController ??= TextEditingController();
+    _model.namaPemegangTextController ??=
+        TextEditingController(text: widget.nama);
     _model.namaPemegangFocusNode ??= FocusNode();
   }
 
@@ -143,7 +166,9 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                                     child: FlutterFlowDropDown<String>(
                                       controller:
                                           _model.namaBankValueController ??=
-                                              FormFieldController<String>(null),
+                                              FormFieldController<String>(
+                                        _model.namaBankValue ??= widget.bank,
+                                      ),
                                       options: const [
                                         'BRI',
                                         'BNI',
@@ -165,7 +190,6 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                                                 .secondaryText,
                                             letterSpacing: 0.0,
                                           ),
-                                      hintText: 'Select...',
                                       icon: Icon(
                                         Icons.keyboard_arrow_down_rounded,
                                         color: FlutterFlowTheme.of(context)
@@ -238,7 +262,6 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                                                     fontFamily: 'Readex Pro',
                                                     letterSpacing: 0.0,
                                                   ),
-                                          hintText: 'TextField',
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -354,7 +377,6 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                                                     fontFamily: 'Readex Pro',
                                                     letterSpacing: 0.0,
                                                   ),
-                                          hintText: 'TextField',
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -430,30 +452,6 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'assets/images/Group_982.png',
-                                width: 200.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Text(
-                              'Unggah foto buku rekening',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ].divide(const SizedBox(height: 10.0)),
-                        ),
                       ),
                     ].divide(const SizedBox(height: 30.0)),
                   ),
@@ -461,26 +459,118 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
               ),
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Simpan Perubahan',
-                  options: FFButtonOptions(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 50.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Rubik',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.apiResultepm = await QrisGroup.updateQrisCall.call(
+                        fotoKtp: QrisGroup.getQrisCall.fotoktp(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
                         ),
-                    elevation: 0.0,
-                    borderRadius: BorderRadius.circular(8.0),
+                        fotoUsaha: QrisGroup.getQrisCall.fotousaha(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        namaUsaha: QrisGroup.getQrisCall.namausaha(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        namaPemilik: QrisGroup.getQrisCall.namapemilik(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        alamatUsaha: QrisGroup.getQrisCall.alamatusaha(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        nomorTelepon: QrisGroup.getQrisCall.nomortelephon(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        kategoriUsaha: QrisGroup.getQrisCall.kategoriusaha(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        deskripsiUsaha: QrisGroup.getQrisCall.deskripsiusaha(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        rekeningPencairan: _model.namaBankValue,
+                        nomorRekening: _model.nomorRekeningTextController.text,
+                        pemilikRekening: _model.namaPemegangTextController.text,
+                        linkQris: QrisGroup.getQrisCall.linkqris(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        status: true,
+                        jenisDokumen: QrisGroup.getQrisCall.jenisdokumen(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        nomorIdentitas: QrisGroup.getQrisCall.nomoridentitas(
+                          (_model.apiResultgetqr?.jsonBody ?? ''),
+                        ),
+                        qrisId: QrisGroup.getQrisCall
+                            .qirsid(
+                              (_model.apiResultgetqr?.jsonBody ?? ''),
+                            )
+                            ?.toString(),
+                        token: currentAuthenticationToken,
+                      );
+
+                      if ((_model.apiResultepm?.succeeded ?? true)) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Sukses'),
+                              content: Text(
+                                  (_model.apiResultepm?.exceptionMessage ??
+                                      '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+
+                        context.pushNamed('Home');
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Gagal'),
+                              content: Text(
+                                  (_model.apiResultepm?.exceptionMessage ??
+                                      '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+
+                      safeSetState(() {});
+                    },
+                    text: 'Simpan Perubahan',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      height: 50.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Rubik',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                 ),
               ),

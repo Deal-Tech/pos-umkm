@@ -9,7 +9,14 @@ import 'halaman_akun_model.dart';
 export 'halaman_akun_model.dart';
 
 class HalamanAkunWidget extends StatefulWidget {
-  const HalamanAkunWidget({super.key});
+  const HalamanAkunWidget({
+    super.key,
+    required this.email,
+    required this.phone,
+  });
+
+  final String? email;
+  final String? phone;
 
   @override
   State<HalamanAkunWidget> createState() => _HalamanAkunWidgetState();
@@ -221,28 +228,49 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 10.0, 10.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Informasi akun',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 15.0,
-                                        ),
-                                      ],
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          'Halaman-detail-profil',
+                                          queryParameters: {
+                                            'email': serializeParam(
+                                              widget.email,
+                                              ParamType.String,
+                                            ),
+                                            'phone': serializeParam(
+                                              widget.phone,
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Informasi akun',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 15.0,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Divider(
@@ -253,28 +281,38 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 10.0, 10.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Riwayat berlangganan',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 15.0,
-                                        ),
-                                      ],
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed(
+                                            'Halaman-riwayat-langganan');
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Riwayat berlangganan',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 15.0,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Divider(
@@ -285,28 +323,37 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 10.0, 10.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Bantuan',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 15.0,
-                                        ),
-                                      ],
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed('Halaman-bantuan');
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Bantuan',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 15.0,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Divider(

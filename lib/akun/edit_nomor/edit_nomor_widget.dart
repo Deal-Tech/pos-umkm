@@ -1,3 +1,5 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -6,7 +8,14 @@ import 'edit_nomor_model.dart';
 export 'edit_nomor_model.dart';
 
 class EditNomorWidget extends StatefulWidget {
-  const EditNomorWidget({super.key});
+  const EditNomorWidget({
+    super.key,
+    required this.nomor,
+    required this.email,
+  });
+
+  final String? nomor;
+  final String? email;
 
   @override
   State<EditNomorWidget> createState() => _EditNomorWidgetState();
@@ -22,7 +31,7 @@ class _EditNomorWidgetState extends State<EditNomorWidget> {
     super.initState();
     _model = createModel(context, () => EditNomorModel());
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??= TextEditingController(text: widget.nomor);
     _model.textFieldFocusNode ??= FocusNode();
   }
 
@@ -152,7 +161,6 @@ class _EditNomorWidgetState extends State<EditNomorWidget> {
                                                     fontFamily: 'Readex Pro',
                                                     letterSpacing: 0.0,
                                                   ),
-                                          hintText: 'TextField',
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -229,26 +237,77 @@ class _EditNomorWidgetState extends State<EditNomorWidget> {
               ),
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
-                child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Simpan Perubahan',
-                  options: FFButtonOptions(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 50.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Rubik',
-                          color: Colors.white,
-                          letterSpacing: 0.0,
-                        ),
-                    elevation: 0.0,
-                    borderRadius: BorderRadius.circular(8.0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.apiResultopq = await ApiUpdateUserCall.call(
+                        token: currentAuthenticationToken,
+                        email: widget.email,
+                        phone: _model.textController.text,
+                      );
+
+                      if ((_model.apiResultopq?.succeeded ?? true)) {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Sukses'),
+                              content: Text(
+                                  (_model.apiResultopq?.exceptionMessage ??
+                                      '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        context.safePop();
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Sukses'),
+                              content: Text(
+                                  (_model.apiResultopq?.exceptionMessage ??
+                                      '')),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+
+                      safeSetState(() {});
+                    },
+                    text: 'Simpan Perubahan',
+                    options: FFButtonOptions(
+                      width: MediaQuery.sizeOf(context).width * 0.9,
+                      height: 50.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Rubik',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                 ),
               ),
