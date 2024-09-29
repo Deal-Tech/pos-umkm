@@ -10,27 +10,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'halaman_riwayat_transaksi_model.dart';
-export 'halaman_riwayat_transaksi_model.dart';
+import 'expense_history_model.dart';
+export 'expense_history_model.dart';
 
-class HalamanRiwayatTransaksiWidget extends StatefulWidget {
-  const HalamanRiwayatTransaksiWidget({super.key});
+class ExpenseHistoryWidget extends StatefulWidget {
+  const ExpenseHistoryWidget({super.key});
 
   @override
-  State<HalamanRiwayatTransaksiWidget> createState() =>
-      _HalamanRiwayatTransaksiWidgetState();
+  State<ExpenseHistoryWidget> createState() => _ExpenseHistoryWidgetState();
 }
 
-class _HalamanRiwayatTransaksiWidgetState
-    extends State<HalamanRiwayatTransaksiWidget> {
-  late HalamanRiwayatTransaksiModel _model;
+class _ExpenseHistoryWidgetState extends State<ExpenseHistoryWidget> {
+  late ExpenseHistoryModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HalamanRiwayatTransaksiModel());
+    _model = createModel(context, () => ExpenseHistoryModel());
   }
 
   @override
@@ -59,7 +57,7 @@ class _HalamanRiwayatTransaksiWidgetState
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primary,
+              color: FlutterFlowTheme.of(context).error,
               size: 30.0,
             ),
             onPressed: () async {
@@ -67,10 +65,10 @@ class _HalamanRiwayatTransaksiWidgetState
             },
           ),
           title: Text(
-            'Riwayat Transaksi',
+            'Riwayat Pengeluaran',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Rubik',
-                  color: FlutterFlowTheme.of(context).primary,
+                  color: FlutterFlowTheme.of(context).error,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
                   fontWeight: FontWeight.w500,
@@ -88,118 +86,121 @@ class _HalamanRiwayatTransaksiWidgetState
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  height: MediaQuery.sizeOf(context).height * 0.07,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 5.0,
-                        color: Color(0x1A000000),
-                        offset: Offset(
-                          0.0,
-                          2.0,
-                        ),
-                      )
-                    ],
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          enableDrag: false,
-                          context: context,
-                          builder: (context) {
-                            return GestureDetector(
-                              onTap: () => FocusScope.of(context).unfocus(),
-                              child: Padding(
-                                padding: MediaQuery.viewInsetsOf(context),
-                                child: const FilterTransaksiWidget(),
-                              ),
-                            );
-                          },
-                        ).then((value) => safeSetState(() {}));
-
-                        safeSetState(() => _model.apiRequestCompleter = null);
-                        await _model.waitForApiRequestCompleted();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: SvgPicture.asset(
-                                    'assets/images/Filter.svg',
-                                    width: 25.0,
-                                    height: 25.0,
-                                    fit: BoxFit.cover,
-                                  ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  child: Container(
+                    height: MediaQuery.sizeOf(context).height * 0.07,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 5.0,
+                          color: Color(0x1A000000),
+                          offset: Offset(
+                            0.0,
+                            2.0,
+                          ),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return GestureDetector(
+                                onTap: () => FocusScope.of(context).unfocus(),
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: const FilterTransaksiWidget(),
                                 ),
-                                Text(
-                                  'Filter Tanggal',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+
+                          safeSetState(() => _model.apiRequestCompleter = null);
+                          await _model.waitForApiRequestCompleted();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: SvgPicture.asset(
+                                      'assets/images/Filter.svg',
+                                      width: 25.0,
+                                      height: 25.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Filter Tanggal',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ].divide(const SizedBox(width: 5.0)),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  FFAppState().filtertransactionsdate =
+                                      FiltertransactionsStruct();
+                                  safeSetState(() {});
+                                  safeSetState(
+                                      () => _model.apiRequestCompleter = null);
+                                  await _model.waitForApiRequestCompleted();
+                                },
+                                text: 'Reset',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).error,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
                                       .override(
-                                        fontFamily: 'Rubik',
-                                        fontSize: 16.0,
+                                        fontFamily: 'Readex Pro',
+                                        color: Colors.white,
                                         letterSpacing: 0.0,
                                       ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                              ].divide(const SizedBox(width: 5.0)),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                FFAppState().filtertransactionsdate =
-                                    FiltertransactionsStruct();
-                                safeSetState(() {});
-                                safeSetState(
-                                    () => _model.apiRequestCompleter = null);
-                                await _model.waitForApiRequestCompleted();
-                              },
-                              text: 'Reset',
-                              options: FFButtonOptions(
-                                height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                          ),
-                        ].divide(const SizedBox(width: 10.0)),
+                          ].divide(const SizedBox(width: 10.0)),
+                        ),
                       ),
                     ),
                   ),
@@ -213,20 +214,19 @@ class _HalamanRiwayatTransaksiWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         FutureBuilder<ApiCallResponse>(
-                          future: (_model.apiRequestCompleter ??= Completer<
-                                  ApiCallResponse>()
-                                ..complete(
-                                    ApiTransaksiGroup.getTransactionsCall.call(
-                                  token: currentAuthenticationToken,
-                                  startDate: FFAppState()
-                                      .filtertransactionsdate
-                                      .datestart
-                                      .toString(),
-                                  endDate: FFAppState()
-                                      .filtertransactionsdate
-                                      .dateend
-                                      .toString(),
-                                )))
+                          future: (_model.apiRequestCompleter ??=
+                                  Completer<ApiCallResponse>()
+                                    ..complete(ExpenseGroup.getListCall.call(
+                                      token: currentAuthenticationToken,
+                                      startDate: FFAppState()
+                                          .filtertransactionsdate
+                                          .datestart
+                                          .toString(),
+                                      endDate: FFAppState()
+                                          .filtertransactionsdate
+                                          .dateend
+                                          .toString(),
+                                    )))
                               .future,
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
@@ -243,23 +243,20 @@ class _HalamanRiwayatTransaksiWidgetState
                                 ),
                               );
                             }
-                            final listViewGetTransactionsResponse =
-                                snapshot.data!;
+                            final listViewGetListResponse = snapshot.data!;
 
                             return Builder(
                               builder: (context) {
-                                final listtransactions =
-                                    (listViewGetTransactionsResponse.jsonBody
-                                                    .toList()
-                                                    .map<TransactionsDetailStruct?>(
-                                                        TransactionsDetailStruct
-                                                            .maybeFromMap)
-                                                    .toList()
-                                                as Iterable<
-                                                    TransactionsDetailStruct?>)
-                                            .withoutNulls
-                                            .toList() ??
-                                        [];
+                                final listtransactions = (listViewGetListResponse
+                                                .jsonBody
+                                                .toList()
+                                                .map<ExpenseStruct?>(
+                                                    ExpenseStruct.maybeFromMap)
+                                                .toList()
+                                            as Iterable<ExpenseStruct?>)
+                                        .withoutNulls
+                                        .toList() ??
+                                    [];
 
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,
@@ -280,20 +277,29 @@ class _HalamanRiwayatTransaksiWidgetState
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed(
-                                            'Detail_transaksi',
+                                            'Expens_detail',
                                             queryParameters: {
+                                              'total': serializeParam(
+                                                listtransactionsItem.nominal,
+                                                ParamType.int,
+                                              ),
                                               'transactionsid': serializeParam(
                                                 listtransactionsItem.id,
                                                 ParamType.int,
                                               ),
                                               'datetransactions':
                                                   serializeParam(
-                                                listtransactionsItem.createdAt,
+                                                listtransactionsItem.tanggal,
                                                 ParamType.String,
                                               ),
-                                              'total': serializeParam(
-                                                listtransactionsItem.total,
-                                                ParamType.int,
+                                              'categoryexpense': serializeParam(
+                                                listtransactionsItem
+                                                    .categoryName,
+                                                ParamType.String,
+                                              ),
+                                              'time': serializeParam(
+                                                listtransactionsItem.waktu,
+                                                ParamType.String,
                                               ),
                                             }.withoutNulls,
                                           );
@@ -338,7 +344,7 @@ class _HalamanRiwayatTransaksiWidgetState
                                                     Text(
                                                       formatNumber(
                                                         listtransactionsItem
-                                                            .total,
+                                                            .nominal,
                                                         formatType:
                                                             FormatType.decimal,
                                                         decimalType: DecimalType
@@ -357,7 +363,7 @@ class _HalamanRiwayatTransaksiWidgetState
                                                           ),
                                                     ),
                                                     Text(
-                                                      '${listtransactionsItem.createdAt}  -  ${'IDTRX ${listtransactionsItem.id.toString()}'}',
+                                                      '${listtransactionsItem.tanggal} - ${listtransactionsItem.id.toString()}',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -375,13 +381,8 @@ class _HalamanRiwayatTransaksiWidgetState
                                                     print('Button pressed ...');
                                                   },
                                                   text: listtransactionsItem
-                                                              .status ==
-                                                          'paid'
-                                                      ? 'Selesai'
-                                                      : listtransactionsItem
-                                                          .status,
+                                                      .categoryName,
                                                   options: FFButtonOptions(
-                                                    width: 100.0,
                                                     height: 29.0,
                                                     padding:
                                                         const EdgeInsetsDirectional
@@ -391,7 +392,9 @@ class _HalamanRiwayatTransaksiWidgetState
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 0.0),
-                                                    color: const Color(0xFF0EC244),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
                                                         .titleSmall

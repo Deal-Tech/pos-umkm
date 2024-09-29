@@ -11,8 +11,6 @@ export '/transaksi/cash_payment_page/cash_payment_page_widget.dart'
     show CashPaymentPageWidget;
 export '/transaksi/succes_checkout_page/succes_checkout_page_widget.dart'
     show SuccesCheckoutPageWidget;
-export '/qris/q_r_i_s_payment_page/q_r_i_s_payment_page_widget.dart'
-    show QRISPaymentPageWidget;
 export '/transaksi/transaction_detail_page/transaction_detail_page_widget.dart'
     show TransactionDetailPageWidget;
 export '/akun/langganan_page/langganan_page_widget.dart'
@@ -104,3 +102,9 @@ export '/transaksi/transaksi_keluar/transaksi_keluar_widget.dart'
     show TransaksiKeluarWidget;
 export '/transaksi/expens_detail/expens_detail_widget.dart'
     show ExpensDetailWidget;
+export '/akun/edit_pemilik/edit_pemilik_widget.dart' show EditPemilikWidget;
+export '/akun/edit_nomor/edit_nomor_widget.dart' show EditNomorWidget;
+export '/akun/edit_alamat/edit_alamat_widget.dart' show EditAlamatWidget;
+export '/akun/edit_rekening/edit_rekening_widget.dart' show EditRekeningWidget;
+export '/transaksi/expense_history/expense_history_widget.dart'
+    show ExpenseHistoryWidget;

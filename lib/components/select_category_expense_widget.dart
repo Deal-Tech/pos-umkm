@@ -97,7 +97,7 @@ class _SelectCategoryExpenseWidgetState
                         'Pilih Kategori',
                         style:
                             FlutterFlowTheme.of(context).headlineSmall.override(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Rubik',
                                   letterSpacing: 0.0,
                                 ),
                       ),

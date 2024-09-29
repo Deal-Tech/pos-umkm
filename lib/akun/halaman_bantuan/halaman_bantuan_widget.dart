@@ -1,6 +1,8 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
 import 'halaman_bantuan_model.dart';
 export 'halaman_bantuan_model.dart';
@@ -58,8 +60,8 @@ class _HalamanBantuanWidgetState extends State<HalamanBantuanWidget> {
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.safePop();
                               },
                               text: '',
                               icon: const Icon(
@@ -108,113 +110,177 @@ class _HalamanBantuanWidgetState extends State<HalamanBantuanWidget> {
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            'assets/images/icons8-support_1.png',
-                            width: 90.0,
-                            height: 90.0,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.sizeOf(context).width * 0.75,
-                          decoration: const BoxDecoration(),
-                          child: Text(
-                            'Saya asisten yang siap membantu kamu, hubungi saya melaluikontak berikut',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  fontSize: 13.0,
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 25.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: 144.0,
-                                height: 90.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x1A0EC244),
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/icons8-whatsapp_1_(1).png',
-                                        width: 45.0,
-                                        height: 45.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Text(
-                                      '085136523201',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Rubik',
-                                            color: const Color(0xFF0EC244),
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                    ),
-                                  ].divide(const SizedBox(height: 10.0)),
+                    child: FutureBuilder<ApiCallResponse>(
+                      future: SupportsCall.call(),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
                               ),
-                              Container(
-                                width: 144.0,
+                            ),
+                          );
+                        }
+                        final columnSupportsResponse = snapshot.data!;
+
+                        return Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/icons8-support_1.png',
+                                width: 90.0,
                                 height: 90.0,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x191696E0),
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/icons8-telegram_1.png',
-                                        width: 45.0,
-                                        height: 45.0,
-                                        fit: BoxFit.cover,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.sizeOf(context).width * 0.75,
+                              decoration: const BoxDecoration(),
+                              child: Text(
+                                'Saya asisten yang siap membantu kamu, hubungi saya melaluikontak berikut',
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Rubik',
+                                      fontSize: 13.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 25.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await launchURL(
+                                          (columnSupportsResponse.jsonBody
+                                                      .toList()
+                                                      .map<SupportsStruct?>(
+                                                          SupportsStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<SupportsStruct?>)
+                                              .withoutNulls[0]
+                                              .contact);
+                                    },
+                                    child: Container(
+                                      width: 144.0,
+                                      height: 90.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x1A0EC244),
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.asset(
+                                              'assets/images/icons8-whatsapp_1_(1).png',
+                                              width: 45.0,
+                                              height: 45.0,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Admin WhatsApp',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: const Color(0xFF0EC244),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
                                       ),
                                     ),
-                                    Text(
-                                      '085136523201',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Rubik',
-                                            color: const Color(0xFF1696E0),
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
+                                  ),
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await launchURL(
+                                          (columnSupportsResponse.jsonBody
+                                                      .toList()
+                                                      .map<SupportsStruct?>(
+                                                          SupportsStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<SupportsStruct?>)
+                                              .withoutNulls[1]
+                                              .contact);
+                                    },
+                                    child: Container(
+                                      width: 144.0,
+                                      height: 90.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x191696E0),
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.asset(
+                                              'assets/images/icons8-telegram_1.png',
+                                              width: 45.0,
+                                              height: 45.0,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
+                                          Text(
+                                            'Admin Telegram',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: const Color(0xFF1696E0),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
                                     ),
-                                  ].divide(const SizedBox(height: 10.0)),
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ].divide(const SizedBox(height: 20.0)),
+                            ),
+                          ].divide(const SizedBox(height: 20.0)),
+                        );
+                      },
                     ),
                   ),
                 ].divide(const SizedBox(height: 30.0)),

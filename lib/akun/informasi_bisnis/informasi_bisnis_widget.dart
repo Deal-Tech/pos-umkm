@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'informasi_bisnis_model.dart';
 export 'informasi_bisnis_model.dart';
 
@@ -201,20 +202,89 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    'Joni AP',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  const FaIcon(
+                                                    FontAwesomeIcons.edit,
+                                                    color: Color(0x8057636C),
+                                                    size: 18.0,
+                                                  ),
+                                                ].divide(const SizedBox(width: 10.0)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 15.0, 20.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
                                             Text(
-                                              'jonianggara@gmail.com',
+                                              'Email',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                       ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    'jonianggara@gmail.com',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  const FaIcon(
+                                                    FontAwesomeIcons.edit,
+                                                    color: Color(0x8057636C),
+                                                    size: 18.0,
+                                                  ),
+                                                ].divide(const SizedBox(width: 10.0)),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -238,20 +308,36 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              '085142102130',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '085142102130',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  const FaIcon(
+                                                    FontAwesomeIcons.edit,
+                                                    color: Color(0x7F57636C),
+                                                    size: 18.0,
+                                                  ),
+                                                ].divide(const SizedBox(width: 10.0)),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -271,24 +357,40 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Text(
-                                              '564116516116565',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '564116516116565',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  const FaIcon(
+                                                    FontAwesomeIcons.edit,
+                                                    color: Color(0x8057636C),
+                                                    size: 18.0,
+                                                  ),
+                                                ].divide(const SizedBox(width: 10.0)),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -323,7 +425,7 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primary,
-                                                        fontSize: 12.0,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),

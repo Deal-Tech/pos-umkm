@@ -6,7 +6,14 @@ import 'halaman_detail_profil_model.dart';
 export 'halaman_detail_profil_model.dart';
 
 class HalamanDetailProfilWidget extends StatefulWidget {
-  const HalamanDetailProfilWidget({super.key});
+  const HalamanDetailProfilWidget({
+    super.key,
+    required this.email,
+    required this.phone,
+  });
+
+  final String? email;
+  final String? phone;
 
   @override
   State<HalamanDetailProfilWidget> createState() =>
@@ -49,58 +56,61 @@ class _HalamanDetailProfilWidgetState extends State<HalamanDetailProfilWidget> {
                 children: [
                   Container(
                     decoration: const BoxDecoration(),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 10.0, 20.0, 10.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: '',
-                              icon: const Icon(
-                                Icons.arrow_back_ios_new_rounded,
-                                color: Color(0xFF0EC244),
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: 34.0,
-                                height: 34.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 0.0, 0.0, 0.0),
-                                color: const Color(0x000EC244),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
+                    child: Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 10.0, 20.0, 10.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  context.safePop();
+                                },
+                                text: '',
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  color: Color(0xFF0EC244),
+                                  size: 15.0,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 34.0,
+                                  height: 34.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      8.0, 0.0, 0.0, 0.0),
+                                  color: const Color(0x000EC244),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
                             ),
-                          ),
-                          Text(
-                            'Profil',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Rubik',
-                                  color: const Color(0xFF0EC244),
-                                  fontSize: 22.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
-                        ].divide(const SizedBox(width: 10.0)),
+                            Text(
+                              'Profil',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Rubik',
+                                    color: const Color(0xFF0EC244),
+                                    fontSize: 22.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ].divide(const SizedBox(width: 10.0)),
+                        ),
                       ),
                     ),
                   ),
@@ -181,7 +191,10 @@ class _HalamanDetailProfilWidgetState extends State<HalamanDetailProfilWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'jonianggara@gmail.com',
+                                            valueOrDefault<String>(
+                                              widget.email,
+                                              'email',
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -215,7 +228,10 @@ class _HalamanDetailProfilWidgetState extends State<HalamanDetailProfilWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            '085142102130',
+                                            valueOrDefault<String>(
+                                              widget.phone,
+                                              'phone',
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

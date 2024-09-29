@@ -96,9 +96,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'OtherPage',
           path: '/otherPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'OtherPage')
-              : const OtherPageWidget(),
+          builder: (context, params) => const OtherPageWidget(),
         ),
         FFRoute(
           name: 'CartPage',
@@ -119,11 +117,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SuccesCheckoutPage',
           path: '/succesCheckoutPage',
           builder: (context, params) => const SuccesCheckoutPageWidget(),
-        ),
-        FFRoute(
-          name: 'QRISPaymentPage',
-          path: '/qRISPaymentPage',
-          builder: (context, params) => const QRISPaymentPageWidget(),
         ),
         FFRoute(
           name: 'TransactionDetailPage',
@@ -291,7 +284,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-detail-profil',
           path: '/halamanDetailProfil',
-          builder: (context, params) => const HalamanDetailProfilWidget(),
+          builder: (context, params) => HalamanDetailProfilWidget(
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Halaman-riwayat-langganan',
@@ -321,7 +323,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-Qris-merchant',
           path: '/halamanQrisMerchant',
-          builder: (context, params) => const HalamanQrisMerchantWidget(),
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'Halaman-Qris-merchant')
+              : const HalamanQrisMerchantWidget(),
         ),
         FFRoute(
           name: 'Halaman-ajukan-qris',
@@ -461,10 +465,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Expens_detail',
           path: '/expensDetail',
           builder: (context, params) => ExpensDetailWidget(
-            paymentmethod: params.getParam(
-              'paymentmethod',
-              ParamType.String,
-            ),
             total: params.getParam(
               'total',
               ParamType.int,
@@ -477,7 +477,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'datetransactions',
               ParamType.String,
             ),
+            categoryexpense: params.getParam(
+              'categoryexpense',
+              ParamType.String,
+            ),
+            time: params.getParam(
+              'time',
+              ParamType.String,
+            ),
           ),
+        ),
+        FFRoute(
+          name: 'edit_pemilik',
+          path: '/editPemilik',
+          builder: (context, params) => const EditPemilikWidget(),
+        ),
+        FFRoute(
+          name: 'edit_nomor',
+          path: '/editNomor',
+          builder: (context, params) => const EditNomorWidget(),
+        ),
+        FFRoute(
+          name: 'edit_alamat',
+          path: '/editAlamat',
+          builder: (context, params) => const EditAlamatWidget(),
+        ),
+        FFRoute(
+          name: 'edit_rekening',
+          path: '/editRekening',
+          builder: (context, params) => const EditRekeningWidget(),
+        ),
+        FFRoute(
+          name: 'expense_history',
+          path: '/expenseHistory',
+          builder: (context, params) => const ExpenseHistoryWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

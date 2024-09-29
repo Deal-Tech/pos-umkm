@@ -209,8 +209,8 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             30.0, 0.0, 30.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            context.pushNamed('Home');
                           },
                           text: 'Home',
                           options: FFButtonOptions(
@@ -245,8 +245,8 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('Home');
                               },
                               text: 'Transaksi Baru',
                               options: FFButtonOptions(

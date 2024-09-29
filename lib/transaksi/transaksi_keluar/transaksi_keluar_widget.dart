@@ -71,7 +71,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.chevron_left,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: FlutterFlowTheme.of(context).primary,
               size: 30.0,
             ),
             onPressed: () async {
@@ -79,7 +79,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
             },
           ),
           title: Text(
-            'Expense',
+            'Tambah Pengeluaran',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Rubik',
                   color: FlutterFlowTheme.of(context).primary,
@@ -169,7 +169,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 .headlineLarge
                                                                 .override(
                                                                   fontFamily:
-                                                                      'Poppins',
+                                                                      'Rubik',
                                                                   fontSize:
                                                                       32.0,
                                                                   letterSpacing:
@@ -294,8 +294,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                               context)
                                                           .headlineLarge
                                                           .override(
-                                                            fontFamily:
-                                                                'Poppins',
+                                                            fontFamily: 'Rubik',
                                                             fontSize: 32.0,
                                                             letterSpacing: 0.0,
                                                             fontWeight:
@@ -573,8 +572,9 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                     safeSetState(() {}));
                                               },
                                               text: FFAppState()
-                                                          .selectcategoryexpense ==
-                                                      null
+                                                          .selectcategoryexpense
+                                                          .status ==
+                                                      0
                                                   ? 'Pilih Kategori'
                                                   : FFAppState()
                                                       .selectcategoryexpense
@@ -798,7 +798,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                           },
                         );
 
-                        context.pushNamed('Halaman-kategori-pengeluaran');
+                        context.pushNamed('expense_history');
                       } else {
                         await showDialog(
                           context: context,

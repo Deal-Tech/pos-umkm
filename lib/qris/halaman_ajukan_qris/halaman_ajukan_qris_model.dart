@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'halaman_ajukan_qris_widget.dart' show HalamanAjukanQrisWidget;
@@ -6,6 +7,18 @@ import 'package:flutter/material.dart';
 class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
   ///  State fields for stateful widgets in this page.
 
+  bool isDataUploading1 = false;
+  FFUploadedFile uploadedLocalFile1 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage1;
+  bool isDataUploading2 = false;
+  FFUploadedFile uploadedLocalFile2 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage2;
   // State field(s) for nama_usaha widget.
   FocusNode? namaUsahaFocusNode;
   TextEditingController? namaUsahaTextController;
@@ -38,10 +51,18 @@ class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
   TextEditingController? nomorIdentitasTextController;
   String? Function(BuildContext, String?)?
       nomorIdentitasTextControllerValidator;
-  // State field(s) for nama_lengkap widget.
-  FocusNode? namaLengkapFocusNode;
-  TextEditingController? namaLengkapTextController;
-  String? Function(BuildContext, String?)? namaLengkapTextControllerValidator;
+  bool isDataUploading3 = false;
+  FFUploadedFile uploadedLocalFile3 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage3;
+  bool isDataUploading4 = false;
+  FFUploadedFile uploadedLocalFile4 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
+  ApiCallResponse? apiResultUploudImage4;
   // State field(s) for rekening_bank widget.
   String? rekeningBankValue;
   FormFieldController<String>? rekeningBankValueController;
@@ -54,6 +75,8 @@ class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
   TextEditingController? pemilikRekeningTextController;
   String? Function(BuildContext, String?)?
       pemilikRekeningTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Add Qris)] action in Button widget.
+  ApiCallResponse? apiResult37m;
 
   @override
   void initState(BuildContext context) {}
@@ -77,9 +100,6 @@ class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
 
     nomorIdentitasFocusNode?.dispose();
     nomorIdentitasTextController?.dispose();
-
-    namaLengkapFocusNode?.dispose();
-    namaLengkapTextController?.dispose();
 
     nomorRekeningFocusNode?.dispose();
     nomorRekeningTextController?.dispose();

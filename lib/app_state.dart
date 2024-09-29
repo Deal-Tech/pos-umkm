@@ -163,6 +163,12 @@ class FFAppState extends ChangeNotifier {
       Function(CategoryExpenseStruct) updateFn) {
     updateFn(_selectcategoryexpense);
   }
+
+  String _filterreport = 'minggu_ini';
+  String get filterreport => _filterreport;
+  set filterreport(String value) {
+    _filterreport = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

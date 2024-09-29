@@ -115,9 +115,9 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Home': const HomeWidget(),
       'Halaman-riwayat-transaksi': const HalamanRiwayatTransaksiWidget(),
+      'Halaman-Qris-merchant': const HalamanQrisMerchantWidget(),
       'Statistik': const StatistikWidget(),
       'List-produk': const ListProdukWidget(),
-      'OtherPage': const OtherPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -154,6 +154,14 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
+              Icons.qr_code_scanner_sharp,
+              size: 24.0,
+            ),
+            label: 'Home',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
               Icons.analytics_outlined,
               size: 24.0,
             ),
@@ -166,14 +174,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Produk',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings_sharp,
-              size: 24.0,
-            ),
-            label: 'Other',
             tooltip: '',
           )
         ],

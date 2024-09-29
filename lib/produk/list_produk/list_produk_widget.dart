@@ -54,7 +54,7 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: FlutterFlowTheme.of(context).primary,
               size: 30.0,
             ),
             onPressed: () async {
@@ -64,10 +64,11 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
           title: Text(
             'Produk',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Poppins',
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontFamily: 'Rubik',
+                  color: FlutterFlowTheme.of(context).primary,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
+                  fontWeight: FontWeight.w500,
                 ),
           ),
           actions: const [],
@@ -77,6 +78,7 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
+            primary: false,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -109,15 +111,14 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {
-                                      return Center(
+                                      return const Center(
                                         child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
+                                          width: 50,
+                                          height: 50,
                                           child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
+                                              Color(0x000EC244),
                                             ),
                                           ),
                                         ),
@@ -230,7 +231,6 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
 
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
-                                        primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount: listProduct.length,

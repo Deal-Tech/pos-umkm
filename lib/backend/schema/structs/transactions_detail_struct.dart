@@ -12,18 +12,18 @@ class TransactionsDetailStruct extends BaseStruct {
     int? paymentPosId,
     String? paymentMethod,
     String? status,
+    List<TransactionDetailsStruct>? transactionDetails,
     String? createdAt,
     String? updatedAt,
-    List<TransactionDetailsStruct>? transactionDetails,
   })  : _id = id,
         _userId = userId,
         _total = total,
         _paymentPosId = paymentPosId,
         _paymentMethod = paymentMethod,
         _status = status,
+        _transactionDetails = transactionDetails,
         _createdAt = createdAt,
-        _updatedAt = updatedAt,
-        _transactionDetails = transactionDetails;
+        _updatedAt = updatedAt;
 
   // "id" field.
   int? _id;
@@ -76,20 +76,6 @@ class TransactionsDetailStruct extends BaseStruct {
 
   bool hasStatus() => _status != null;
 
-  // "created_at" field.
-  String? _createdAt;
-  String get createdAt => _createdAt ?? '';
-  set createdAt(String? val) => _createdAt = val;
-
-  bool hasCreatedAt() => _createdAt != null;
-
-  // "updated_at" field.
-  String? _updatedAt;
-  String get updatedAt => _updatedAt ?? '';
-  set updatedAt(String? val) => _updatedAt = val;
-
-  bool hasUpdatedAt() => _updatedAt != null;
-
   // "transaction_details" field.
   List<TransactionDetailsStruct>? _transactionDetails;
   List<TransactionDetailsStruct> get transactionDetails =>
@@ -104,6 +90,20 @@ class TransactionsDetailStruct extends BaseStruct {
 
   bool hasTransactionDetails() => _transactionDetails != null;
 
+  // "created_at" field.
+  String? _createdAt;
+  String get createdAt => _createdAt ?? '';
+  set createdAt(String? val) => _createdAt = val;
+
+  bool hasCreatedAt() => _createdAt != null;
+
+  // "updated_at" field.
+  String? _updatedAt;
+  String get updatedAt => _updatedAt ?? '';
+  set updatedAt(String? val) => _updatedAt = val;
+
+  bool hasUpdatedAt() => _updatedAt != null;
+
   static TransactionsDetailStruct fromMap(Map<String, dynamic> data) =>
       TransactionsDetailStruct(
         id: castToType<int>(data['id']),
@@ -112,12 +112,12 @@ class TransactionsDetailStruct extends BaseStruct {
         paymentPosId: castToType<int>(data['payment_pos_id']),
         paymentMethod: data['payment_method'] as String?,
         status: data['status'] as String?,
-        createdAt: data['created_at'] as String?,
-        updatedAt: data['updated_at'] as String?,
         transactionDetails: getStructList(
           data['transaction_details'],
           TransactionDetailsStruct.fromMap,
         ),
+        createdAt: data['created_at'] as String?,
+        updatedAt: data['updated_at'] as String?,
       );
 
   static TransactionsDetailStruct? maybeFromMap(dynamic data) => data is Map
@@ -131,10 +131,10 @@ class TransactionsDetailStruct extends BaseStruct {
         'payment_pos_id': _paymentPosId,
         'payment_method': _paymentMethod,
         'status': _status,
-        'created_at': _createdAt,
-        'updated_at': _updatedAt,
         'transaction_details':
             _transactionDetails?.map((e) => e.toMap()).toList(),
+        'created_at': _createdAt,
+        'updated_at': _updatedAt,
       }.withoutNulls;
 
   @override
@@ -163,6 +163,11 @@ class TransactionsDetailStruct extends BaseStruct {
           _status,
           ParamType.String,
         ),
+        'transaction_details': serializeParam(
+          _transactionDetails,
+          ParamType.DataStruct,
+          isList: true,
+        ),
         'created_at': serializeParam(
           _createdAt,
           ParamType.String,
@@ -170,11 +175,6 @@ class TransactionsDetailStruct extends BaseStruct {
         'updated_at': serializeParam(
           _updatedAt,
           ParamType.String,
-        ),
-        'transaction_details': serializeParam(
-          _transactionDetails,
-          ParamType.DataStruct,
-          isList: true,
         ),
       }.withoutNulls;
 
@@ -211,6 +211,12 @@ class TransactionsDetailStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        transactionDetails: deserializeStructParam<TransactionDetailsStruct>(
+          data['transaction_details'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: TransactionDetailsStruct.fromSerializableMap,
+        ),
         createdAt: deserializeParam(
           data['created_at'],
           ParamType.String,
@@ -220,12 +226,6 @@ class TransactionsDetailStruct extends BaseStruct {
           data['updated_at'],
           ParamType.String,
           false,
-        ),
-        transactionDetails: deserializeStructParam<TransactionDetailsStruct>(
-          data['transaction_details'],
-          ParamType.DataStruct,
-          true,
-          structBuilder: TransactionDetailsStruct.fromSerializableMap,
         ),
       );
 
@@ -242,9 +242,9 @@ class TransactionsDetailStruct extends BaseStruct {
         paymentPosId == other.paymentPosId &&
         paymentMethod == other.paymentMethod &&
         status == other.status &&
+        listEquality.equals(transactionDetails, other.transactionDetails) &&
         createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        listEquality.equals(transactionDetails, other.transactionDetails);
+        updatedAt == other.updatedAt;
   }
 
   @override
@@ -255,9 +255,9 @@ class TransactionsDetailStruct extends BaseStruct {
         paymentPosId,
         paymentMethod,
         status,
+        transactionDetails,
         createdAt,
-        updatedAt,
-        transactionDetails
+        updatedAt
       ]);
 }
 

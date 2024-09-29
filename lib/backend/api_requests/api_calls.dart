@@ -329,6 +329,8 @@ class ExpenseGroup {
 
 class GetListCall {
   Future<ApiCallResponse> call({
+    String? startDate = '',
+    String? endDate = '',
     String? token = '',
   }) async {
     final baseUrl = ExpenseGroup.getBaseUrl(
@@ -342,7 +344,10 @@ class GetListCall {
       headers: {
         'Authorization': 'Bearer $token',
       },
-      params: {},
+      params: {
+        'start_date': startDate,
+        'end_date': endDate,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -439,6 +444,130 @@ class GetCategoryExpenseCall {
 }
 
 /// End Category Expense Group Code
+
+/// Start QRIS Group Code
+
+class QrisGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static AddQrisCall addQrisCall = AddQrisCall();
+  static GetQrisCall getQrisCall = GetQrisCall();
+}
+
+class AddQrisCall {
+  Future<ApiCallResponse> call({
+    String? fotoKtp = '',
+    String? fotoUsaha = '',
+    String? namaUsaha = '',
+    String? namaPemilik = '',
+    String? alamatUsaha = '',
+    String? nomorTelepon = '',
+    String? kategoriUsaha = '',
+    String? deskripsiUsaha = '',
+    String? rekeningPencairan = '',
+    String? nomorRekening = '',
+    String? pemilikRekening = '',
+    String? linkQris = 'null',
+    bool? status,
+    String? jenisDokumen = '',
+    String? nomorIdentitas = '',
+    String? token = '',
+  }) async {
+    final baseUrl = QrisGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "foto_ktp": "$fotoKtp",
+  "foto_usaha": "$fotoUsaha",
+  "nama_usaha": "$namaUsaha",
+  "nama_pemilik": "$namaPemilik",
+  "alamat_usaha": "$alamatUsaha",
+  "nomor_telepon": "$nomorTelepon",
+  "kategori_usaha": "$kategoriUsaha",
+  "deskripsi_usaha": "$deskripsiUsaha",
+"jenis_dokumen": "$jenisDokumen",
+"nomor_identitas": "$nomorIdentitas",
+  "rekening_pencairan": "$rekeningPencairan",
+  "nomor_rekening": "$nomorRekening",
+  "pemilik_rekening": "$pemilikRekening",
+  "link_qris": "$linkQris",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add Qris',
+      apiUrl: '$baseUrl/qris',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetQrisCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = QrisGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Qris',
+      apiUrl: '$baseUrl/qris',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? status(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].status''',
+      ));
+  String? linkqris(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].link_qris''',
+      ));
+  String? bank(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].rekening_pencairan''',
+      ));
+  String? norek(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nomor_rekening''',
+      ));
+  String? atasnama(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].pemilik_rekening''',
+      ));
+}
+
+/// End QRIS Group Code
 
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
@@ -1148,6 +1277,68 @@ class ApiListProductFixedBugCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class ReportCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? filter = 'minggu_ini',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Report',
+      apiUrl: 'https://thetester.me/api/rekappos',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {
+        'filter': filter,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<int>? penjualanhariantotal(dynamic response) => (getJsonField(
+        response,
+        r'''$.penjualan_harian[:].total''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+}
+
+class SupportsCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Supports',
+      apiUrl: 'https://thetester.me/api/supports',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? jenis(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].jenis''',
+      ));
+  static String? contact(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].contact''',
+      ));
 }
 
 class ApiPagingParams {

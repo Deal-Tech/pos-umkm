@@ -1,7 +1,10 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'halaman_qris_merchant_model.dart';
 export 'halaman_qris_merchant_model.dart';
 
@@ -22,6 +25,13 @@ class _HalamanQrisMerchantWidgetState extends State<HalamanQrisMerchantWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HalamanQrisMerchantModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultb37 = await QrisGroup.getQrisCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -104,86 +114,164 @@ class _HalamanQrisMerchantWidgetState extends State<HalamanQrisMerchantWidget> {
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: const BoxDecoration(),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 50.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset(
-                          'assets/images/qr-code-148732_1280.webp',
-                          width: 200.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
+                  if (QrisGroup.getQrisCall.status(
+                        (_model.apiResultb37?.jsonBody ?? ''),
+                      ) ==
+                      1)
+                    Container(
+                      decoration: const BoxDecoration(),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 100.0, 0.0, 50.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.asset(
+                            'assets/images/qr-code-148732_1280.webp',
+                            width: 200.0,
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: 'Cetak Qris Merchant',
-                          icon: const Icon(
-                            Icons.print,
-                            size: 30.0,
+                  if (QrisGroup.getQrisCall.status(
+                        (_model.apiResultb37?.jsonBody ?? ''),
+                      ) ==
+                      1)
+                    Container(
+                      decoration: const BoxDecoration(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          FFButtonWidget(
+                            onPressed: () {
+                              print('Button pressed ...');
+                            },
+                            text: 'Cetak Qris Merchant',
+                            icon: const Icon(
+                              Icons.print,
+                              size: 30.0,
+                            ),
+                            options: FFButtonOptions(
+                              width: 327.0,
+                              height: 57.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0xFF0EC244),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                          options: FFButtonOptions(
-                            width: 327.0,
-                            height: 57.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: const Color(0xFF0EC244),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
+                          FFButtonWidget(
+                            onPressed: () {
+                              print('Button pressed ...');
+                            },
+                            text: 'Bagikan Qris',
+                            icon: const Icon(
+                              Icons.share_sharp,
+                              size: 30.0,
+                            ),
+                            options: FFButtonOptions(
+                              width: 327.0,
+                              height: 57.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0x190EC244),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: const Color(0xFF0EC244),
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ),
-                        FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: 'Bagikan Qris',
-                          icon: const Icon(
-                            Icons.share_sharp,
-                            size: 30.0,
-                          ),
-                          options: FFButtonOptions(
-                            width: 327.0,
-                            height: 57.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: const Color(0x190EC244),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: const Color(0xFF0EC244),
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ].divide(const SizedBox(height: 15.0)),
+                        ].divide(const SizedBox(height: 15.0)),
+                      ),
                     ),
-                  ),
+                  if (QrisGroup.getQrisCall.status(
+                        (_model.apiResultb37?.jsonBody ?? ''),
+                      ) !=
+                      1)
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: MediaQuery.sizeOf(context).height * 1.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/icons8-empty-192_1_(1).png',
+                              width: 200.0,
+                              height: 200.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Text(
+                              'QRIS Toko Belum Tersedia !!',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                context.pushNamed('Halaman-kelola-toko');
+                              },
+                              text: 'Ajukan Sekarang!',
+                              icon: const Icon(
+                                Icons.arrow_outward_sharp,
+                                size: 30.0,
+                              ),
+                              options: FFButtonOptions(
+                                width: 327.0,
+                                height: 57.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: const Color(0x190EC244),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: const Color(0xFF0EC244),
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                 ].divide(const SizedBox(height: 30.0)),
               ),
             ),

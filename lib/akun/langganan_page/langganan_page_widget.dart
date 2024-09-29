@@ -70,7 +70,7 @@ class _LanggananPageWidgetState extends State<LanggananPageWidget> {
                 child: Text(
                   'Langganan POS UMKM',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Rubik',
                         letterSpacing: 0.0,
                       ),
                 ),
@@ -140,7 +140,7 @@ class _LanggananPageWidgetState extends State<LanggananPageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Rubik',
                                     letterSpacing: 0.0,
                                   ),
                             ),
@@ -238,7 +238,7 @@ class _LanggananPageWidgetState extends State<LanggananPageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .headlineMedium
                                   .override(
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Rubik',
                                     letterSpacing: 0.0,
                                   ),
                             ),
@@ -311,7 +311,7 @@ class _LanggananPageWidgetState extends State<LanggananPageWidget> {
                           style: FlutterFlowTheme.of(context)
                               .headlineSmall
                               .override(
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Rubik',
                                 letterSpacing: 0.0,
                                 lineHeight: 1.5,
                               ),

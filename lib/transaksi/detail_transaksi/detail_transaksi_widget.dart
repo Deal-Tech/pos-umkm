@@ -54,7 +54,7 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -67,13 +67,13 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('Home');
+              context.pushNamed('Halaman-riwayat-transaksi');
             },
           ),
           title: Text(
             'Kembali',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Rubik',
                   color: FlutterFlowTheme.of(context).primary,
                   fontSize: 22.0,
                   letterSpacing: 0.0,
@@ -82,7 +82,7 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
           ),
           actions: const [],
           centerTitle: false,
-          elevation: 1.0,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,

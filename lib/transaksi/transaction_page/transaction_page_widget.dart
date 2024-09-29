@@ -43,7 +43,7 @@ class _TransactionPageWidgetState extends State<TransactionPageWidget> {
           title: Text(
             'Transaction',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Rubik',
                   color: FlutterFlowTheme.of(context).primaryText,
                   fontSize: 22.0,
                   letterSpacing: 0.0,

@@ -159,51 +159,51 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get displayLargeFamily => 'Poppins';
+  String get displayLargeFamily => 'Rubik';
   TextStyle get displayLarge => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 64.0,
       );
-  String get displayMediumFamily => 'Poppins';
+  String get displayMediumFamily => 'Rubik';
   TextStyle get displayMedium => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 44.0,
       );
-  String get displaySmallFamily => 'Poppins';
+  String get displaySmallFamily => 'Rubik';
   TextStyle get displaySmall => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       );
-  String get headlineLargeFamily => 'Poppins';
+  String get headlineLargeFamily => 'Rubik';
   TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 32.0,
       );
-  String get headlineMediumFamily => 'Poppins';
+  String get headlineMediumFamily => 'Rubik';
   TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 24.0,
       );
-  String get headlineSmallFamily => 'Poppins';
+  String get headlineSmallFamily => 'Rubik';
   TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 24.0,
       );
-  String get titleLargeFamily => 'Poppins';
+  String get titleLargeFamily => 'Rubik';
   TextStyle get titleLarge => GoogleFonts.getFont(
-        'Poppins',
+        'Rubik',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,

@@ -1,10 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
-import 'statistik_widget.dart' show StatistikWidget;
+import 'expense_history_widget.dart' show ExpenseHistoryWidget;
 import 'package:flutter/material.dart';
 
-class StatistikModel extends FlutterFlowModel<StatistikWidget> {
+class ExpenseHistoryModel extends FlutterFlowModel<ExpenseHistoryWidget> {
   ///  State fields for stateful widgets in this page.
 
   Completer<ApiCallResponse>? apiRequestCompleter;

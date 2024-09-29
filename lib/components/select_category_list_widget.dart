@@ -78,7 +78,7 @@ class _SelectCategoryListWidgetState extends State<SelectCategoryListWidget> {
                         'Pilih Kategori',
                         style:
                             FlutterFlowTheme.of(context).headlineSmall.override(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Rubik',
                                   letterSpacing: 0.0,
                                 ),
                       ),
