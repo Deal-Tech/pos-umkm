@@ -27,7 +27,7 @@ class _EditPemilikWidgetState extends State<EditPemilikWidget> {
     super.initState();
     _model = createModel(context, () => EditPemilikModel());
 
-    _model.textController ??= TextEditingController();
+    _model.textController ??= TextEditingController(text: widget.pemilik);
     _model.textFieldFocusNode ??= FocusNode();
   }
 

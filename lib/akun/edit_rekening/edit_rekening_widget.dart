@@ -528,8 +528,7 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                             );
                           },
                         );
-
-                        context.pushNamed('Home');
+                        context.safePop();
                       } else {
                         await showDialog(
                           context: context,

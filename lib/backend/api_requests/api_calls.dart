@@ -1654,7 +1654,7 @@ class ApiUpdateUserCall {
     final ffApiRequestBody = '''
 {
   "phone": "$phone",
-  "email": "$phone"
+  "email": "$email"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Update User',
