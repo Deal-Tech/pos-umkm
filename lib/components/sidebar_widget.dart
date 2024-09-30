@@ -80,7 +80,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 30.0, 20.0, 30.0),
+                                  20.0, 30.0, 20.0, 20.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -132,34 +132,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 20.0, 20.0, 10.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Halo, ${valueOrDefault<String>(
-                                      ApiGetUserCall.nama(
-                                        columnApiGetUserResponse.jsonBody,
-                                      ),
-                                      'nama',
-                                    )}',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Rubik',
-                                          color: Colors.white,
-                                          fontSize: 25.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
-                                ].divide(const SizedBox(width: 10.0)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 20.0, 0.0, 0.0),
+                                  0.0, 10.0, 0.0, 0.0),
                               child: ListView(
                                 padding: EdgeInsets.zero,
                                 primary: false,
@@ -474,32 +447,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        context.pushNamed(
-                                          'Informasi_bisnis',
-                                          queryParameters: {
-                                            'namapemilik': serializeParam(
-                                              ApiGetUserCall.nama(
-                                                columnApiGetUserResponse
-                                                    .jsonBody,
-                                              ),
-                                              ParamType.String,
-                                            ),
-                                            'email': serializeParam(
-                                              ApiGetUserCall.email(
-                                                columnApiGetUserResponse
-                                                    .jsonBody,
-                                              ),
-                                              ParamType.String,
-                                            ),
-                                            'phone': serializeParam(
-                                              ApiGetUserCall.phone(
-                                                columnApiGetUserResponse
-                                                    .jsonBody,
-                                              ),
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
+                                        context.pushNamed('Informasi_bisnis');
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -536,25 +484,81 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        context.pushNamed(
-                                          'Halaman-akun',
-                                          queryParameters: {
-                                            'email': serializeParam(
-                                              ApiGetUserCall.email(
-                                                columnApiGetUserResponse
-                                                    .jsonBody,
-                                              ),
-                                              ParamType.String,
-                                            ),
-                                            'phone': serializeParam(
-                                              ApiGetUserCall.phone(
-                                                columnApiGetUserResponse
-                                                    .jsonBody,
-                                              ),
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
+                                        context.pushNamed('List_hutang');
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.arrow_downward_sharp,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                          Text(
+                                            'Catat Hutang',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(width: 20.0)),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed('Informasi_bisnis');
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.arrow_upward,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                          Text(
+                                            'Catat Piutang',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(width: 20.0)),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed('Halaman-akun');
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

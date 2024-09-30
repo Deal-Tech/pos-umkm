@@ -566,7 +566,7 @@ class UpdateQrisCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Update Qris ',
       apiUrl: '$baseUrl/qris/$qrisId',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -675,6 +675,203 @@ class GetQrisCall {
 }
 
 /// End QRIS Group Code
+
+/// Start Debt Group Code
+
+class DebtGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static GetDebtCall getDebtCall = GetDebtCall();
+  static AddDebtCall addDebtCall = AddDebtCall();
+  static UpdateDebtCall updateDebtCall = UpdateDebtCall();
+  static UpdateDebtIsPaidCall updateDebtIsPaidCall = UpdateDebtIsPaidCall();
+  static DeleteDebtCall deleteDebtCall = DeleteDebtCall();
+}
+
+class GetDebtCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = DebtGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Debt',
+      apiUrl: '$baseUrl/debts',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddDebtCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? phone = '',
+    String? jenis = '',
+    String? description = '',
+    int? amount,
+    String? dueDate = '',
+    bool? isPaid,
+    String? token = '',
+  }) async {
+    final baseUrl = DebtGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "phone": "$phone",
+  "jenis": "$jenis",
+  "description": "$description",
+  "amount": $amount,
+  "due_date": "$dueDate",
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add Debt',
+      apiUrl: '$baseUrl/debts',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateDebtCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? phone = '',
+    String? jenis = '',
+    String? description = '',
+    int? amount,
+    String? dueDate = '',
+    bool? isPaid,
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = DebtGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "phone": "$phone",
+  "jenis": "$jenis",
+  "description": "$description",
+  "amount": $amount,
+  "due_date": "$dueDate",
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Debt',
+      apiUrl: '$baseUrl/debts/$id',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateDebtIsPaidCall {
+  Future<ApiCallResponse> call({
+    bool? isPaid,
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = DebtGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Debt is paid',
+      apiUrl: '$baseUrl/debts/$id',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteDebtCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = DebtGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Debt',
+      apiUrl: '$baseUrl/debts$id',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Debt Group Code
 
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
@@ -1389,7 +1586,7 @@ class ApiListProductFixedBugCall {
 class ReportCall {
   static Future<ApiCallResponse> call({
     String? token = '',
-    String? filter = 'minggu_ini',
+    String? filter = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Report',

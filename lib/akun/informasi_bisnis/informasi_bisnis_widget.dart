@@ -4,21 +4,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'informasi_bisnis_model.dart';
 export 'informasi_bisnis_model.dart';
 
 class InformasiBisnisWidget extends StatefulWidget {
-  const InformasiBisnisWidget({
-    super.key,
-    required this.namapemilik,
-    required this.email,
-    required this.phone,
-  });
-
-  final String? namapemilik;
-  final String? email;
-  final String? phone;
+  const InformasiBisnisWidget({super.key});
 
   @override
   State<InformasiBisnisWidget> createState() => _InformasiBisnisWidgetState();
@@ -33,6 +25,13 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => InformasiBisnisModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResult4hj = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -214,11 +213,30 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                             ),
                                           ),
                                           Text(
-                                            'Jl. Sumber jaya. klaten, jawa tengah 65145',
+                                            QrisGroup.getQrisCall.status(
+                                                      columnGetQrisResponse
+                                                          .jsonBody,
+                                                    ) ==
+                                                    1
+                                                ? 'Terverifikasi'
+                                                : 'Belum Verifikasi',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Rubik',
+                                                  color: QrisGroup.getQrisCall
+                                                              .status(
+                                                            columnGetQrisResponse
+                                                                .jsonBody,
+                                                          ) ==
+                                                          1
+                                                      ? FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary
+                                                      : FlutterFlowTheme.of(
+                                                              context)
+                                                          .error,
+                                                  fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                 ),
                                           ),
@@ -255,7 +273,11 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                     children: [
                                                       Text(
                                                         valueOrDefault<String>(
-                                                          widget.namapemilik,
+                                                          ApiGetUserCall.nama(
+                                                            (_model.apiResult4hj
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          ),
                                                           'nama',
                                                         ),
                                                         style:
@@ -289,8 +311,12 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                             queryParameters: {
                                                               'pemilik':
                                                                   serializeParam(
-                                                                widget
-                                                                    .namapemilik,
+                                                                ApiGetUserCall
+                                                                    .nama(
+                                                                  (_model.apiResult4hj
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                ),
                                                                 ParamType
                                                                     .String,
                                                               ),
@@ -338,39 +364,80 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                             context)
                                                         .secondaryBackground,
                                                   ),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Text(
-                                                        valueOrDefault<String>(
-                                                          widget.email,
-                                                          'email',
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      context.pushNamed(
+                                                        'edit_email',
+                                                        queryParameters: {
+                                                          'nomor':
+                                                              serializeParam(
+                                                            ApiGetUserCall
+                                                                .phone(
+                                                              (_model.apiResult4hj
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            ),
+                                                            ParamType.String,
+                                                          ),
+                                                          'email':
+                                                              serializeParam(
+                                                            ApiGetUserCall
+                                                                .email(
+                                                              (_model.apiResult4hj
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            ),
+                                                            ParamType.String,
+                                                          ),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            ApiGetUserCall
+                                                                .email(
+                                                              (_model.apiResult4hj
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            ),
+                                                            'email',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
                                                         ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Rubik',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                      const FaIcon(
-                                                        FontAwesomeIcons.edit,
-                                                        color:
-                                                            Color(0x8057636C),
-                                                        size: 18.0,
-                                                      ),
-                                                    ].divide(
-                                                        const SizedBox(width: 10.0)),
+                                                        const FaIcon(
+                                                          FontAwesomeIcons.edit,
+                                                          color:
+                                                              Color(0x8057636C),
+                                                          size: 18.0,
+                                                        ),
+                                                      ].divide(const SizedBox(
+                                                          width: 10.0)),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -409,7 +476,11 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                     children: [
                                                       Text(
                                                         valueOrDefault<String>(
-                                                          widget.phone,
+                                                          ApiGetUserCall.phone(
+                                                            (_model.apiResult4hj
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          ),
                                                           'phone',
                                                         ),
                                                         style:
@@ -443,13 +514,23 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                             queryParameters: {
                                                               'nomor':
                                                                   serializeParam(
-                                                                widget.phone,
+                                                                ApiGetUserCall
+                                                                    .phone(
+                                                                  (_model.apiResult4hj
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                ),
                                                                 ParamType
                                                                     .String,
                                                               ),
                                                               'email':
                                                                   serializeParam(
-                                                                widget.email,
+                                                                ApiGetUserCall
+                                                                    .email(
+                                                                  (_model.apiResult4hj
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                ),
                                                                 ParamType
                                                                     .String,
                                                               ),
@@ -506,16 +587,30 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                           MainAxisSize.max,
                                                       children: [
                                                         Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            QrisGroup
-                                                                .getQrisCall
-                                                                .norek(
-                                                              columnGetQrisResponse
-                                                                  .jsonBody,
-                                                            ),
-                                                            'nomor rekening',
-                                                          ),
+                                                          QrisGroup.getQrisCall
+                                                                          .bank(
+                                                                        columnGetQrisResponse
+                                                                            .jsonBody,
+                                                                      ) !=
+                                                                      null &&
+                                                                  QrisGroup
+                                                                          .getQrisCall
+                                                                          .bank(
+                                                                        columnGetQrisResponse
+                                                                            .jsonBody,
+                                                                      ) !=
+                                                                      ''
+                                                              ? valueOrDefault<
+                                                                  String>(
+                                                                  QrisGroup
+                                                                      .getQrisCall
+                                                                      .norek(
+                                                                    columnGetQrisResponse
+                                                                        .jsonBody,
+                                                                  ),
+                                                                  'nomor rekening',
+                                                                )
+                                                              : 'Rekening tidak dapat diubah jika belum mengajukan QRIS',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -605,7 +700,7 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  'Status',
+                                                  'Alamat',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -615,36 +710,96 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                                 ),
-                                                Text(
-                                                  QrisGroup.getQrisCall.status(
-                                                            columnGetQrisResponse
-                                                                .jsonBody,
-                                                          ) ==
-                                                          1
-                                                      ? 'Terverifikasi'
-                                                      : 'Belum Verifikasi',
-                                                  style:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            color: QrisGroup
+                                                Container(
+                                                  width: 200.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                  ),
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      context.pushNamed(
+                                                        'edit_alamat_bisnis',
+                                                        queryParameters: {
+                                                          'alamat':
+                                                              serializeParam(
+                                                            QrisGroup
+                                                                .getQrisCall
+                                                                .alamatusaha(
+                                                              columnGetQrisResponse
+                                                                  .jsonBody,
+                                                            ),
+                                                            ParamType.String,
+                                                          ),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Flexible(
+                                                          child: Text(
+                                                            QrisGroup.getQrisCall
+                                                                            .alamatusaha(
+                                                                          columnGetQrisResponse
+                                                                              .jsonBody,
+                                                                        ) !=
+                                                                        null &&
+                                                                    QrisGroup
+                                                                            .getQrisCall
+                                                                            .alamatusaha(
+                                                                          columnGetQrisResponse
+                                                                              .jsonBody,
+                                                                        ) !=
+                                                                        ''
+                                                                ? valueOrDefault<
+                                                                    String>(
+                                                                    QrisGroup
                                                                         .getQrisCall
-                                                                        .status(
+                                                                        .alamatusaha(
                                                                       columnGetQrisResponse
                                                                           .jsonBody,
-                                                                    ) ==
-                                                                    1
-                                                                ? FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.0,
+                                                                    ),
+                                                                    'alamat',
+                                                                  )
+                                                                : 'Alamat tidak dapat diubah jika belum mengajukan QRIS',
+                                                            textAlign:
+                                                                TextAlign.end,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Rubik',
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                           ),
+                                                        ),
+                                                        const FaIcon(
+                                                          FontAwesomeIcons.edit,
+                                                          color:
+                                                              Color(0x8057636C),
+                                                          size: 18.0,
+                                                        ),
+                                                      ].divide(const SizedBox(
+                                                          width: 10.0)),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),

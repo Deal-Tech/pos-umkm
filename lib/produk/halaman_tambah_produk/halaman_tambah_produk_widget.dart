@@ -1102,44 +1102,20 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                             );
 
                             if ((_model.apiResultysp?.succeeded ?? true)) {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Sukses'),
-                                    content: Text(
-                                        (_model.apiResultysp?.bodyText ?? '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
                               FFAppState().selectcategory = CategoriesStruct();
                               safeSetState(() {});
 
-                              context.pushNamed('Home');
+                              context.pushNamed('sukses_add-produk');
                             } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Gagal'),
-                                    content: Text(
-                                        (_model.apiResultysp?.bodyText ?? '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                              context.pushNamed(
+                                'gagal-add-produk',
+                                queryParameters: {
+                                  'pesanerror': serializeParam(
+                                    (_model.apiResultysp?.exceptionMessage ??
+                                        ''),
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
                               );
                             }
 

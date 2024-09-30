@@ -4,19 +4,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'halaman_akun_model.dart';
 export 'halaman_akun_model.dart';
 
 class HalamanAkunWidget extends StatefulWidget {
-  const HalamanAkunWidget({
-    super.key,
-    required this.email,
-    required this.phone,
-  });
-
-  final String? email;
-  final String? phone;
+  const HalamanAkunWidget({super.key});
 
   @override
   State<HalamanAkunWidget> createState() => _HalamanAkunWidgetState();
@@ -31,6 +25,13 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HalamanAkunModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultgetuser = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -70,8 +71,8 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.safePop();
                               },
                               text: '',
                               icon: const Icon(
@@ -238,11 +239,19 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                           'Halaman-detail-profil',
                                           queryParameters: {
                                             'email': serializeParam(
-                                              widget.email,
+                                              ApiGetUserCall.email(
+                                                (_model.apiResultgetuser
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ),
                                               ParamType.String,
                                             ),
                                             'phone': serializeParam(
-                                              widget.phone,
+                                              ApiGetUserCall.phone(
+                                                (_model.apiResultgetuser
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ),
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,

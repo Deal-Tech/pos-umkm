@@ -93,3 +93,24 @@ export '/akun/edit_alamat/edit_alamat_widget.dart' show EditAlamatWidget;
 export '/akun/edit_rekening/edit_rekening_widget.dart' show EditRekeningWidget;
 export '/transaksi/expense_history/expense_history_widget.dart'
     show ExpenseHistoryWidget;
+export '/akun/edit_alamat_bisnis/edit_alamat_bisnis_widget.dart'
+    show EditAlamatBisnisWidget;
+export '/struk/pengaturan_struk/pengaturan_struk_widget.dart'
+    show PengaturanStrukWidget;
+export '/struk/edit_nama_usaha/edit_nama_usaha_widget.dart'
+    show EditNamaUsahaWidget;
+export '/struk/edit_nomor_telepon/edit_nomor_telepon_widget.dart'
+    show EditNomorTeleponWidget;
+export '/struk/edit_alamat_usaha/edit_alamat_usaha_widget.dart'
+    show EditAlamatUsahaWidget;
+export '/hutang/catatan_hutang/catatan_hutang_widget.dart'
+    show CatatanHutangWidget;
+export '/hutang/catatan_piutang/catatan_piutang_widget.dart'
+    show CatatanPiutangWidget;
+export '/hutang/list_hutang/list_hutang_widget.dart' show ListHutangWidget;
+export '/hutang/list_piutang/list_piutang_widget.dart' show ListPiutangWidget;
+export '/hutang/detail_hutang/detail_hutang_widget.dart'
+    show DetailHutangWidget;
+export '/hutang/detail_piutang/detail_piutang_widget.dart'
+    show DetailPiutangWidget;
+export '/akun/edit_email/edit_email_widget.dart' show EditEmailWidget;

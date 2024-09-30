@@ -6,7 +6,12 @@ import 'gagal_add_produk_model.dart';
 export 'gagal_add_produk_model.dart';
 
 class GagalAddProdukWidget extends StatefulWidget {
-  const GagalAddProdukWidget({super.key});
+  const GagalAddProdukWidget({
+    super.key,
+    required this.pesanerror,
+  });
+
+  final String? pesanerror;
 
   @override
   State<GagalAddProdukWidget> createState() => _GagalAddProdukWidgetState();
@@ -151,7 +156,7 @@ class _GagalAddProdukWidgetState extends State<GagalAddProdukWidget> {
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 5.0, 0.0, 0.0),
                                 child: Text(
-                                  'Gagal menambahkan produk, silahkan cek kesalahan dan ulangi lagi',
+                                  'Gagal menambahkan produk, pesan error \"${widget.pesanerror}\"',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium

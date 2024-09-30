@@ -86,7 +86,7 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                   children: [
                     Column(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           height: MediaQuery.sizeOf(context).height * 0.07,
@@ -140,11 +140,45 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                   },
                                 ),
                                 Container(
-                                  width: 100.0,
-                                  height: 100.0,
+                                  width: 150.0,
+                                  height: 40.0,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    borderRadius: BorderRadius.circular(6.0),
+                                  ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context
+                                          .pushNamed('Halaman_tambah-produk');
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.add_circle_outline_sharp,
+                                          color: Colors.white,
+                                          size: 24.0,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            'Tambah Produk',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: Colors.white,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ].divide(const SizedBox(width: 5.0)),
+                                    ),
                                   ),
                                 ),
                               ].divide(const SizedBox(width: 25.0)),

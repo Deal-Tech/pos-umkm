@@ -75,13 +75,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
         ),
         FFRoute(
           name: 'SplashPage',
@@ -239,16 +239,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-akun',
           path: '/halamanAkun',
-          builder: (context, params) => HalamanAkunWidget(
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            phone: params.getParam(
-              'phone',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => const HalamanAkunWidget(),
         ),
         FFRoute(
           name: 'Halaman-detail-profil',
@@ -362,7 +353,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'gagal-add-produk',
           path: '/gagalAddProduk',
-          builder: (context, params) => const GagalAddProdukWidget(),
+          builder: (context, params) => GagalAddProdukWidget(
+            pesanerror: params.getParam(
+              'pesanerror',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Statistik',
@@ -423,20 +419,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Informasi_bisnis',
           path: '/informasiBisnis',
-          builder: (context, params) => InformasiBisnisWidget(
-            namapemilik: params.getParam(
-              'namapemilik',
-              ParamType.String,
-            ),
-            email: params.getParam(
-              'email',
-              ParamType.String,
-            ),
-            phone: params.getParam(
-              'phone',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => const InformasiBisnisWidget(),
         ),
         FFRoute(
           name: 'Transaksi-keluar',
@@ -525,6 +508,124 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'expense_history',
           path: '/expenseHistory',
           builder: (context, params) => const ExpenseHistoryWidget(),
+        ),
+        FFRoute(
+          name: 'edit_alamat_bisnis',
+          path: '/editAlamatBisnis',
+          builder: (context, params) => EditAlamatBisnisWidget(
+            alamat: params.getParam(
+              'alamat',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'pengaturan_struk',
+          path: '/pengaturanStruk',
+          builder: (context, params) => const PengaturanStrukWidget(),
+        ),
+        FFRoute(
+          name: 'edit_nama_usaha',
+          path: '/editNamaUsaha',
+          builder: (context, params) => EditNamaUsahaWidget(
+            namausaha: params.getParam(
+              'namausaha',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'edit_nomor_telepon',
+          path: '/editNomorTelepon',
+          builder: (context, params) => EditNomorTeleponWidget(
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'edit_alamat_usaha',
+          path: '/editAlamatUsaha',
+          builder: (context, params) => EditAlamatUsahaWidget(
+            alamat: params.getParam(
+              'alamat',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'catatan_hutang',
+          path: '/catatanHutang',
+          builder: (context, params) => const CatatanHutangWidget(),
+        ),
+        FFRoute(
+          name: 'catatan_piutang',
+          path: '/catatanPiutang',
+          builder: (context, params) => const CatatanPiutangWidget(),
+        ),
+        FFRoute(
+          name: 'List_hutang',
+          path: '/listHutang',
+          builder: (context, params) => const ListHutangWidget(),
+        ),
+        FFRoute(
+          name: 'List_piutang',
+          path: '/listPiutang',
+          builder: (context, params) => const ListPiutangWidget(),
+        ),
+        FFRoute(
+          name: 'Detail_hutang',
+          path: '/detailHutang',
+          builder: (context, params) => DetailHutangWidget(
+            jenis: params.getParam(
+              'jenis',
+              ParamType.String,
+            ),
+            nama: params.getParam(
+              'nama',
+              ParamType.String,
+            ),
+            nominal: params.getParam(
+              'nominal',
+              ParamType.int,
+            ),
+            duedate: params.getParam(
+              'duedate',
+              ParamType.String,
+            ),
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+            ispaid: params.getParam(
+              'ispaid',
+              ParamType.bool,
+            ),
+            id: params.getParam(
+              'id',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'Detail_piutang',
+          path: '/detailPiutang',
+          builder: (context, params) => const DetailPiutangWidget(),
+        ),
+        FFRoute(
+          name: 'edit_email',
+          path: '/editEmail',
+          builder: (context, params) => EditEmailWidget(
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -695,7 +796,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/halamanDepan';
+            return '/splashPage';
           }
           return null;
         },

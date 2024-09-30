@@ -97,8 +97,8 @@ class _HalamanDepanWidgetState extends State<HalamanDepanWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        context.pushNamed('HalamanBuatakun');
                       },
                       text: 'Buat akun baru',
                       options: FFButtonOptions(
@@ -120,8 +120,8 @@ class _HalamanDepanWidgetState extends State<HalamanDepanWidget> {
                       ),
                     ),
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        context.pushNamed('Halaman_login_2');
                       },
                       text: 'Masuk',
                       options: FFButtonOptions(

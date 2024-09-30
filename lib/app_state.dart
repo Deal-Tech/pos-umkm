@@ -39,6 +39,17 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _userid = prefs.getString('ff_userid') ?? _userid;
     });
+    _safeInit(() {
+      if (prefs.containsKey('ff_SettingStruk')) {
+        try {
+          final serializedData = prefs.getString('ff_SettingStruk') ?? '{}';
+          _SettingStruk = SettingStrukStruct.fromSerializableMap(
+              jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
   }
 
   void update(VoidCallback callback) {
@@ -168,6 +179,24 @@ class FFAppState extends ChangeNotifier {
   String get filterreport => _filterreport;
   set filterreport(String value) {
     _filterreport = value;
+  }
+
+  SettingStrukStruct _SettingStruk = SettingStrukStruct();
+  SettingStrukStruct get SettingStruk => _SettingStruk;
+  set SettingStruk(SettingStrukStruct value) {
+    _SettingStruk = value;
+    prefs.setString('ff_SettingStruk', value.serialize());
+  }
+
+  void updateSettingStrukStruct(Function(SettingStrukStruct) updateFn) {
+    updateFn(_SettingStruk);
+    prefs.setString('ff_SettingStruk', _SettingStruk.serialize());
+  }
+
+  String _SelectJenisDebt = '';
+  String get SelectJenisDebt => _SelectJenisDebt;
+  set SelectJenisDebt(String value) {
+    _SelectJenisDebt = value;
   }
 }
 
