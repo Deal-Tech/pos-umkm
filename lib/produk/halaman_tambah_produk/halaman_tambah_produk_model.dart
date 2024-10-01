@@ -12,14 +12,10 @@ class HalamanTambahProdukModel
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
-  ApiCallResponse? apiResultUploudImage1;
   bool isDataUploading2 = false;
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
-  ApiCallResponse? apiResultUploudImage2;
   // State field(s) for NamaProduk widget.
   FocusNode? namaProdukFocusNode;
   TextEditingController? namaProdukTextController;
@@ -43,6 +39,12 @@ class HalamanTambahProdukModel
   FocusNode? barcodeFocusNode;
   TextEditingController? barcodeTextController;
   String? Function(BuildContext, String?)? barcodeTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Button widget.
+  ApiCallResponse? apiResultUploudImage1;
+  // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
+  ApiCallResponse? apiResultyspp;
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Button widget.
+  ApiCallResponse? apiResultUploudImage2;
   // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
   ApiCallResponse? apiResultysp;
 

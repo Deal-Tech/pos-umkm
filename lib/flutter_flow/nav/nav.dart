@@ -407,6 +407,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'productid',
               ParamType.String,
             ),
+            imagetampil: params.getParam(
+              'imagetampil',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -560,19 +564,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CatatanHutangWidget(),
         ),
         FFRoute(
-          name: 'catatan_piutang',
-          path: '/catatanPiutang',
-          builder: (context, params) => const CatatanPiutangWidget(),
-        ),
-        FFRoute(
           name: 'List_hutang',
           path: '/listHutang',
           builder: (context, params) => const ListHutangWidget(),
-        ),
-        FFRoute(
-          name: 'List_piutang',
-          path: '/listPiutang',
-          builder: (context, params) => const ListPiutangWidget(),
         ),
         FFRoute(
           name: 'Detail_hutang',
@@ -609,11 +603,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'Detail_piutang',
-          path: '/detailPiutang',
-          builder: (context, params) => const DetailPiutangWidget(),
-        ),
-        FFRoute(
           name: 'edit_email',
           path: '/editEmail',
           builder: (context, params) => EditEmailWidget(
@@ -626,6 +615,50 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'catatan_piutang',
+          path: '/catatanPiutang',
+          builder: (context, params) => const CatatanPiutangWidget(),
+        ),
+        FFRoute(
+          name: 'Detail_piutang',
+          path: '/detailPiutang',
+          builder: (context, params) => DetailPiutangWidget(
+            jenis: params.getParam(
+              'jenis',
+              ParamType.String,
+            ),
+            nama: params.getParam(
+              'nama',
+              ParamType.String,
+            ),
+            nominal: params.getParam(
+              'nominal',
+              ParamType.int,
+            ),
+            duedate: params.getParam(
+              'duedate',
+              ParamType.String,
+            ),
+            nomor: params.getParam(
+              'nomor',
+              ParamType.String,
+            ),
+            ispaid: params.getParam(
+              'ispaid',
+              ParamType.bool,
+            ),
+            id: params.getParam(
+              'id',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'List_piutang',
+          path: '/listPiutang',
+          builder: (context, params) => const ListPiutangWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

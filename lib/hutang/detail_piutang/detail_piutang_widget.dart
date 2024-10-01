@@ -1,13 +1,33 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'detail_piutang_model.dart';
 export 'detail_piutang_model.dart';
 
 class DetailPiutangWidget extends StatefulWidget {
-  const DetailPiutangWidget({super.key});
+  const DetailPiutangWidget({
+    super.key,
+    required this.jenis,
+    required this.nama,
+    required this.nominal,
+    required this.duedate,
+    required this.nomor,
+    required this.ispaid,
+    required this.id,
+  });
+
+  final String? jenis;
+  final String? nama;
+  final int? nominal;
+  final String? duedate;
+  final String? nomor;
+  final bool? ispaid;
+  final String? id;
 
   @override
   State<DetailPiutangWidget> createState() => _DetailPiutangWidgetState();
@@ -22,9 +42,6 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DetailPiutangModel());
-
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -130,12 +147,23 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                     width: 10.0,
                                     height: 10.0,
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF00B2D1),
+                                      color: () {
+                                        if (widget.jenis == 'Pelanggan') {
+                                          return const Color(0xFF00B2D1);
+                                        } else if (widget.jenis == 'Suplier') {
+                                          return const Color(0xFFFF9F05);
+                                        } else {
+                                          return const Color(0xFF0EC244);
+                                        }
+                                      }(),
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                   ),
                                   Text(
-                                    'Pelanggan',
+                                    valueOrDefault<String>(
+                                      widget.jenis,
+                                      'jenis',
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -179,7 +207,10 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                   ),
                             ),
                             Text(
-                              'Nico Saputra',
+                              valueOrDefault<String>(
+                                widget.nama,
+                                'nama',
+                              ),
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -210,7 +241,12 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                   ),
                             ),
                             Text(
-                              'Rp10.500.000',
+                              formatNumber(
+                                widget.nominal,
+                                formatType: FormatType.decimal,
+                                decimalType: DecimalType.automatic,
+                                currency: 'Rp ',
+                              ),
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -241,7 +277,10 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                   ),
                             ),
                             Text(
-                              '15/Agus/2024',
+                              valueOrDefault<String>(
+                                widget.duedate,
+                                'jatuh tempo',
+                              ),
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -272,7 +311,10 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                   ),
                             ),
                             Text(
-                              '085312014562',
+                              valueOrDefault<String>(
+                                widget.nomor,
+                                'nomor',
+                              ),
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -297,102 +339,6 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Catatan',
-                                textAlign: TextAlign.start,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: 200.0,
-                                      child: TextFormField(
-                                        controller: _model.textController,
-                                        focusNode: _model.textFieldFocusNode,
-                                        autofocus: false,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          hintText: 'TextField',
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          filled: true,
-                                          fillColor: const Color(0xFFE8E8E8),
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                        maxLines: 4,
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .textControllerValidator
-                                            .asValidator(context),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 10.0, 0.0, 20.0),
@@ -401,37 +347,154 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                      child: FFButtonWidget(
-                                        onPressed: () {
-                                          print('Button pressed ...');
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.38,
+                                      height: 50.0,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0x320EC244),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          await launchURL(
+                                              'https://wa.me/${widget.nomor}');
                                         },
-                                        text: 'Tandai Lunas',
-                                        options: FFButtonOptions(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  0.38,
-                                          height: 50.0,
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          iconPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            FaIcon(
+                                              FontAwesomeIcons.whatsapp,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 24.0,
+                                            ),
+                                            Text(
+                                              'Hubungi',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
                                                   .override(
                                                     fontFamily: 'Rubik',
-                                                    color: Colors.white,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    fontSize: 16.0,
                                                     letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                          elevation: 0.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                            ),
+                                          ].divide(const SizedBox(width: 10.0)),
                                         ),
+                                      ),
+                                    ),
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        if (widget.ispaid!) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: const Text('Status'),
+                                                content: const Text(
+                                                    'Piutang  Sudah Lunas'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: const Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          _model.apiResultrgl =
+                                              await ReceivableGroup
+                                                  .updateReceivableIsPaidCall
+                                                  .call(
+                                            isPaid: true,
+                                            id: widget.id,
+                                            token: currentAuthenticationToken,
+                                          );
+
+                                          if ((_model.apiResultrgl?.succeeded ??
+                                              true)) {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: const Text('Berhasil'),
+                                                  content: const Text(
+                                                      'Ubah Status Piutang Berhasil'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: const Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            context.safePop();
+                                          } else {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: const Text('Berhasil'),
+                                                  content: const Text(
+                                                      'Ubah Status Piutang Gagal'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: const Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                      text: 'Tandai Lunas',
+                                      options: FFButtonOptions(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.38,
+                                        height: 50.0,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Rubik',
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        elevation: 0.0,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ],

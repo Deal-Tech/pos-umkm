@@ -25,9 +25,6 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HalamanKelolaTokoModel());
-
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -106,109 +103,6 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 0.08,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5.0,
-                              color: Color(0x10000000),
-                              offset: Offset(
-                                0.0,
-                                2.0,
-                              ),
-                            )
-                          ],
-                          border: Border.all(
-                            color: const Color(0x1E3E3E3E),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: const AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 20.0, 0.0),
-                            child: SizedBox(
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              child: TextFormField(
-                                controller: _model.textController,
-                                focusNode: _model.textFieldFocusNode,
-                                autofocus: false,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  labelStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0.0,
-                                      ),
-                                  hintText: 'Apa yang ingin kamu cari',
-                                  hintStyle: FlutterFlowTheme.of(context)
-                                      .labelSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: const Color(0x9957636C),
-                                        letterSpacing: 0.0,
-                                      ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x4E57636C),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context).error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  filled: true,
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  suffixIcon: const Icon(
-                                    Icons.search,
-                                    size: 25.0,
-                                  ),
-                                ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                                cursorColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                validator: _model.textControllerValidator
-                                    .asValidator(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn,
@@ -403,7 +297,7 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 10.0, 20.0, 0.0),
                             child: Container(
-                              height: 120.0,
+                              height: 110.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -444,28 +338,54 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 10.0, 5.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Kantong Pembayaran',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 15.0,
-                                        ),
-                                      ],
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Ups!!'),
+                                              content: const Text(
+                                                  'Fitur ini masih dalam pengembangan..'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Kantong Pembayaran',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 15.0,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Divider(
@@ -639,7 +559,7 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 10.0, 20.0, 0.0),
                             child: Container(
-                              height: 120.0,
+                              height: 130.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -754,6 +674,11 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                                       ),
                                     ),
                                   ),
+                                  Divider(
+                                    thickness: 1.0,
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
                                 ],
                               ),
                             ),
@@ -809,8 +734,24 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        context.pushNamed(
-                                            'halaman-daftar-karyawan');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Ups!!'),
+                                              content: const Text(
+                                                  'Fitur ini masih dalam pengembangan..'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

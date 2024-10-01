@@ -54,7 +54,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         key: scaffoldKey,
         backgroundColor: const Color(0xFFF5F7FA),
         drawer: SizedBox(
-          width: MediaQuery.sizeOf(context).width * 0.8,
+          width: MediaQuery.sizeOf(context).width * 0.7,
           child: Drawer(
             elevation: 16.0,
             child: Container(
@@ -90,7 +90,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 20.0, 20.0, 15.0),
+                                20.0, 60.0, 20.0, 15.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,42 +159,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   ),
                                   Text(
                                     'Kategori',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Rubik',
-                                          color: Colors.white,
-                                          fontSize: 18.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ].divide(const SizedBox(width: 20.0)),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 10.0, 20.0, 10.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                context.pushNamed('Halaman-riwayat-transaksi');
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.history,
-                                    color: Colors.white,
-                                    size: 24.0,
-                                  ),
-                                  Text(
-                                    'Riwayat Transaksi',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -471,7 +435,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('Informasi_bisnis');
+                                context.pushNamed('List_piutang');
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -579,8 +543,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                FFAppState().apilogin = '';
-                                safeSetState(() {});
+                                var confirmDialogResponse =
+                                    await showDialog<bool>(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Konfirmasi'),
+                                              content: const Text(
+                                                  'Apakah Anda yakin ingin keluar?'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext,
+                                                          false),
+                                                  child: const Text('Batal'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext,
+                                                          true),
+                                                  child: const Text('Iya'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ) ??
+                                        false;
                                 GoRouter.of(context).prepareAuthEvent();
                                 await authManager.signOut();
                                 GoRouter.of(context).clearRedirectLocation();
@@ -630,7 +620,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               },
                               text: 'Upgrade Premium',
                               options: FFButtonOptions(
-                                width: 269.0,
+                                width: MediaQuery.sizeOf(context).width * 0.6,
                                 height: 50.0,
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 0.0),
@@ -664,7 +654,6 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Stack(
             children: [
               SingleChildScrollView(
-                primary: false,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -944,6 +933,108 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ScanMode.QR,
                                   );
 
+                                  _model.apiResultd0i =
+                                      await ApiListProductFixedBugCall.call(
+                                    token: currentAuthenticationToken,
+                                    barcode: _model.outputScanBarcode,
+                                  );
+
+                                  if ((_model.apiResultd0i?.succeeded ??
+                                      true)) {
+                                    FFAppState().addToCart(CartItemStruct(
+                                      quantity: 1,
+                                      price:
+                                          ((_model.apiResultd0i?.jsonBody ?? '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .price,
+                                      unit:
+                                          ((_model.apiResultd0i?.jsonBody ?? '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .unit,
+                                      productId:
+                                          ((_model.apiResultd0i?.jsonBody ?? '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .id,
+                                      categoryId:
+                                          ((_model.apiResultd0i?.jsonBody ??
+                                                          '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .categoryId,
+                                      name:
+                                          ((_model.apiResultd0i?.jsonBody ?? '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .name,
+                                      productImageUrl:
+                                          ((_model.apiResultd0i?.jsonBody ?? '')
+                                                      .toList()
+                                                      .map<ProductStruct?>(
+                                                          ProductStruct
+                                                              .maybeFromMap)
+                                                      .toList()
+                                                  as Iterable<ProductStruct?>)
+                                              .withoutNulls
+                                              .first
+                                              .imageUrl,
+                                    ));
+                                    safeSetState(() {});
+
+                                    context.pushNamed('Halaman_detail_list');
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: const Text('Gagal'),
+                                          content: Text((_model.apiResultd0i
+                                                  ?.exceptionMessage ??
+                                              '')),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: const Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+
                                   safeSetState(() {});
                                 },
                                 child: Icon(
@@ -1039,173 +1130,186 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   );
                                 }
 
-                                return GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 20.0,
-                                    mainAxisSpacing: 20.0,
-                                    childAspectRatio: 1.0,
-                                  ),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: listProduk.length,
-                                  itemBuilder: (context, listProdukIndex) {
-                                    final listProdukItem =
-                                        listProduk[listProdukIndex];
-                                    return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        FFAppState().addToCart(CartItemStruct(
-                                          quantity: 1,
-                                          price: listProdukItem.price,
-                                          unit: listProdukItem.unit,
-                                          productId: listProdukItem.id,
-                                          categoryId: listProdukItem.categoryId,
-                                          name: listProdukItem.name,
-                                          productImageUrl:
-                                              listProdukItem.imageUrl,
-                                        ));
-                                        safeSetState(() {});
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 10.0,
-                                              color: Color(0x15000000),
-                                              offset: Offset(
-                                                0.0,
-                                                2.0,
-                                              ),
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.network(
-                                                listProdukItem.imageUrl ==
-                                                        'null'
-                                                    ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
-                                                    : listProdukItem.imageUrl,
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.5,
-                                                height:
-                                                    MediaQuery.sizeOf(context)
-                                                            .height *
-                                                        0.11,
-                                                fit: BoxFit.contain,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: const AlignmentDirectional(
-                                                  -1.0, 0.0),
-                                              child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 10.0, 0.0, 0.0),
-                                                child: Text(
-                                                  listProdukItem.name,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                return RefreshIndicator(
+                                  onRefresh: () async {
+                                    safeSetState(() =>
+                                        _model.apiRequestCompleter = null);
+                                    await _model.waitForApiRequestCompleted();
+                                  },
+                                  child: GridView.builder(
+                                    padding: EdgeInsets.zero,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 20.0,
+                                      mainAxisSpacing: 20.0,
+                                      childAspectRatio: 1.0,
+                                    ),
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: listProduk.length,
+                                    itemBuilder: (context, listProdukIndex) {
+                                      final listProdukItem =
+                                          listProduk[listProdukIndex];
+                                      return InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          FFAppState().addToCart(CartItemStruct(
+                                            quantity: 1,
+                                            price: listProdukItem.price,
+                                            unit: listProdukItem.unit,
+                                            productId: listProdukItem.id,
+                                            categoryId:
+                                                listProdukItem.categoryId,
+                                            name: listProdukItem.name,
+                                            productImageUrl:
+                                                listProdukItem.imageUrl,
+                                          ));
+                                          safeSetState(() {});
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 10.0,
+                                                color: Color(0x15000000),
+                                                offset: Offset(
+                                                  0.0,
+                                                  2.0,
+                                                ),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                child: Image.network(
+                                                  listProdukItem.imageUrl ==
+                                                          'null'
+                                                      ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                                      : listProdukItem.imageUrl,
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.5,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.11,
+                                                  fit: BoxFit.contain,
                                                 ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 0.0, 10.0, 0.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  5.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        formatNumber(
-                                                          listProdukItem.price,
-                                                          formatType: FormatType
-                                                              .decimal,
-                                                          decimalType:
-                                                              DecimalType
-                                                                  .automatic,
-                                                          currency: 'Rp ',
+                                              Align(
+                                                alignment: const AlignmentDirectional(
+                                                    -1.0, 0.0),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          10.0, 10.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    listProdukItem.name,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w500,
                                                         ),
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Rubik',
-                                                              color: const Color(
-                                                                  0xFF0EC244),
-                                                              fontSize: 16.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 10.0, 0.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              -1.0, 0.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          formatNumber(
+                                                            listProdukItem
+                                                                .price,
+                                                            formatType:
+                                                                FormatType
+                                                                    .decimal,
+                                                            decimalType:
+                                                                DecimalType
+                                                                    .automatic,
+                                                            currency: 'Rp ',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                color: const Color(
+                                                                    0xFF0EC244),
+                                                                fontSize: 16.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(0xFF0EC244),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            const Color(0xFF0EC244),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      child: const Icon(
+                                                        Icons.add,
+                                                        color: Colors.white,
+                                                        size: 25.0,
+                                                      ),
                                                     ),
-                                                    child: const Icon(
-                                                      Icons.add,
-                                                      color: Colors.white,
-                                                      size: 25.0,
-                                                    ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             );

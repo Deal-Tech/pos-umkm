@@ -181,8 +181,24 @@ class _HalamanKategoriPengeluaranWidgetState
                               ),
                             ),
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Upss!!'),
+                                      content: const Text(
+                                          'Fitur ini masih dalam pengembangan'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               text: 'Tambah',
                               options: FFButtonOptions(

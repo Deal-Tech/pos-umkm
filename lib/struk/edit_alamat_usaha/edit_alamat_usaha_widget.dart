@@ -68,8 +68,8 @@ class _EditAlamatUsahaWidgetState extends State<EditAlamatUsahaWidget> {
                               Align(
                                 alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    context.safePop();
                                   },
                                   text: '',
                                   icon: const Icon(
@@ -241,6 +241,7 @@ class _EditAlamatUsahaWidgetState extends State<EditAlamatUsahaWidget> {
                         (e) => e..alamat = _model.textController.text,
                       );
                       safeSetState(() {});
+                      context.safePop();
                     },
                     text: 'Simpan Perubahan',
                     options: FFButtonOptions(

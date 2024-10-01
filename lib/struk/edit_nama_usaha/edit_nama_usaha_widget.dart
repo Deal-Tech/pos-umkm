@@ -241,6 +241,7 @@ class _EditNamaUsahaWidgetState extends State<EditNamaUsahaWidget> {
                         (e) => e..namaBisnis = _model.textController.text,
                       );
                       safeSetState(() {});
+                      context.safePop();
                     },
                     text: 'Simpan Perubahan',
                     options: FFButtonOptions(

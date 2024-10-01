@@ -213,7 +213,7 @@ class _HalamanPembayaranNonCashWidgetState
                               ),
                               child: FutureBuilder<ApiCallResponse>(
                                 future: ApiGetPaymentPOSCall.call(
-                                  token: FFAppState().apilogin,
+                                  token: currentAuthenticationToken,
                                 ),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.

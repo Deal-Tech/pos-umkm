@@ -9,6 +9,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'detail_transaksi_model.dart';
 export 'detail_transaksi_model.dart';
 
@@ -48,6 +49,8 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -130,8 +133,31 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                         ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 5.0),
+                                  child: Text(
+                                    FFAppState()
+                                                    .SettingStruk
+                                                    .namaBisnis !=
+                                                ''
+                                        ? FFAppState().SettingStruk.namaBisnis
+                                        : 'Nama Usaha',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: const Color(0xFF2A3256),
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ),
                                 Text(
-                                  'Jl. sumber rejeki no 67 kademangan jawa tengah',
+                                  FFAppState().SettingStruk.alamat != ''
+                                      ? FFAppState().SettingStruk.alamat
+                                      : 'Alamat Usaha',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -146,7 +172,10 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 5.0, 0.0, 10.0),
                                   child: Text(
-                                    '085-562-530-255',
+                                    FFAppState().SettingStruk.nomor !=
+                                                ''
+                                        ? FFAppState().SettingStruk.nomor
+                                        : 'Nomor  Usaha',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

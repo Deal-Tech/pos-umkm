@@ -15,17 +15,22 @@ class HalamanSetPasswordModel
   // State field(s) for Password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
+  late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for KonfirmsaiPasword widget.
   FocusNode? konfirmsaiPaswordFocusNode;
   TextEditingController? konfirmsaiPaswordTextController;
+  late bool konfirmsaiPaswordVisibility;
   String? Function(BuildContext, String?)?
       konfirmsaiPaswordTextControllerValidator;
   // Stores action output result for [Backend Call - API (Api Change Password With Code)] action in Button widget.
   ApiCallResponse? apiResultChangePassword;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    passwordVisibility = false;
+    konfirmsaiPaswordVisibility = false;
+  }
 
   @override
   void dispose() {

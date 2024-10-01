@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'other_page_model.dart';
 export 'other_page_model.dart';
 
@@ -36,11 +35,9 @@ class _OtherPageWidgetState extends State<OtherPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return FutureBuilder<ApiCallResponse>(
       future: ApiGetUserCall.call(
-        token: FFAppState().apilogin,
+        token: currentAuthenticationToken,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -585,60 +582,8 @@ class _OtherPageWidgetState extends State<OtherPageWidget> {
                         width: MediaQuery.sizeOf(context).width * 1.0,
                         decoration: const BoxDecoration(),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            _model.apiResult6dy = await ApiLogoutCall.call(
-                              token: FFAppState().apilogin,
-                            );
-
-                            if ((_model.apiResult6dy?.succeeded ?? true)) {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Sukses Logout'),
-                                    content: Text((_model
-                                            .apiResult6dy?.exceptionMessage ??
-                                        '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              FFAppState().apilogin = '';
-                              FFAppState().update(() {});
-                              GoRouter.of(context).prepareAuthEvent();
-                              await authManager.signOut();
-                              GoRouter.of(context).clearRedirectLocation();
-
-                              context.goNamedAuth(
-                                  'Halaman_login_2', context.mounted);
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Gagal Logout'),
-                                    content: Text((_model
-                                            .apiResult6dy?.exceptionMessage ??
-                                        '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-
-                            safeSetState(() {});
+                          onPressed: () {
+                            print('Button pressed ...');
                           },
                           text: 'Keluar',
                           options: FFButtonOptions(

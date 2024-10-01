@@ -258,166 +258,198 @@ class _ExpenseHistoryWidgetState extends State<ExpenseHistoryWidget> {
                                         .toList() ??
                                     [];
 
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: listtransactions.length,
-                                  itemBuilder:
-                                      (context, listtransactionsIndex) {
-                                    final listtransactionsItem =
-                                        listtransactions[listtransactionsIndex];
-                                    return Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            'Expens_detail',
-                                            queryParameters: {
-                                              'total': serializeParam(
-                                                listtransactionsItem.nominal,
-                                                ParamType.int,
-                                              ),
-                                              'transactionsid': serializeParam(
-                                                listtransactionsItem.id,
-                                                ParamType.int,
-                                              ),
-                                              'datetransactions':
-                                                  serializeParam(
-                                                listtransactionsItem.tanggal,
-                                                ParamType.String,
-                                              ),
-                                              'categoryexpense': serializeParam(
-                                                listtransactionsItem
-                                                    .categoryName,
-                                                ParamType.String,
-                                              ),
-                                              'time': serializeParam(
-                                                listtransactionsItem.waktu,
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 100.0,
-                                          height: 75.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 10.0,
-                                                color: Color(0x12000000),
-                                                offset: Offset(
-                                                  0.0,
-                                                  4.0,
+                                return RefreshIndicator(
+                                  onRefresh: () async {
+                                    safeSetState(() =>
+                                        _model.apiRequestCompleter = null);
+                                    await _model.waitForApiRequestCompleted();
+                                  },
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: listtransactions.length,
+                                    itemBuilder:
+                                        (context, listtransactionsIndex) {
+                                      final listtransactionsItem =
+                                          listtransactions[
+                                              listtransactionsIndex];
+                                      return Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 10.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'Expens_detail',
+                                              queryParameters: {
+                                                'total': serializeParam(
+                                                  listtransactionsItem.nominal,
+                                                  ParamType.int,
                                                 ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      formatNumber(
-                                                        listtransactionsItem
-                                                            .nominal,
-                                                        formatType:
-                                                            FormatType.decimal,
-                                                        decimalType: DecimalType
-                                                            .automatic,
-                                                        currency: 'Rp ',
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            fontSize: 18.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                    ),
-                                                    Text(
-                                                      '${listtransactionsItem.tanggal} - ${listtransactionsItem.id.toString()}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  ].divide(
-                                                      const SizedBox(height: 5.0)),
+                                                'transactionsid':
+                                                    serializeParam(
+                                                  listtransactionsItem.id,
+                                                  ParamType.int,
                                                 ),
-                                                FFButtonWidget(
-                                                  onPressed: () {
-                                                    print('Button pressed ...');
-                                                  },
-                                                  text: listtransactionsItem
+                                                'datetransactions':
+                                                    serializeParam(
+                                                  listtransactionsItem.tanggal,
+                                                  ParamType.String,
+                                                ),
+                                                'categoryexpense':
+                                                    serializeParam(
+                                                  listtransactionsItem
                                                       .categoryName,
-                                                  options: FFButtonOptions(
-                                                    height: 29.0,
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(16.0, 0.0,
-                                                                16.0, 0.0),
-                                                    iconPadding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 0.0),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    textStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily: 'Rubik',
-                                                          color: Colors.white,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                    elevation: 0.0,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
-                                                  ),
+                                                  ParamType.String,
                                                 ),
+                                                'time': serializeParam(
+                                                  listtransactionsItem.waktu,
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 100.0,
+                                            height: 75.0,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  blurRadius: 10.0,
+                                                  color: Color(0x12000000),
+                                                  offset: Offset(
+                                                    0.0,
+                                                    4.0,
+                                                  ),
+                                                )
                                               ],
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      15.0, 0.0, 15.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        formatNumber(
+                                                          listtransactionsItem
+                                                              .nominal,
+                                                          formatType: FormatType
+                                                              .decimal,
+                                                          decimalType:
+                                                              DecimalType
+                                                                  .automatic,
+                                                          currency: 'Rp ',
+                                                        ),
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Rubik',
+                                                              fontSize: 18.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                      ),
+                                                      Text(
+                                                        '${listtransactionsItem.tanggal} - ${listtransactionsItem.id.toString()}',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Rubik',
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 5.0)),
+                                                  ),
+                                                  FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text: listtransactionsItem
+                                                        .categoryName,
+                                                    options: FFButtonOptions(
+                                                      height: 29.0,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                color: Colors
+                                                                    .white,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      elevation: 0.0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              6.0),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             );

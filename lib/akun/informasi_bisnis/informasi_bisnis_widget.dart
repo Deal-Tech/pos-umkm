@@ -271,63 +271,37 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
-                                                      Text(
-                                                        valueOrDefault<String>(
-                                                          ApiGetUserCall.nama(
-                                                            (_model.apiResult4hj
-                                                                    ?.jsonBody ??
-                                                                ''),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    29.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            ApiGetUserCall.nama(
+                                                              (_model.apiResult4hj
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            ),
+                                                            'nama',
                                                           ),
-                                                          'nama',
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Rubik',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                      InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          context.pushNamed(
-                                                            'edit_pemilik',
-                                                            queryParameters: {
-                                                              'pemilik':
-                                                                  serializeParam(
-                                                                ApiGetUserCall
-                                                                    .nama(
-                                                                  (_model.apiResult4hj
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                ),
-                                                                ParamType
-                                                                    .String,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
-                                                            }.withoutNulls,
-                                                          );
-                                                        },
-                                                        child: const FaIcon(
-                                                          FontAwesomeIcons.edit,
-                                                          color:
-                                                              Color(0x8057636C),
-                                                          size: 18.0,
                                                         ),
                                                       ),
                                                     ].divide(

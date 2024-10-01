@@ -632,8 +632,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        FFAppState().apilogin = '';
-                                        safeSetState(() {});
                                         GoRouter.of(context).prepareAuthEvent();
                                         await authManager.signOut();
                                         GoRouter.of(context)

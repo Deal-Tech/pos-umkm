@@ -41,8 +41,6 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
       _model.apiResultgetqr = await QrisGroup.getQrisCall.call(
         token: currentAuthenticationToken,
       );
-
-      context.safePop();
     });
 
     _model.nomorRekeningTextController ??=
@@ -91,8 +89,8 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                               Align(
                                 alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    context.safePop();
                                   },
                                   text: '',
                                   icon: const Icon(
@@ -317,6 +315,7 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                                               fontFamily: 'Readex Pro',
                                               letterSpacing: 0.0,
                                             ),
+                                        keyboardType: TextInputType.number,
                                         cursorColor:
                                             FlutterFlowTheme.of(context)
                                                 .primaryText,

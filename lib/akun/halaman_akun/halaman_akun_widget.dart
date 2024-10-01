@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:provider/provider.dart';
 import 'halaman_akun_model.dart';
 export 'halaman_akun_model.dart';
 
@@ -43,8 +42,6 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -418,12 +415,10 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                         ) ??
                                         false;
                                 _model.apiResult1xg = await ApiLogoutCall.call(
-                                  token: FFAppState().apilogin,
+                                  token: currentAuthenticationToken,
                                 );
 
                                 if ((_model.apiResult1xg?.succeeded ?? true)) {
-                                  FFAppState().apilogin = '';
-                                  safeSetState(() {});
                                   GoRouter.of(context).prepareAuthEvent();
                                   await authManager.signOut();
                                   GoRouter.of(context).clearRedirectLocation();

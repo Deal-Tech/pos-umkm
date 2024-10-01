@@ -242,7 +242,7 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                             controller: _model.passwordTextController,
                             focusNode: _model.passwordFocusNode,
                             autofocus: false,
-                            obscureText: false,
+                            obscureText: !_model.passwordVisibility,
                             decoration: InputDecoration(
                               isDense: true,
                               labelStyle: FlutterFlowTheme.of(context)
@@ -292,6 +292,19 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               filled: true,
+                              suffixIcon: InkWell(
+                                onTap: () => safeSetState(
+                                  () => _model.passwordVisibility =
+                                      !_model.passwordVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  _model.passwordVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: 20.0,
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -299,7 +312,7 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                                   fontFamily: 'Rubik',
                                   letterSpacing: 0.0,
                                 ),
-                            maxLines: null,
+                            keyboardType: TextInputType.visiblePassword,
                             cursorColor:
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model.passwordTextControllerValidator
@@ -329,7 +342,7 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                             controller: _model.konfirmsaiPaswordTextController,
                             focusNode: _model.konfirmsaiPaswordFocusNode,
                             autofocus: false,
-                            obscureText: false,
+                            obscureText: !_model.konfirmsaiPaswordVisibility,
                             decoration: InputDecoration(
                               isDense: true,
                               labelStyle: FlutterFlowTheme.of(context)
@@ -379,6 +392,19 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               filled: true,
+                              suffixIcon: InkWell(
+                                onTap: () => safeSetState(
+                                  () => _model.konfirmsaiPaswordVisibility =
+                                      !_model.konfirmsaiPaswordVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  _model.konfirmsaiPaswordVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: 20.0,
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -386,7 +412,7 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                                   fontFamily: 'Rubik',
                                   letterSpacing: 0.0,
                                 ),
-                            maxLines: null,
+                            keyboardType: TextInputType.visiblePassword,
                             cursorColor:
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model

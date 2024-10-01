@@ -314,6 +314,7 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                   fontFamily: 'Readex Pro',
                                                   letterSpacing: 0.0,
                                                 ),
+                                            keyboardType: TextInputType.number,
                                             cursorColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,
@@ -655,6 +656,8 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                             'Readex Pro',
                                                         letterSpacing: 0.0,
                                                       ),
+                                              keyboardType:
+                                                  TextInputType.number,
                                               cursorColor:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
@@ -789,8 +792,13 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                     .fromSTEB(
                                                         5.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  dateTimeFormat("y-MM-d",
-                                                      _model.datePicked),
+                                                  dateTimeFormat(
+                                                    "y-MM-d",
+                                                    _model.datePicked,
+                                                    locale: FFLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -946,7 +954,11 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                         description: _model.deskripsiHutangTextController.text,
                         amount: int.tryParse(
                             _model.jumlahHutangTextController.text),
-                        dueDate: dateTimeFormat("y-MM-d", _model.datePicked),
+                        dueDate: dateTimeFormat(
+                          "y-MM-d",
+                          _model.datePicked,
+                          locale: FFLocalizations.of(context).languageCode,
+                        ),
                         isPaid: false,
                         token: currentAuthenticationToken,
                       );
@@ -957,8 +969,7 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Berhasil'),
-                              content:
-                                  const Text('Berhasil menambahkan catatan hutang'),
+                              content: const Text('Hutang baru berhasil ditambahkan'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
@@ -976,7 +987,8 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Gagal'),
-                              content: const Text('Gagal menambahkan catatan hutang'),
+                              content:
+                                  const Text('Gagal menambahkan catatan hutang baru'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

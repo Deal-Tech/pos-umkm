@@ -13,12 +13,15 @@ class HalamanLogin2Model extends FlutterFlowModel<HalamanLogin2Widget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
+  late bool passwordVisibility;
   String? Function(BuildContext, String?)? textController2Validator;
   // Stores action output result for [Backend Call - API (login api)] action in Button widget.
   ApiCallResponse? apiResultLogin;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    passwordVisibility = false;
+  }
 
   @override
   void dispose() {

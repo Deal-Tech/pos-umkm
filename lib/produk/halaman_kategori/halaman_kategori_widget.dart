@@ -434,6 +434,38 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                     highlightColor:
                                                         Colors.transparent,
                                                     onTap: () async {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Konfirmasi'),
+                                                                    content: Text(
+                                                                        'Apakah kamu yakin ingin menghapus ketegori ${listCategoryItem.name}?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Tidak'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Iya'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
                                                       _model.apiResultqqe =
                                                           await ApiDeleteCategoryCall
                                                               .call(

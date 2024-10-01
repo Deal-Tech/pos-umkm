@@ -71,8 +71,8 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            context.safePop();
                           },
                           text: '',
                           icon: const Icon(
@@ -325,6 +325,7 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                           fontFamily: 'Rubik',
                                           letterSpacing: 0.0,
                                         ),
+                                    keyboardType: TextInputType.emailAddress,
                                     cursorColor: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     validator: _model
@@ -435,6 +436,7 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                           fontFamily: 'Rubik',
                                           letterSpacing: 0.0,
                                         ),
+                                    keyboardType: TextInputType.phone,
                                     cursorColor: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     validator: _model
@@ -482,7 +484,7 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                     controller: _model.passwordTextController,
                                     focusNode: _model.passwordFocusNode,
                                     autofocus: false,
-                                    obscureText: false,
+                                    obscureText: !_model.passwordVisibility,
                                     decoration: InputDecoration(
                                       isDense: true,
                                       labelStyle: FlutterFlowTheme.of(context)
@@ -538,6 +540,20 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                             BorderRadius.circular(8.0),
                                       ),
                                       filled: true,
+                                      suffixIcon: InkWell(
+                                        onTap: () => safeSetState(
+                                          () => _model.passwordVisibility =
+                                              !_model.passwordVisibility,
+                                        ),
+                                        focusNode:
+                                            FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          _model.passwordVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          size: 20.0,
+                                        ),
+                                      ),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -545,6 +561,7 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                           fontFamily: 'Rubik',
                                           letterSpacing: 0.0,
                                         ),
+                                    keyboardType: TextInputType.visiblePassword,
                                     cursorColor: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     validator: _model
@@ -590,7 +607,8 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                       _model.confirmpasswordTextController,
                                   focusNode: _model.confirmpasswordFocusNode,
                                   autofocus: false,
-                                  obscureText: false,
+                                  obscureText:
+                                      !_model.confirmpasswordVisibility,
                                   decoration: InputDecoration(
                                     isDense: true,
                                     labelStyle: FlutterFlowTheme.of(context)
@@ -642,6 +660,19 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     filled: true,
+                                    suffixIcon: InkWell(
+                                      onTap: () => safeSetState(
+                                        () => _model.confirmpasswordVisibility =
+                                            !_model.confirmpasswordVisibility,
+                                      ),
+                                      focusNode: FocusNode(skipTraversal: true),
+                                      child: Icon(
+                                        _model.confirmpasswordVisibility
+                                            ? Icons.visibility_outlined
+                                            : Icons.visibility_off_outlined,
+                                        size: 20.0,
+                                      ),
+                                    ),
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -649,7 +680,7 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                                         fontFamily: 'Rubik',
                                         letterSpacing: 0.0,
                                       ),
-                                  maxLines: null,
+                                  keyboardType: TextInputType.visiblePassword,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model

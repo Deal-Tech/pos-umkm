@@ -17,6 +17,8 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
   var outputScanBarcode = '';
+  // Stores action output result for [Backend Call - API (Api List Product Fixed Bug)] action in Icon widget.
+  ApiCallResponse? apiResultd0i;
 
   @override
   void initState(BuildContext context) {}

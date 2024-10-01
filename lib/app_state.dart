@@ -34,9 +34,6 @@ class FFAppState extends ChangeNotifier {
           _cart;
     });
     _safeInit(() {
-      _apilogin = prefs.getString('ff_apilogin') ?? _apilogin;
-    });
-    _safeInit(() {
       _userid = prefs.getString('ff_userid') ?? _userid;
     });
     _safeInit(() {
@@ -49,6 +46,9 @@ class FFAppState extends ChangeNotifier {
           print("Can't decode persisted data type. Error: $e.");
         }
       }
+    });
+    _safeInit(() {
+      _uploudedimage = prefs.getString('ff_uploudedimage') ?? _uploudedimage;
     });
   }
 
@@ -92,13 +92,6 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInCart(int index, CartItemStruct value) {
     cart.insert(index, value);
     prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
-  }
-
-  String _apilogin = '';
-  String get apilogin => _apilogin;
-  set apilogin(String value) {
-    _apilogin = value;
-    prefs.setString('ff_apilogin', value);
   }
 
   String _userid = '';
@@ -193,10 +186,18 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_SettingStruk', _SettingStruk.serialize());
   }
 
-  String _SelectJenisDebt = '';
+  String _SelectJenisDebt =
+      'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png';
   String get SelectJenisDebt => _SelectJenisDebt;
   set SelectJenisDebt(String value) {
     _SelectJenisDebt = value;
+  }
+
+  String _uploudedimage = '';
+  String get uploudedimage => _uploudedimage;
+  set uploudedimage(String value) {
+    _uploudedimage = value;
+    prefs.setString('ff_uploudedimage', value);
   }
 }
 

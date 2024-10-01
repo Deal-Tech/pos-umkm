@@ -1,7 +1,6 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
-import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -293,71 +292,6 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 10.0, 15.0, 10.0),
-                              child: SizedBox(
-                                width: 370.0,
-                                height: 180.0,
-                                child: FlutterFlowBarChart(
-                                  barData: [
-                                    FFBarChartData(
-                                      yData: FFAppState().filterreport ==
-                                              'minggu_ini'
-                                          ? ReportStruct.maybeFromMap(
-                                                  columnReportResponse
-                                                      .jsonBody)!
-                                              .penjualanHarian
-                                              .map((e) => formatNumber(
-                                                    e.total,
-                                                    formatType:
-                                                        FormatType.compact,
-                                                  ))
-                                              .toList()
-                                          : ReportStruct.maybeFromMap(
-                                                  columnReportResponse
-                                                      .jsonBody)!
-                                              .penjualanMingguan
-                                              .map((e) => formatNumber(
-                                                    e.total,
-                                                    formatType:
-                                                        FormatType.compact,
-                                                  ))
-                                              .toList(),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                    )
-                                  ],
-                                  xLabels: FFAppState().filterreport ==
-                                          'minggu_ini'
-                                      ? ReportStruct.maybeFromMap(
-                                              columnReportResponse.jsonBody)!
-                                          .penjualanHarian
-                                          .map((e) => e.hari)
-                                          .toList()
-                                      : ReportStruct.maybeFromMap(
-                                              columnReportResponse.jsonBody)!
-                                          .penjualanMingguan
-                                          .map((e) => e.rangeTanggal)
-                                          .toList(),
-                                  barWidth: 16.0,
-                                  barBorderRadius: BorderRadius.circular(8.0),
-                                  groupSpace: 8.0,
-                                  alignment: BarChartAlignment.spaceAround,
-                                  chartStylingInfo: const ChartStylingInfo(
-                                    backgroundColor: Color(0x000EC244),
-                                    showBorder: false,
-                                  ),
-                                  axisBounds: const AxisBounds(),
-                                  xAxisLabelInfo: const AxisLabelInfo(
-                                    reservedSize: 28.0,
-                                  ),
-                                  yAxisLabelInfo: const AxisLabelInfo(
-                                    reservedSize: 42.0,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -412,48 +346,6 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                         ),
                                   ),
                                 ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 10.0, 15.0, 10.0),
-                              child: SizedBox(
-                                height: 180.0,
-                                child: FlutterFlowBarChart(
-                                  barData: [
-                                    FFBarChartData(
-                                      yData: ReportStruct.maybeFromMap(
-                                              columnReportResponse.jsonBody)!
-                                          .pengeluaranHarian
-                                          .map((e) => formatNumber(
-                                                e.total,
-                                                formatType: FormatType.compact,
-                                              ))
-                                          .toList(),
-                                      color: FlutterFlowTheme.of(context).error,
-                                    )
-                                  ],
-                                  xLabels: ReportStruct.maybeFromMap(
-                                          columnReportResponse.jsonBody)!
-                                      .pengeluaranHarian
-                                      .map((e) => e.hari)
-                                      .toList(),
-                                  barWidth: 30.0,
-                                  barBorderRadius: BorderRadius.circular(10.0),
-                                  groupSpace: 5.0,
-                                  alignment: BarChartAlignment.spaceAround,
-                                  chartStylingInfo: const ChartStylingInfo(
-                                    backgroundColor: Color(0x00819288),
-                                    showBorder: false,
-                                  ),
-                                  axisBounds: const AxisBounds(),
-                                  xAxisLabelInfo: const AxisLabelInfo(
-                                    reservedSize: 28.0,
-                                  ),
-                                  yAxisLabelInfo: const AxisLabelInfo(
-                                    reservedSize: 42.0,
-                                  ),
-                                ),
                               ),
                             ),
                           ],

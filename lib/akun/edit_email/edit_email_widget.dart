@@ -216,6 +216,8 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                                               fontFamily: 'Rubik',
                                               letterSpacing: 0.0,
                                             ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         cursorColor:
                                             FlutterFlowTheme.of(context)
                                                 .primaryText,

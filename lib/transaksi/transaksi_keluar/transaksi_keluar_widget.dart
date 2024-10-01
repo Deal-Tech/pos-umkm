@@ -216,8 +216,14 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                   }
                                                 },
                                                 text: _model.datePicked1 != null
-                                                    ? dateTimeFormat("y-MM-d",
-                                                        _model.datePicked1)
+                                                    ? dateTimeFormat(
+                                                        "y-MM-d",
+                                                        _model.datePicked1,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      )
                                                     : 'Pilih Tanggal',
                                                 options: FFButtonOptions(
                                                   height: 40.0,
@@ -338,7 +344,12 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                           },
                                           text: _model.datePicked2 != null
                                               ? dateTimeFormat(
-                                                  "Hms", _model.datePicked2)
+                                                  "Hms",
+                                                  _model.datePicked2,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )
                                               : 'Pilih Waktu',
                                           options: FFButtonOptions(
                                             height: 40.0,
@@ -488,6 +499,8 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 .secondaryText,
                                                         letterSpacing: 0.0,
                                                       ),
+                                                  keyboardType:
+                                                      TextInputType.number,
                                                   cursorColor:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -768,8 +781,16 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                       _model.apiResult99e =
                           await ExpenseGroup.addExpenseCall.call(
                         token: currentAuthenticationToken,
-                        tanggal: dateTimeFormat("y-MM-d", _model.datePicked1),
-                        waktu: dateTimeFormat("Hms", _model.datePicked2),
+                        tanggal: dateTimeFormat(
+                          "y-MM-d",
+                          _model.datePicked1,
+                          locale: FFLocalizations.of(context).languageCode,
+                        ),
+                        waktu: dateTimeFormat(
+                          "Hms",
+                          _model.datePicked2,
+                          locale: FFLocalizations.of(context).languageCode,
+                        ),
                         nominal: int.tryParse(
                             _model.nominalTransaksiTextController.text),
                         categoryName: FFAppState().selectcategoryexpense.nama,

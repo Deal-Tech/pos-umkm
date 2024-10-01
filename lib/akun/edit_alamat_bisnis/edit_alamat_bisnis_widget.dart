@@ -236,8 +236,24 @@ class _EditAlamatBisnisWidgetState extends State<EditAlamatBisnisWidget> {
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: const Text('Ups!!'),
+                            content:
+                                const Text('Fitur ini masih dalam pengembangan..'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: const Text('Ok'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     text: 'Simpan Perubahan',
                     options: FFButtonOptions(

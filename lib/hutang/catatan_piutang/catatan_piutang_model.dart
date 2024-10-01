@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'catatan_piutang_widget.dart' show CatatanPiutangWidget;
 import 'package:flutter/material.dart';
@@ -19,11 +20,14 @@ class CatatanPiutangModel extends FlutterFlowModel<CatatanPiutangWidget> {
   FocusNode? jumlahHutangFocusNode;
   TextEditingController? jumlahHutangTextController;
   String? Function(BuildContext, String?)? jumlahHutangTextControllerValidator;
+  DateTime? datePicked;
   // State field(s) for deskripsi_hutang widget.
   FocusNode? deskripsiHutangFocusNode;
   TextEditingController? deskripsiHutangTextController;
   String? Function(BuildContext, String?)?
       deskripsiHutangTextControllerValidator;
+  // Stores action output result for [Backend Call - API (Add Receivable)] action in Button widget.
+  ApiCallResponse? apiResultearud;
 
   @override
   void initState(BuildContext context) {}

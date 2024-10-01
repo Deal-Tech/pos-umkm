@@ -241,6 +241,7 @@ class _EditNomorTeleponWidgetState extends State<EditNomorTeleponWidget> {
                         (e) => e..nomor = _model.textController.text,
                       );
                       safeSetState(() {});
+                      context.safePop();
                     },
                     text: 'Simpan Perubahan',
                     options: FFButtonOptions(

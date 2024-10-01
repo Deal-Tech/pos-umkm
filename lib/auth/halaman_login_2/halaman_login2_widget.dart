@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'halaman_login2_model.dart';
 export 'halaman_login2_model.dart';
 
@@ -187,6 +186,7 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                     letterSpacing: 0.0,
                                   ),
                               maxLines: null,
+                              keyboardType: TextInputType.phone,
                               cursorColor:
                                   FlutterFlowTheme.of(context).primaryText,
                               validator: _model.textController1Validator
@@ -231,7 +231,7 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                 controller: _model.textController2,
                                 focusNode: _model.textFieldFocusNode2,
                                 autofocus: false,
-                                obscureText: false,
+                                obscureText: !_model.passwordVisibility,
                                 decoration: InputDecoration(
                                   isDense: true,
                                   labelStyle: FlutterFlowTheme.of(context)
@@ -281,8 +281,18 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   filled: true,
-                                  suffixIcon: const FaIcon(
-                                    FontAwesomeIcons.eyeSlash,
+                                  suffixIcon: InkWell(
+                                    onTap: () => safeSetState(
+                                      () => _model.passwordVisibility =
+                                          !_model.passwordVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      _model.passwordVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      size: 20.0,
+                                    ),
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context)
@@ -292,6 +302,7 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                       letterSpacing: 0.0,
                                     ),
                                 textAlign: TextAlign.start,
+                                keyboardType: TextInputType.visiblePassword,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
                                 validator: _model.textController2Validator
@@ -342,11 +353,6 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                   );
                                   navigate = () => context.goNamedAuth(
                                       'Home', context.mounted);
-                                  FFAppState().apilogin =
-                                      LoginApiCall.tokenlogin(
-                                    (_model.apiResultLogin?.jsonBody ?? ''),
-                                  )!;
-                                  safeSetState(() {});
                                 } else {
                                   await showDialog(
                                     context: context,

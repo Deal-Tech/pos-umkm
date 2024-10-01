@@ -25,6 +25,7 @@ class HalamanEditProdukWidget extends StatefulWidget {
     required this.barcode,
     required this.imageurl,
     required this.productid,
+    required this.imagetampil,
   });
 
   final String? name;
@@ -36,6 +37,7 @@ class HalamanEditProdukWidget extends StatefulWidget {
   final String? barcode;
   final String? imageurl;
   final String? productid;
+  final String? imagetampil;
 
   @override
   State<HalamanEditProdukWidget> createState() =>
@@ -221,7 +223,7 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
 
                                     _model.apiResultUploudImage1 =
                                         await ApiUploudImageProductCall.call(
-                                      token: FFAppState().apilogin,
+                                      token: currentAuthenticationToken,
                                       image: _model.uploadedLocalFile1,
                                     );
 
@@ -334,65 +336,13 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                         return;
                                       }
                                     }
-
-                                    _model.apiResultUploudImage2 =
-                                        await ApiUploudImageProductCall.call(
-                                      token: FFAppState().apilogin,
-                                      image: _model.uploadedLocalFile2,
-                                    );
-
-                                    if ((_model
-                                            .apiResultUploudImage2?.succeeded ??
-                                        true)) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Sukses'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage2
-                                                    ?.exceptionMessage ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    } else {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('gagal'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage2
-                                                    ?.bodyText ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-
-                                    safeSetState(() {});
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.network(
                                       widget.imageurl == 'null'
                                           ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
-                                          : widget.imageurl!,
+                                          : widget.imagetampil!,
                                       width: 152.0,
                                       height: 98.0,
                                       fit: BoxFit.cover,
@@ -1028,80 +978,200 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                       children: [
                         FFButtonWidget(
                           onPressed: () async {
-                            _model.apiResultysp =
-                                await ApiProductUpdateCall.call(
-                              categoryId: FFAppState().selectcategory.id == 0
-                                  ? widget.categoryid?.toString()
-                                  : FFAppState().selectcategory.id.toString(),
-                              category: FFAppState().selectcategory.id == 0
-                                  ? widget.category
-                                  : FFAppState().selectcategory.name,
-                              token: currentAuthenticationToken,
-                              name: _model.namaProdukTextController.text,
-                              price: int.tryParse(
-                                  _model.hargaProdukTextController.text),
-                              unit: _model.dropDownValue == null ||
-                                      _model.dropDownValue == ''
-                                  ? widget.unit
-                                  : _model.nilaiSatuanTextController.text,
-                              status: true,
-                              productId: widget.productid,
-                              sku: _model.sKUProdukTextController.text,
-                              barcode: _model.barcodeTextController.text,
-                              userId: currentUserUid,
-                              imageUrl: _model.apiResultUploudImage1 == null
-                                  ? ImageUrlStruct.maybeFromMap((_model
-                                              .apiResultUploudImage2
-                                              ?.jsonBody ??
-                                          ''))
-                                      ?.imageUrl
-                                  : ImageUrlStruct.maybeFromMap((_model
-                                              .apiResultUploudImage1
-                                              ?.jsonBody ??
-                                          ''))
-                                      ?.imageUrl,
-                            );
-
-                            if ((_model.apiResultysp?.succeeded ?? true)) {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Sukses'),
-                                    content: Text(
-                                        (_model.apiResultysp?.bodyText ?? '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                            if ((_model.uploadedLocalFile2.bytes?.isEmpty ??
+                                    true)) {
+                              _model.apiResultysp =
+                                  await ApiProductUpdateCall.call(
+                                categoryId: FFAppState().selectcategory.id == 0
+                                    ? widget.categoryid?.toString()
+                                    : FFAppState().selectcategory.id.toString(),
+                                category: FFAppState().selectcategory.id == 0
+                                    ? widget.category
+                                    : FFAppState().selectcategory.name,
+                                token: currentAuthenticationToken,
+                                name: _model.namaProdukTextController.text,
+                                price: int.tryParse(
+                                    _model.hargaProdukTextController.text),
+                                unit: _model.dropDownValue == null ||
+                                        _model.dropDownValue == ''
+                                    ? widget.unit
+                                    : _model.nilaiSatuanTextController.text,
+                                status: true,
+                                productId: widget.productid,
+                                sku: _model.sKUProdukTextController.text,
+                                barcode: _model.barcodeTextController.text,
+                                userId: currentUserUid,
+                                imageUrl: widget.imagetampil,
                               );
-                              FFAppState().selectcategory = CategoriesStruct();
-                              safeSetState(() {});
 
-                              context.pushNamed('List-produk');
+                              if ((_model.apiResultysp?.succeeded ?? true)) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Sukses'),
+                                      content: Text(
+                                          (_model.apiResultysp?.bodyText ??
+                                              '')),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                FFAppState().selectcategory =
+                                    CategoriesStruct();
+                                safeSetState(() {});
+
+                                context.pushNamed('List-produk');
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Gagal'),
+                                      content: Text(
+                                          (_model.apiResultysp?.bodyText ??
+                                              '')),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Gagal'),
-                                    content: Text(
-                                        (_model.apiResultysp?.bodyText ?? '')),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                              _model.apiResultUploudImage2 =
+                                  await ApiUploudImageProductCall.call(
+                                token: currentAuthenticationToken,
+                                image: _model.uploadedLocalFile2,
                               );
+
+                              if ((_model.apiResultUploudImage2?.succeeded ??
+                                  true)) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Sukses'),
+                                      content: Text((_model
+                                              .apiResultUploudImage2
+                                              ?.exceptionMessage ??
+                                          '')),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                _model.apiResultysppp =
+                                    await ApiProductUpdateCall.call(
+                                  categoryId:
+                                      FFAppState().selectcategory.id == 0
+                                          ? widget.categoryid?.toString()
+                                          : FFAppState()
+                                              .selectcategory
+                                              .id
+                                              .toString(),
+                                  category: FFAppState().selectcategory.id == 0
+                                      ? widget.category
+                                      : FFAppState().selectcategory.name,
+                                  token: currentAuthenticationToken,
+                                  name: _model.namaProdukTextController.text,
+                                  price: int.tryParse(
+                                      _model.hargaProdukTextController.text),
+                                  unit: _model.dropDownValue == null ||
+                                          _model.dropDownValue == ''
+                                      ? widget.unit
+                                      : _model.nilaiSatuanTextController.text,
+                                  status: true,
+                                  productId: widget.productid,
+                                  sku: _model.sKUProdukTextController.text,
+                                  barcode: _model.barcodeTextController.text,
+                                  userId: currentUserUid,
+                                  imageUrl: ApiUploudImageProductCall.imageurl(
+                                    (_model.apiResultUploudImage2?.jsonBody ??
+                                        ''),
+                                  ).toString(),
+                                );
+
+                                if ((_model.apiResultysp?.succeeded ?? true)) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Sukses'),
+                                        content: Text((_model.apiResultysppp
+                                                ?.exceptionMessage ??
+                                            '')),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  FFAppState().selectcategory =
+                                      CategoriesStruct();
+                                  safeSetState(() {});
+
+                                  context.pushNamed('List-produk');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Gagal'),
+                                        content: Text((_model.apiResultysppp
+                                                ?.exceptionMessage ??
+                                            '')),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('gagal'),
+                                      content: Text((_model
+                                              .apiResultUploudImage2
+                                              ?.exceptionMessage ??
+                                          '')),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             }
 
                             safeSetState(() {});

@@ -363,7 +363,7 @@ class _DetailHutangWidgetState extends State<DetailHutangWidget> {
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           await launchURL(
-                                              'whatsapp://send${widget.nomor}');
+                                              'https://wa.me/${widget.nomor}');
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,

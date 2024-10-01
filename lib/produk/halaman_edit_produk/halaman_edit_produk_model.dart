@@ -17,8 +17,6 @@ class HalamanEditProdukModel extends FlutterFlowModel<HalamanEditProdukWidget> {
   FFUploadedFile uploadedLocalFile2 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Image widget.
-  ApiCallResponse? apiResultUploudImage2;
   // State field(s) for NamaProduk widget.
   FocusNode? namaProdukFocusNode;
   TextEditingController? namaProdukTextController;
@@ -44,6 +42,10 @@ class HalamanEditProdukModel extends FlutterFlowModel<HalamanEditProdukWidget> {
   String? Function(BuildContext, String?)? barcodeTextControllerValidator;
   // Stores action output result for [Backend Call - API (Api Product Update)] action in Button widget.
   ApiCallResponse? apiResultysp;
+  // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Button widget.
+  ApiCallResponse? apiResultUploudImage2;
+  // Stores action output result for [Backend Call - API (Api Product Update)] action in Button widget.
+  ApiCallResponse? apiResultysppp;
 
   @override
   void initState(BuildContext context) {}

@@ -78,7 +78,6 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
-            primary: false,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -263,373 +262,401 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                         );
                                       }
 
-                                      return ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: listProduct.length,
-                                        itemBuilder:
-                                            (context, listProductIndex) {
-                                          final listProductItem =
-                                              listProduct[listProductIndex];
-                                          return Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    10.0, 10.0, 10.0, 10.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: const Color(0x3FE0E3E7),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    20.0,
-                                                                    20.0,
-                                                                    20.0,
-                                                                    10.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0,
-                                                                          10.0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  listProductItem
-                                                                              .imageUrl ==
-                                                                          'null'
-                                                                      ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
-                                                                      : listProductItem
-                                                                          .imageUrl,
-                                                                  width: 80.0,
-                                                                  height: 80.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  listProductItem
-                                                                      .name,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Rubik',
-                                                                        fontSize:
-                                                                            16.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                ),
-                                                                Text(
-                                                                  formatNumber(
-                                                                    listProductItem
-                                                                        .price,
-                                                                    formatType:
-                                                                        FormatType
-                                                                            .decimal,
-                                                                    decimalType:
-                                                                        DecimalType
-                                                                            .automatic,
-                                                                    currency:
-                                                                        'Rp ',
-                                                                  ),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Rubik',
-                                                                        fontSize:
-                                                                            18.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ].divide(const SizedBox(
-                                                              width: 20.0)),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                                10.0, 20.0),
-                                                    child: Row(
+                                      return RefreshIndicator(
+                                        onRefresh: () async {
+                                          safeSetState(() => _model
+                                              .apiRequestCompleter = null);
+                                          await _model
+                                              .waitForApiRequestCompleted();
+                                        },
+                                        child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: listProduct.length,
+                                          itemBuilder:
+                                              (context, listProductIndex) {
+                                            final listProductItem =
+                                                listProduct[listProductIndex];
+                                            return Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      10.0, 10.0, 10.0, 10.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0x3FE0E3E7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
                                                       children: [
-                                                        FFButtonWidget(
-                                                          onPressed: () async {
-                                                            context.pushNamed(
-                                                              'Halaman_edit_produk',
-                                                              queryParameters: {
-                                                                'name':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .name,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'price':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .price,
-                                                                  ParamType.int,
-                                                                ),
-                                                                'category':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .category,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'categoryid':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .categoryId,
-                                                                  ParamType.int,
-                                                                ),
-                                                                'unit':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .unit,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'sku':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .sku,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'barcode':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .barcode,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'imageurl':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .imageUrl,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                                'productid':
-                                                                    serializeParam(
-                                                                  listProductItem
-                                                                      .id
-                                                                      .toString(),
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                              }.withoutNulls,
-                                                            );
-                                                          },
-                                                          text: 'Edit item',
-                                                          icon: const Icon(
-                                                            Icons.edit_square,
-                                                            size: 20.0,
-                                                          ),
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width: MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width *
-                                                                0.4,
-                                                            height: 40.0,
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        16.0,
-                                                                        0.0,
-                                                                        16.0,
-                                                                        0.0),
-                                                            iconPadding:
-                                                                const EdgeInsetsDirectional
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      20.0,
+                                                                      20.0,
+                                                                      20.0,
+                                                                      10.0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Padding(
+                                                                padding: const EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         0.0,
+                                                                        10.0,
                                                                         0.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Rubik',
-                                                                      color: Colors
-                                                                          .white,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            elevation: 0.0,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                          ),
-                                                        ),
-                                                        FFButtonWidget(
-                                                          onPressed: () async {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              enableDrag: false,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () =>
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        SizedBox(
-                                                                      height:
-                                                                          MediaQuery.sizeOf(context).height *
-                                                                              0.3,
-                                                                      child:
-                                                                          KonfirmasiHapusProdukWidget(
-                                                                        productid:
-                                                                            listProductItem.id,
-                                                                        imageurl:
-                                                                            listProductItem.imageUrl,
-                                                                      ),
-                                                                    ),
+                                                                        10.0),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .network(
+                                                                    listProductItem.imageUrl ==
+                                                                            'null'
+                                                                        ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                                                        : listProductItem
+                                                                            .imageUrl,
+                                                                    width: 80.0,
+                                                                    height:
+                                                                        80.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
                                                                   ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-
-                                                            safeSetState(() =>
-                                                                _model.apiRequestCompleter =
-                                                                    null);
-                                                            await _model
-                                                                .waitForApiRequestCompleted();
-                                                          },
-                                                          text: 'Hapus Item',
-                                                          icon: const FaIcon(
-                                                            FontAwesomeIcons
-                                                                .trash,
-                                                            size: 18.0,
-                                                          ),
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width: MediaQuery
-                                                                        .sizeOf(
+                                                                ),
+                                                              ),
+                                                              Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    listProductItem
+                                                                        .name,
+                                                                    style: FlutterFlowTheme.of(
                                                                             context)
-                                                                    .width *
-                                                                0.4,
-                                                            height: 40.0,
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        16.0,
-                                                                        0.0,
-                                                                        16.0,
-                                                                        0.0),
-                                                            iconPadding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleSmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Rubik',
-                                                                      color: Colors
-                                                                          .white,
-                                                                      letterSpacing:
-                                                                          0.0,
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Rubik',
+                                                                          fontSize:
+                                                                              16.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                  Text(
+                                                                    formatNumber(
+                                                                      listProductItem
+                                                                          .price,
+                                                                      formatType:
+                                                                          FormatType
+                                                                              .decimal,
+                                                                      decimalType:
+                                                                          DecimalType
+                                                                              .automatic,
+                                                                      currency:
+                                                                          'Rp ',
                                                                     ),
-                                                            elevation: 0.0,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Rubik',
+                                                                          fontSize:
+                                                                              18.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ].divide(const SizedBox(
+                                                                width: 20.0)),
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                  ),
-                                                ],
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  10.0,
+                                                                  20.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          FFButtonWidget(
+                                                            onPressed:
+                                                                () async {
+                                                              context.pushNamed(
+                                                                'Halaman_edit_produk',
+                                                                queryParameters:
+                                                                    {
+                                                                  'name':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .name,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'price':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .price,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                  'category':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .category,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'categoryid':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .categoryId,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                  'unit':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .unit,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'sku':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .sku,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'barcode':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .barcode,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'imageurl':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .hasImageUrl()
+                                                                        .toString(),
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'productid':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .id
+                                                                        .toString(),
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'imagetampil':
+                                                                      serializeParam(
+                                                                    listProductItem
+                                                                        .imageUrl,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                }.withoutNulls,
+                                                              );
+                                                            },
+                                                            text: 'Edit item',
+                                                            icon: const Icon(
+                                                              Icons.edit_square,
+                                                              size: 20.0,
+                                                            ),
+                                                            options:
+                                                                FFButtonOptions(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.4,
+                                                              height: 40.0,
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              iconPadding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              textStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Rubik',
+                                                                        color: Colors
+                                                                            .white,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              elevation: 0.0,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                          ),
+                                                          FFButtonWidget(
+                                                            onPressed:
+                                                                () async {
+                                                              await showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                enableDrag:
+                                                                    false,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return GestureDetector(
+                                                                    onTap: () =>
+                                                                        FocusScope.of(context)
+                                                                            .unfocus(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: MediaQuery
+                                                                          .viewInsetsOf(
+                                                                              context),
+                                                                      child:
+                                                                          SizedBox(
+                                                                        height: MediaQuery.sizeOf(context).height *
+                                                                            0.3,
+                                                                        child:
+                                                                            KonfirmasiHapusProdukWidget(
+                                                                          productid:
+                                                                              listProductItem.id,
+                                                                          imageurl:
+                                                                              listProductItem.imageUrl,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ).then((value) =>
+                                                                  safeSetState(
+                                                                      () {}));
+
+                                                              safeSetState(() =>
+                                                                  _model.apiRequestCompleter =
+                                                                      null);
+                                                              await _model
+                                                                  .waitForApiRequestCompleted();
+                                                            },
+                                                            text: 'Hapus Item',
+                                                            icon: const FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .trash,
+                                                              size: 18.0,
+                                                            ),
+                                                            options:
+                                                                FFButtonOptions(
+                                                              width: MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width *
+                                                                  0.4,
+                                                              height: 40.0,
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              iconPadding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              textStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Rubik',
+                                                                        color: Colors
+                                                                            .white,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              elevation: 0.0,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            );
+                                          },
+                                        ),
                                       );
                                     },
                                   );

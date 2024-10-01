@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'halaman_ajukan_qris_model.dart';
 export 'halaman_ajukan_qris_model.dart';
 
@@ -63,8 +62,6 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -297,7 +294,7 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
 
                               _model.apiResultUploudImage2 =
                                   await ApiUploudImageProductCall.call(
-                                token: FFAppState().apilogin,
+                                token: currentAuthenticationToken,
                                 image: _model.uploadedLocalFile2,
                               );
 

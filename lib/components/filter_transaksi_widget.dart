@@ -231,7 +231,11 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                               );
                               safeSetState(() {});
                             },
-                            text: dateTimeFormat("d/MMM/y", _model.datePicked1),
+                            text: dateTimeFormat(
+                              "d/MMM/y",
+                              _model.datePicked1,
+                              locale: FFLocalizations.of(context).languageCode,
+                            ),
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -330,7 +334,11 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                               );
                               safeSetState(() {});
                             },
-                            text: dateTimeFormat("d/MMM/y", _model.datePicked2),
+                            text: dateTimeFormat(
+                              "d/MMM/y",
+                              _model.datePicked2,
+                              locale: FFLocalizations.of(context).languageCode,
+                            ),
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(

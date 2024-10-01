@@ -21,17 +21,22 @@ class HalamanBuatakunModel extends FlutterFlowModel<HalamanBuatakunWidget> {
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
+  late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for confirmpassword widget.
   FocusNode? confirmpasswordFocusNode;
   TextEditingController? confirmpasswordTextController;
+  late bool confirmpasswordVisibility;
   String? Function(BuildContext, String?)?
       confirmpasswordTextControllerValidator;
   // Stores action output result for [Backend Call - API (api daftar)] action in Button widget.
   ApiCallResponse? apiResultDaftar;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    passwordVisibility = false;
+    confirmpasswordVisibility = false;
+  }
 
   @override
   void dispose() {

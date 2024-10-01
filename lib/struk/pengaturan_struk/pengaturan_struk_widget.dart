@@ -62,8 +62,8 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.safePop();
                               },
                               text: '',
                               icon: const Icon(
@@ -328,61 +328,83 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                             ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  context.pushNamed(
-                                                    'edit_alamat_usaha',
-                                                    queryParameters: {
-                                                      'alamat': serializeParam(
-                                                        FFAppState()
-                                                            .SettingStruk
-                                                            .alamat,
-                                                        ParamType.String,
-                                                      ),
-                                                    }.withoutNulls,
-                                                  );
-                                                },
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      FFAppState().SettingStruk ==
-                                                              null
-                                                          ? 'Alamat'
-                                                          : FFAppState()
+                                            Flexible(
+                                              child: Container(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        0.55,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                ),
+                                                child: InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    context.pushNamed(
+                                                      'edit_alamat_usaha',
+                                                      queryParameters: {
+                                                        'alamat':
+                                                            serializeParam(
+                                                          FFAppState()
                                                               .SettingStruk
                                                               .alamat,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .secondaryText,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                    const FaIcon(
-                                                      FontAwesomeIcons.edit,
-                                                      color: Color(0x7F57636C),
-                                                      size: 18.0,
-                                                    ),
-                                                  ].divide(
-                                                      const SizedBox(width: 10.0)),
+                                                          ParamType.String,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              FFAppState().SettingStruk ==
+                                                                      null
+                                                                  ? 'Alamat'
+                                                                  : FFAppState()
+                                                                      .SettingStruk
+                                                                      .alamat,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Rubik',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const FaIcon(
+                                                        FontAwesomeIcons.edit,
+                                                        color:
+                                                            Color(0x7F57636C),
+                                                        size: 18.0,
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(width: 10.0)),
+                                                  ),
                                                 ),
                                               ),
                                             ),

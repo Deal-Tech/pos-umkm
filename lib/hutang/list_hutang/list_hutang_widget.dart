@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'list_hutang_model.dart';
 export 'list_hutang_model.dart';
@@ -215,9 +216,12 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                         child: FutureBuilder<ApiCallResponse>(
-                          future: DebtGroup.getDebtCall.call(
-                            token: currentAuthenticationToken,
-                          ),
+                          future: (_model.apiRequestCompleter ??=
+                                  Completer<ApiCallResponse>()
+                                    ..complete(DebtGroup.getDebtCall.call(
+                                      token: currentAuthenticationToken,
+                                    )))
+                              .future,
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -246,276 +250,298 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                         .withoutNulls
                                         .toList() ??
                                     [];
+                                if (debtlist.isEmpty) {
+                                  return Center(
+                                    child: Image.asset(
+                                      'assets/images/icons8-empty-192_1.png',
+                                    ),
+                                  );
+                                }
 
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: debtlist.length,
-                                  itemBuilder: (context, debtlistIndex) {
-                                    final debtlistItem =
-                                        debtlist[debtlistIndex];
-                                    return Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: Container(
-                                        width: 100.0,
-                                        height: 95.0,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFF0F3F7),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            context.pushNamed(
-                                              'Detail_hutang',
-                                              queryParameters: {
-                                                'jenis': serializeParam(
-                                                  debtlistItem.jenis,
-                                                  ParamType.String,
-                                                ),
-                                                'nama': serializeParam(
-                                                  debtlistItem.name,
-                                                  ParamType.String,
-                                                ),
-                                                'nominal': serializeParam(
-                                                  debtlistItem.amount,
-                                                  ParamType.int,
-                                                ),
-                                                'duedate': serializeParam(
-                                                  debtlistItem.dueDate,
-                                                  ParamType.String,
-                                                ),
-                                                'nomor': serializeParam(
-                                                  debtlistItem.phone,
-                                                  ParamType.String,
-                                                ),
-                                                'ispaid': serializeParam(
-                                                  debtlistItem.isPaid == 1
-                                                      ? true
-                                                      : false,
-                                                  ParamType.bool,
-                                                ),
-                                                'id': serializeParam(
-                                                  debtlistItem.id.toString(),
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        20.0, 0.0, 0.0, 0.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      debtlistItem.name,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            fontSize: 16.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
+                                return RefreshIndicator(
+                                  onRefresh: () async {
+                                    safeSetState(() =>
+                                        _model.apiRequestCompleter = null);
+                                    await _model.waitForApiRequestCompleted();
+                                  },
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: debtlist.length,
+                                    itemBuilder: (context, debtlistIndex) {
+                                      final debtlistItem =
+                                          debtlist[debtlistIndex];
+                                      return Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 20.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: 100.0,
+                                          height: 95.0,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF0F3F7),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              context.pushNamed(
+                                                'Detail_hutang',
+                                                queryParameters: {
+                                                  'jenis': serializeParam(
+                                                    debtlistItem.jenis,
+                                                    ParamType.String,
+                                                  ),
+                                                  'nama': serializeParam(
+                                                    debtlistItem.name,
+                                                    ParamType.String,
+                                                  ),
+                                                  'nominal': serializeParam(
+                                                    debtlistItem.amount,
+                                                    ParamType.int,
+                                                  ),
+                                                  'duedate': serializeParam(
+                                                    debtlistItem.dueDate,
+                                                    ParamType.String,
+                                                  ),
+                                                  'nomor': serializeParam(
+                                                    debtlistItem.phone,
+                                                    ParamType.String,
+                                                  ),
+                                                  'ispaid': serializeParam(
+                                                    debtlistItem.isPaid == 1
+                                                        ? true
+                                                        : false,
+                                                    ParamType.bool,
+                                                  ),
+                                                  'id': serializeParam(
+                                                    debtlistItem.id.toString(),
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            },
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        debtlistItem.name,
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Rubik',
+                                                              fontSize: 16.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Container(
+                                                                  width: 10.0,
+                                                                  height: 10.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: () {
+                                                                      if (debtlistItem
+                                                                              .jenis ==
+                                                                          'Pelanggan') {
+                                                                        return const Color(
+                                                                            0xFF00B2D1);
+                                                                      } else if (debtlistItem
+                                                                              .jenis ==
+                                                                          'Suplier') {
+                                                                        return const Color(
+                                                                            0xFFFF9F05);
+                                                                      } else {
+                                                                        return const Color(
+                                                                            0xFF0EC244);
+                                                                      }
+                                                                    }(),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            24.0),
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  debtlistItem
+                                                                      .jenis,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Rubik',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ].divide(const SizedBox(
+                                                                  width: 5.0)),
+                                                            ),
                                                           ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              const BoxDecoration(),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Container(
-                                                                width: 10.0,
-                                                                height: 10.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: () {
-                                                                    if (debtlistItem
-                                                                            .jenis ==
-                                                                        'Pelanggan') {
-                                                                      return const Color(
-                                                                          0xFF00B2D1);
-                                                                    } else if (debtlistItem
-                                                                            .jenis ==
-                                                                        'Suplier') {
-                                                                      return const Color(
-                                                                          0xFFFF9F05);
-                                                                    } else {
-                                                                      return const Color(
-                                                                          0xFF0EC244);
-                                                                    }
-                                                                  }(),
+                                                        ],
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 10.0)),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 20.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                ClipRRect(
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
-                                                                              24.0),
+                                                                              8.0),
+                                                                  child: Image
+                                                                      .asset(
+                                                                    'assets/images/money-bags_1.png',
+                                                                    width: 25.0,
+                                                                    height:
+                                                                        25.0,
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              Text(
-                                                                debtlistItem
-                                                                    .jenis,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Rubik',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              ),
-                                                            ].divide(const SizedBox(
-                                                                width: 5.0)),
+                                                                Text(
+                                                                  formatNumber(
+                                                                    debtlistItem
+                                                                        .amount,
+                                                                    formatType:
+                                                                        FormatType
+                                                                            .decimal,
+                                                                    decimalType:
+                                                                        DecimalType
+                                                                            .automatic,
+                                                                    currency:
+                                                                        'Rp ',
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Rubik',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ].divide(const SizedBox(
+                                                                  width: 5.0)),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ].divide(
-                                                      const SizedBox(height: 10.0)),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 20.0, 0.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              const BoxDecoration(),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/money-bags_1.png',
-                                                                  width: 25.0,
-                                                                  height: 25.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                const Icon(
+                                                                  Icons
+                                                                      .calendar_month,
+                                                                  color: Color(
+                                                                      0xFF707070),
+                                                                  size: 23.0,
                                                                 ),
-                                                              ),
-                                                              Text(
-                                                                formatNumber(
+                                                                Text(
                                                                   debtlistItem
-                                                                      .amount,
-                                                                  formatType:
-                                                                      FormatType
-                                                                          .decimal,
-                                                                  decimalType:
-                                                                      DecimalType
-                                                                          .automatic,
-                                                                  currency:
-                                                                      'Rp ',
+                                                                      .dueDate,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Readex Pro',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
                                                                 ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Rubik',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              ),
-                                                            ].divide(const SizedBox(
-                                                                width: 5.0)),
+                                                              ].divide(const SizedBox(
+                                                                  width: 5.0)),
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Container(
-                                                          decoration:
-                                                              const BoxDecoration(),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              const Icon(
-                                                                Icons
-                                                                    .calendar_month,
-                                                                color: Color(
-                                                                    0xFF707070),
-                                                                size: 23.0,
-                                                              ),
-                                                              Text(
-                                                                debtlistItem
-                                                                    .dueDate,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Readex Pro',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              ),
-                                                            ].divide(const SizedBox(
-                                                                width: 5.0)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ].divide(
-                                                      const SizedBox(height: 10.0)),
+                                                        ],
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(height: 10.0)),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 );
                               },
                             );

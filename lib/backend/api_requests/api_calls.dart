@@ -873,6 +873,204 @@ class DeleteDebtCall {
 
 /// End Debt Group Code
 
+/// Start Receivable Group Code
+
+class ReceivableGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static GetReceivableCall getReceivableCall = GetReceivableCall();
+  static AddReceivableCall addReceivableCall = AddReceivableCall();
+  static UpdateReceivableCall updateReceivableCall = UpdateReceivableCall();
+  static UpdateReceivableIsPaidCall updateReceivableIsPaidCall =
+      UpdateReceivableIsPaidCall();
+  static DeleteReceivableCall deleteReceivableCall = DeleteReceivableCall();
+}
+
+class GetReceivableCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = ReceivableGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Receivable',
+      apiUrl: '$baseUrl/receivables',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddReceivableCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? phone = '',
+    String? jenis = '',
+    String? description = '',
+    int? amount,
+    String? dueDate = '',
+    bool? isPaid,
+    String? token = '',
+  }) async {
+    final baseUrl = ReceivableGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "phone": "$phone",
+  "jenis": "$jenis",
+  "description": "$description",
+  "amount": $amount,
+  "due_date": "$dueDate",
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add Receivable',
+      apiUrl: '$baseUrl/receivables',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateReceivableCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? phone = '',
+    String? jenis = '',
+    String? description = '',
+    int? amount,
+    String? dueDate = '',
+    bool? isPaid,
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ReceivableGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "phone": "$phone",
+  "jenis": "$jenis",
+  "description": "$description",
+  "amount": $amount,
+  "due_date": "$dueDate",
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Receivable',
+      apiUrl: '$baseUrl/receivables/$id',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateReceivableIsPaidCall {
+  Future<ApiCallResponse> call({
+    bool? isPaid,
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ReceivableGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "is_paid": $isPaid
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Receivable is paid ',
+      apiUrl: '$baseUrl/receivables/$id',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteReceivableCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = ReceivableGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Receivable',
+      apiUrl: '$baseUrl/receivables$id',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Receivable Group Code
+
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
     String? name = '',
@@ -1160,7 +1358,7 @@ class ApiGetListProductCall {
         'Authorization': 'Bearer $token',
       },
       params: {
-        'category': sku,
+        'category': category,
         'query': query,
         'barcode': barcode,
       },
@@ -1561,6 +1759,7 @@ class ApiListProductFixedBugCall {
     String? category = '',
     String? token = '',
     String? query = '',
+    String? barcode = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api List Product Fixed Bug',
@@ -1572,6 +1771,7 @@ class ApiListProductFixedBugCall {
       params: {
         'category': category,
         'query': query,
+        'barcode': barcode,
       },
       returnBody: true,
       encodeBodyUtf8: false,
