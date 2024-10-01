@@ -75,12 +75,12 @@ class _HalamanPembayaranNonCashWidgetState
                           Align(
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('Home');
                               },
                               text: '',
                               icon: const Icon(
-                                Icons.format_list_bulleted_rounded,
+                                Icons.chevron_left,
                                 color: Color(0xFF0EC244),
                                 size: 34.0,
                               ),

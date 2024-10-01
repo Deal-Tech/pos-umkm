@@ -571,12 +571,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           },
                                         ) ??
                                         false;
-                                GoRouter.of(context).prepareAuthEvent();
-                                await authManager.signOut();
-                                GoRouter.of(context).clearRedirectLocation();
+                                if (confirmDialogResponse) {
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  await authManager.signOut();
+                                  GoRouter.of(context).clearRedirectLocation();
 
-                                context.pushNamedAuth(
-                                    'Halaman_login_2', context.mounted);
+                                  context.pushNamedAuth(
+                                      'Halaman_login_2', context.mounted);
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
