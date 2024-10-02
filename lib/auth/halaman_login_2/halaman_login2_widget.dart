@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'halaman_login2_model.dart';
 export 'halaman_login2_model.dart';
 
@@ -89,8 +90,8 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 20.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      'https://picsum.photos/seed/21/600',
+                    child: Image.asset(
+                      'assets/images/mega-creator.png',
                       width: 200.0,
                       height: 200.0,
                       fit: BoxFit.cover,
@@ -186,6 +187,14 @@ class _HalamanLogin2WidgetState extends State<HalamanLogin2Widget> {
                                     letterSpacing: 0.0,
                                   ),
                               maxLines: null,
+                              maxLength: 14,
+                              maxLengthEnforcement:
+                                  MaxLengthEnforcement.enforced,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) =>
+                                  null,
                               keyboardType: TextInputType.phone,
                               cursorColor:
                                   FlutterFlowTheme.of(context).primaryText,

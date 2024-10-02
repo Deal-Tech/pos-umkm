@@ -135,23 +135,6 @@ class _KonfirmasiHapusProdukWidgetState
                       );
 
                       if ((_model.apiResultw38?.succeeded ?? true)) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Sukses'),
-                              content:
-                                  Text((_model.apiResultw38?.bodyText ?? '')),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
                         FFAppState().cart = [];
                         safeSetState(() {});
                         Navigator.pop(context);

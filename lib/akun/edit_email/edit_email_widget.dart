@@ -72,8 +72,8 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                               Align(
                                 alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    context.safePop();
                                   },
                                   text: '',
                                   icon: const Icon(
@@ -255,9 +255,8 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResultopq?.exceptionMessage ??
-                                      '')),
+                              content:
+                                  Text((_model.apiResultopq?.bodyText ?? '')),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
@@ -268,7 +267,8 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                             );
                           },
                         );
-                        context.safePop();
+
+                        context.goNamed('Informasi_bisnis');
                       } else {
                         await showDialog(
                           context: context,

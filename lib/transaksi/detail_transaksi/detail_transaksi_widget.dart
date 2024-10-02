@@ -19,11 +19,13 @@ class DetailTransaksiWidget extends StatefulWidget {
     required this.transactionsid,
     required this.datetransactions,
     required this.total,
+    required this.paymentmethod,
   });
 
   final int? transactionsid;
   final String? datetransactions;
   final int? total;
+  final String? paymentmethod;
 
   @override
   State<DetailTransaksiWidget> createState() => _DetailTransaksiWidgetState();
@@ -266,6 +268,52 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                     ),
                                   ],
                                 ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Metode Pembayaran',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Text(
+                                            valueOrDefault<String>(
+                                              widget.paymentmethod,
+                                              'Metode Pembayaran',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ].divide(const SizedBox(height: 3.0)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 const StyledDivider(
                                   thickness: 2.0,
                                   color: Color(0x8057636C),
@@ -281,15 +329,14 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {
-                                      return Center(
+                                      return const Center(
                                         child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
+                                          width: 50,
+                                          height: 50,
                                           child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
+                                              Color(0x000EC244),
                                             ),
                                           ),
                                         ),

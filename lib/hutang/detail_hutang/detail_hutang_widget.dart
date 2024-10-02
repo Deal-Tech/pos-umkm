@@ -446,7 +446,8 @@ class _DetailHutangWidgetState extends State<DetailHutangWidget> {
                                                 );
                                               },
                                             );
-                                            context.safePop();
+
+                                            context.pushNamed('List_hutang');
                                           } else {
                                             await showDialog(
                                               context: context,

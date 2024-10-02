@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'halaman_riwayat_transaksi_model.dart';
@@ -234,10 +235,9 @@ class _HalamanRiwayatTransaksiWidgetState
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                                  child: SpinKitFadingFour(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
                                   ),
                                 ),
                               );
@@ -261,6 +261,7 @@ class _HalamanRiwayatTransaksiWidgetState
                                         [];
 
                                 return RefreshIndicator(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   onRefresh: () async {
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);
@@ -303,6 +304,11 @@ class _HalamanRiwayatTransaksiWidgetState
                                                 'total': serializeParam(
                                                   listtransactionsItem.total,
                                                   ParamType.int,
+                                                ),
+                                                'paymentmethod': serializeParam(
+                                                  listtransactionsItem
+                                                      .paymentMethod,
+                                                  ParamType.String,
                                                 ),
                                               }.withoutNulls,
                                             );

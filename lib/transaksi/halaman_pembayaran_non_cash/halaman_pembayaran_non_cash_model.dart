@@ -9,7 +9,7 @@ class HalamanPembayaranNonCashModel
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (Get Transaction ID)] action in Button widget.
-  ApiCallResponse? apiResultcektransaksi;
+  ApiCallResponse? apiResultcektransaksii;
 
   @override
   void initState(BuildContext context) {}

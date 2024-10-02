@@ -26,7 +26,7 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(milliseconds: 2000));
 
-      context.pushNamed('Halaman_depan');
+      context.goNamed('Halaman_depan');
     });
   }
 

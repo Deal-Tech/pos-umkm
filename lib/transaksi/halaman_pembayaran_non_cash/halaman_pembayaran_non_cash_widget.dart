@@ -1,9 +1,11 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'halaman_pembayaran_non_cash_model.dart';
 export 'halaman_pembayaran_non_cash_model.dart';
@@ -222,12 +224,10 @@ class _HalamanPembayaranNonCashWidgetState
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
+                                        child: SpinKitFadingFour(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 50.0,
                                         ),
                                       ),
                                     );
@@ -257,18 +257,74 @@ class _HalamanPembayaranNonCashWidgetState
               Align(
                 alignment: const AlignmentDirectional(0.0, 1.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      _model.apiResultcektransaksi =
+                      await ApiTransaksiGroup.updateStatusTransactionsCall.call(
+                        token: currentAuthenticationToken,
+                        status: Status.paid.name,
+                        transactionId: widget.idtransactions,
+                      );
+
+                      context.pushNamed(
+                        'Bukti-pencatatan',
+                        queryParameters: {
+                          'paymentmethod': serializeParam(
+                            'QRIS',
+                            ParamType.String,
+                          ),
+                          'total': serializeParam(
+                            widget.total,
+                            ParamType.int,
+                          ),
+                          'transactionsid': serializeParam(
+                            widget.idtransactions,
+                            ParamType.int,
+                          ),
+                          'datetransactions': serializeParam(
+                            widget.datetransactions,
+                            ParamType.String,
+                          ),
+                        }.withoutNulls,
+                      );
+                    },
+                    text: 'Pembayaran Diterima',
+                    options: FFButtonOptions(
+                      width: 327.0,
+                      height: 60.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0xFF0EC244),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Rubik',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: const AlignmentDirectional(0.0, 1.0),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 110.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      _model.apiResultcektransaksii =
                           await ApiTransaksiGroup.getTransactionIDCall.call(
                         transactionId: widget.idtransactions?.toString(),
                         token: currentAuthenticationToken,
                       );
 
-                      if ((_model.apiResultcektransaksi?.succeeded ?? true)) {
+                      if ((_model.apiResultcektransaksii?.succeeded ?? true)) {
                         if (ApiTransaksiGroup.getTransactionIDCall.status(
-                              (_model.apiResultcektransaksi?.jsonBody ?? ''),
+                              (_model.apiResultcektransaksii?.jsonBody ?? ''),
                             ) ==
                             'paid') {
                           await showDialog(
@@ -334,7 +390,7 @@ class _HalamanPembayaranNonCashWidgetState
                             return AlertDialog(
                               title: const Text('Error'),
                               content: Text(
-                                  (_model.apiResultcektransaksi?.bodyText ??
+                                  (_model.apiResultcektransaksii?.bodyText ??
                                       '')),
                               actions: [
                                 TextButton(

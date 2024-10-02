@@ -28,13 +28,13 @@ class CustomAuthManager {
     uid = null;
 
     // Update the current user.
-    cahrurPOSUMKMAuthUserSubject.add(
-      CahrurPOSUMKMAuthUser(loggedIn: false),
+    dealPOSAuthUserSubject.add(
+      DealPOSAuthUser(loggedIn: false),
     );
     persistAuthData();
   }
 
-  Future<CahrurPOSUMKMAuthUser?> signIn({
+  Future<DealPOSAuthUser?> signIn({
     String? authenticationToken,
     String? refreshToken,
     DateTime? tokenExpiration,
@@ -66,7 +66,7 @@ class CustomAuthManager {
     );
   }
 
-  CahrurPOSUMKMAuthUser? _updateCurrentUser({
+  DealPOSAuthUser? _updateCurrentUser({
     String? authenticationToken,
     String? refreshToken,
     DateTime? tokenExpiration,
@@ -78,11 +78,11 @@ class CustomAuthManager {
     uid = authUid;
 
     // Update the current user stream.
-    final updatedUser = CahrurPOSUMKMAuthUser(
+    final updatedUser = DealPOSAuthUser(
       loggedIn: true,
       uid: authUid,
     );
-    cahrurPOSUMKMAuthUserSubject.add(updatedUser);
+    dealPOSAuthUserSubject.add(updatedUser);
     persistAuthData();
     return updatedUser;
   }
@@ -109,11 +109,11 @@ class CustomAuthManager {
     final authTokenExists = authenticationToken != null;
     final tokenExpired =
         tokenExpiration != null && tokenExpiration!.isBefore(DateTime.now());
-    final updatedUser = CahrurPOSUMKMAuthUser(
+    final updatedUser = DealPOSAuthUser(
       loggedIn: authTokenExists && !tokenExpired,
       uid: uid,
     );
-    cahrurPOSUMKMAuthUserSubject.add(updatedUser);
+    dealPOSAuthUserSubject.add(updatedUser);
   }
 
   void persistAuthData() {
@@ -131,5 +131,5 @@ class CustomAuthManager {
   }
 }
 
-CahrurPOSUMKMAuthUser? currentUser;
+DealPOSAuthUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;

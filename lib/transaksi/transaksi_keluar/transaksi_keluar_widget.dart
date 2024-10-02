@@ -114,118 +114,501 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Tanggal',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Tanggal',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: FFButtonWidget(
+                                                  onPressed: () async {
+                                                    final datePicked1Date =
+                                                        await showDatePicker(
+                                                      context: context,
+                                                      initialDate:
+                                                          getCurrentTimestamp,
+                                                      firstDate:
+                                                          getCurrentTimestamp,
+                                                      lastDate: DateTime(2050),
+                                                      builder:
+                                                          (context, child) {
+                                                        return wrapInMaterialDatePickerTheme(
+                                                          context,
+                                                          child!,
+                                                          headerBackgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary,
+                                                          headerForegroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .info,
+                                                          headerTextStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .headlineLarge
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Rubik',
+                                                                    fontSize:
+                                                                        32.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                          pickerBackgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondaryBackground,
+                                                          pickerForegroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryText,
+                                                          selectedDateTimeBackgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary,
+                                                          selectedDateTimeForegroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .info,
+                                                          actionButtonForegroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryText,
+                                                          iconSize: 24.0,
+                                                        );
+                                                      },
+                                                    );
+
+                                                    if (datePicked1Date !=
+                                                        null) {
+                                                      safeSetState(() {
+                                                        _model.datePicked1 =
+                                                            DateTime(
+                                                          datePicked1Date.year,
+                                                          datePicked1Date
+                                                              .month,
+                                                          datePicked1Date.day,
+                                                        );
+                                                      });
+                                                    }
+                                                  },
+                                                  text: _model.datePicked1 !=
+                                                          null
+                                                      ? dateTimeFormat(
+                                                          "y-MM-d",
+                                                          _model.datePicked1,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        )
+                                                      : 'Pilih Tanggal',
+                                                  options: FFButtonOptions(
+                                                    height: 40.0,
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                16.0, 0.0),
+                                                    iconPadding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    color: const Color(0x80E0E3E7),
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    elevation: 0.0,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                ),
                                               ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: FFButtonWidget(
+                                            ],
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: const AlignmentDirectional(1.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Waktu',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          FFButtonWidget(
+                                            onPressed: () async {
+                                              final datePicked2Time =
+                                                  await showTimePicker(
+                                                context: context,
+                                                initialTime:
+                                                    TimeOfDay.fromDateTime(
+                                                        getCurrentTimestamp),
+                                                builder: (context, child) {
+                                                  return wrapInMaterialTimePickerTheme(
+                                                    context,
+                                                    child!,
+                                                    headerBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    headerForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .info,
+                                                    headerTextStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineLarge
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Rubik',
+                                                              fontSize: 32.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                    pickerBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondaryBackground,
+                                                    pickerForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    selectedDateTimeBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    selectedDateTimeForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .info,
+                                                    actionButtonForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    iconSize: 24.0,
+                                                  );
+                                                },
+                                              );
+                                              if (datePicked2Time != null) {
+                                                safeSetState(() {
+                                                  _model.datePicked2 = DateTime(
+                                                    getCurrentTimestamp.year,
+                                                    getCurrentTimestamp.month,
+                                                    getCurrentTimestamp.day,
+                                                    datePicked2Time.hour,
+                                                    datePicked2Time.minute,
+                                                  );
+                                                });
+                                              }
+                                            },
+                                            text: _model.datePicked2 != null
+                                                ? dateTimeFormat(
+                                                    "Hms",
+                                                    _model.datePicked2,
+                                                    locale: FFLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  )
+                                                : 'Pilih Waktu',
+                                            options: FFButtonOptions(
+                                              height: 40.0,
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color: const Color(0x80E0E3E7),
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                              elevation: 0.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
+                                    ),
+                                  ].divide(const SizedBox(width: 20.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Nominal Transaksi',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: SizedBox(
+                                                  width: 200.0,
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .nominalTransaksiTextController,
+                                                    focusNode: _model
+                                                        .nominalTransaksiFocusNode,
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText:
+                                                          'Masukan nominal transaksi',
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                color: const Color(
+                                                                    0x8057636C),
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color(0x7FE0E3E7),
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Rubik',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .nominalTransaksiTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
+                                    ),
+                                  ].divide(const SizedBox(width: 20.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Kategori',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              FFButtonWidget(
                                                 onPressed: () async {
-                                                  final datePicked1Date =
-                                                      await showDatePicker(
+                                                  await showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    enableDrag: false,
                                                     context: context,
-                                                    initialDate:
-                                                        getCurrentTimestamp,
-                                                    firstDate:
-                                                        getCurrentTimestamp,
-                                                    lastDate: DateTime(2050),
-                                                    builder: (context, child) {
-                                                      return wrapInMaterialDatePickerTheme(
-                                                        context,
-                                                        child!,
-                                                        headerBackgroundColor:
-                                                            FlutterFlowTheme.of(
+                                                    builder: (context) {
+                                                      return GestureDetector(
+                                                        onTap: () =>
+                                                            FocusScope.of(
                                                                     context)
-                                                                .primary,
-                                                        headerForegroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .info,
-                                                        headerTextStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .headlineLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Rubik',
-                                                                  fontSize:
-                                                                      32.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                        pickerBackgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryBackground,
-                                                        pickerForegroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        selectedDateTimeBackgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        selectedDateTimeForegroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .info,
-                                                        actionButtonForegroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        iconSize: 24.0,
+                                                                .unfocus(),
+                                                        child: Padding(
+                                                          padding: MediaQuery
+                                                              .viewInsetsOf(
+                                                                  context),
+                                                          child: SizedBox(
+                                                            height: MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .height *
+                                                                0.35,
+                                                            child:
+                                                                SelectCategoryExpenseWidget(
+                                                              listcategoryexpense: ((_model
+                                                                              .apiResultCategoryExpense
+                                                                              ?.jsonBody ??
+                                                                          '')
+                                                                      .toList()
+                                                                      .map<CategoryExpenseStruct?>(
+                                                                          CategoryExpenseStruct
+                                                                              .maybeFromMap)
+                                                                      .toList() as Iterable<CategoryExpenseStruct?>)
+                                                                  .withoutNulls,
+                                                            ),
+                                                          ),
+                                                        ),
                                                       );
                                                     },
-                                                  );
-
-                                                  if (datePicked1Date !=
-                                                      null) {
-                                                    safeSetState(() {
-                                                      _model.datePicked1 =
-                                                          DateTime(
-                                                        datePicked1Date.year,
-                                                        datePicked1Date.month,
-                                                        datePicked1Date.day,
-                                                      );
-                                                    });
-                                                  }
+                                                  ).then((value) =>
+                                                      safeSetState(() {}));
                                                 },
-                                                text: _model.datePicked1 != null
-                                                    ? dateTimeFormat(
-                                                        "y-MM-d",
-                                                        _model.datePicked1,
-                                                        locale:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .languageCode,
-                                                      )
-                                                    : 'Pilih Tanggal',
+                                                text: FFAppState()
+                                                            .selectcategoryexpense
+                                                            .status ==
+                                                        0
+                                                    ? 'Pilih Kategori'
+                                                    : FFAppState()
+                                                        .selectcategoryexpense
+                                                        .nama,
+                                                icon: const Icon(
+                                                  Icons.arrow_drop_down,
+                                                  size: 15.0,
+                                                ),
                                                 options: FFButtonOptions(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.45,
                                                   height: 40.0,
                                                   padding: const EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -234,7 +617,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                       const EdgeInsetsDirectional
                                                           .fromSTEB(0.0, 0.0,
                                                               0.0, 0.0),
-                                                  color: const Color(0x80E0E3E7),
+                                                  color: const Color(0x7FE0E3E7),
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
                                                       .titleSmall
@@ -244,8 +627,11 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryText,
+                                                                .secondaryText,
+                                                        fontSize: 14.0,
                                                         letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.normal,
                                                       ),
                                                   elevation: 0.0,
                                                   borderRadius:
@@ -253,518 +639,146 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                           8.0),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ].divide(const SizedBox(height: 10.0)),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: const AlignmentDirectional(1.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Waktu',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        FFButtonWidget(
-                                          onPressed: () async {
-                                            final datePicked2Time =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime:
-                                                  TimeOfDay.fromDateTime(
-                                                      getCurrentTimestamp),
-                                              builder: (context, child) {
-                                                return wrapInMaterialTimePickerTheme(
-                                                  context,
-                                                  child!,
-                                                  headerBackgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                  headerForegroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .info,
-                                                  headerTextStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .headlineLarge
-                                                          .override(
-                                                            fontFamily: 'Rubik',
-                                                            fontSize: 32.0,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                  pickerBackgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondaryBackground,
-                                                  pickerForegroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryText,
-                                                  selectedDateTimeBackgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                  selectedDateTimeForegroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .info,
-                                                  actionButtonForegroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryText,
-                                                  iconSize: 24.0,
-                                                );
-                                              },
-                                            );
-                                            if (datePicked2Time != null) {
-                                              safeSetState(() {
-                                                _model.datePicked2 = DateTime(
-                                                  getCurrentTimestamp.year,
-                                                  getCurrentTimestamp.month,
-                                                  getCurrentTimestamp.day,
-                                                  datePicked2Time.hour,
-                                                  datePicked2Time.minute,
-                                                );
-                                              });
-                                            }
-                                          },
-                                          text: _model.datePicked2 != null
-                                              ? dateTimeFormat(
-                                                  "Hms",
-                                                  _model.datePicked2,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                )
-                                              : 'Pilih Waktu',
-                                          options: FFButtonOptions(
-                                            height: 40.0,
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: const Color(0x80E0E3E7),
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            ],
                                           ),
-                                        ),
-                                      ].divide(const SizedBox(height: 10.0)),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
                                     ),
-                                  ),
-                                ].divide(const SizedBox(width: 20.0)),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Nominal Transaksi',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: SizedBox(
-                                                width: 200.0,
-                                                child: TextFormField(
-                                                  controller: _model
-                                                      .nominalTransaksiTextController,
-                                                  focusNode: _model
-                                                      .nominalTransaksiFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    labelText:
-                                                        'Masukan nominal transaksi',
-                                                    labelStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Rubik',
-                                                          color:
-                                                              const Color(0x8057636C),
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    hintStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: const BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: const BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        const Color(0x7FE0E3E7),
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  cursorColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryText,
-                                                  validator: _model
-                                                      .nominalTransaksiTextControllerValidator
-                                                      .asValidator(context),
+                                  ].divide(const SizedBox(width: 20.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Catatan',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Rubik',
+                                                  letterSpacing: 0.0,
                                                 ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ].divide(const SizedBox(height: 10.0)),
-                                    ),
-                                  ),
-                                ].divide(const SizedBox(width: 20.0)),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Kategori',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            FFButtonWidget(
-                                              onPressed: () async {
-                                                await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(context)
-                                                              .unfocus(),
-                                                      child: Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child: SizedBox(
-                                                          height:
-                                                              MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .height *
-                                                                  0.35,
-                                                          child:
-                                                              SelectCategoryExpenseWidget(
-                                                            listcategoryexpense: ((_model
-                                                                            .apiResultCategoryExpense
-                                                                            ?.jsonBody ??
-                                                                        '')
-                                                                    .toList()
-                                                                    .map<CategoryExpenseStruct?>(
-                                                                        CategoryExpenseStruct
-                                                                            .maybeFromMap)
-                                                                    .toList() as Iterable<CategoryExpenseStruct?>)
-                                                                .withoutNulls,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ).then((value) =>
-                                                    safeSetState(() {}));
-                                              },
-                                              text: FFAppState()
-                                                          .selectcategoryexpense
-                                                          .status ==
-                                                      0
-                                                  ? 'Pilih Kategori'
-                                                  : FFAppState()
-                                                      .selectcategoryexpense
-                                                      .nama,
-                                              icon: const Icon(
-                                                Icons.arrow_drop_down,
-                                                size: 15.0,
-                                              ),
-                                              options: FFButtonOptions(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.45,
-                                                height: 40.0,
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 16.0, 0.0),
-                                                iconPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color: const Color(0x7FE0E3E7),
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color:
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: SizedBox(
+                                                  width: 200.0,
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _model.textController2,
+                                                    focusNode: _model
+                                                        .textFieldFocusNode,
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText: 'Catatan',
+                                                      labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .secondaryText,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                elevation: 0.0,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ].divide(const SizedBox(height: 10.0)),
-                                    ),
-                                  ),
-                                ].divide(const SizedBox(width: 20.0)),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Catatan',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Rubik',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: SizedBox(
-                                                width: 200.0,
-                                                child: TextFormField(
-                                                  controller:
-                                                      _model.textController2,
-                                                  focusNode:
-                                                      _model.textFieldFocusNode,
-                                                  autofocus: false,
-                                                  obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    isDense: true,
-                                                    labelText: 'Catatan',
-                                                    labelStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily: 'Rubik',
-                                                          letterSpacing: 0.0,
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Rubik',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
                                                         ),
-                                                    hintStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .labelMedium
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: const BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                          const Color(0x7FE0E3E7),
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: const BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: const BorderSide(
-                                                        color:
-                                                            Color(0x00000000),
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    filled: true,
-                                                    fillColor:
-                                                        const Color(0x7FE0E3E7),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .textController2Validator
+                                                        .asValidator(context),
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                  cursorColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryText,
-                                                  validator: _model
-                                                      .textController2Validator
-                                                      .asValidator(context),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ].divide(const SizedBox(height: 10.0)),
+                                            ],
+                                          ),
+                                        ].divide(const SizedBox(height: 10.0)),
+                                      ),
                                     ),
-                                  ),
-                                ].divide(const SizedBox(width: 20.0)),
-                              ),
-                            ].divide(const SizedBox(height: 30.0)),
+                                  ].divide(const SizedBox(width: 20.0)),
+                                ),
+                              ].divide(const SizedBox(height: 30.0)),
+                            ),
                           ),
                         ),
                       ),
@@ -800,25 +814,6 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                       );
 
                       if ((_model.apiResult99e?.succeeded ?? true)) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResult99e?.exceptionMessage ??
-                                      '')),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-
                         context.pushNamed('expense_history');
                       } else {
                         await showDialog(
@@ -826,9 +821,8 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Gagal'),
-                              content: Text(
-                                  (_model.apiResult99e?.exceptionMessage ??
-                                      '')),
+                              content:
+                                  Text((_model.apiResult99e?.bodyText ?? '')),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

@@ -447,7 +447,8 @@ class _DetailPiutangWidgetState extends State<DetailPiutangWidget> {
                                                 );
                                               },
                                             );
-                                            context.safePop();
+
+                                            context.pushNamed('List_piutang');
                                           } else {
                                             await showDialog(
                                               context: context,

@@ -11,6 +11,7 @@ export 'apilogin_struct.dart';
 export 'cart_item_struct.dart';
 export 'categories_struct.dart';
 export 'category_expense_struct.dart';
+export 'categoryexpenslocal_struct.dart';
 export 'expense_struct.dart';
 export 'filtertransactions_struct.dart';
 export 'image_url_struct.dart';

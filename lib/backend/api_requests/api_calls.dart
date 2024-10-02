@@ -21,6 +21,8 @@ class ApiTransaksiGroup {
   };
   static CreateTransactionCall createTransactionCall = CreateTransactionCall();
   static UpdateTransactionCall updateTransactionCall = UpdateTransactionCall();
+  static UpdateStatusTransactionsCall updateStatusTransactionsCall =
+      UpdateStatusTransactionsCall();
   static GetTransactionsCall getTransactionsCall = GetTransactionsCall();
   static GetTransactionIDCall getTransactionIDCall = GetTransactionIDCall();
   static DeleteTransactionCall deleteTransactionCall = DeleteTransactionCall();
@@ -132,6 +134,40 @@ class UpdateTransactionCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Update Transaction',
+      apiUrl: '$baseUrl/transactions/$transactionId',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class UpdateStatusTransactionsCall {
+  Future<ApiCallResponse> call({
+    String? status = '',
+    int? transactionId,
+    String? token = '',
+  }) async {
+    final baseUrl = ApiTransaksiGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "status": "$status"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Update Status Transactions',
       apiUrl: '$baseUrl/transactions/$transactionId',
       callType: ApiCallType.PUT,
       headers: {
@@ -415,6 +451,8 @@ class CategoryExpenseGroup {
   };
   static GetCategoryExpenseCall getCategoryExpenseCall =
       GetCategoryExpenseCall();
+  static AddCategoryExpenseCall addCategoryExpenseCall =
+      AddCategoryExpenseCall();
 }
 
 class GetCategoryExpenseCall {
@@ -433,6 +471,41 @@ class GetCategoryExpenseCall {
         'Authorization': 'Bearer $token',
       },
       params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AddCategoryExpenseCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    bool? status,
+    String? token = '',
+  }) async {
+    final baseUrl = CategoryExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "nama": "$name",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add Category Expense',
+      apiUrl: '$baseUrl/category-expenses',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -1269,6 +1342,29 @@ class ApiProductCreateCall {
       alwaysAllowBody: false,
     );
   }
+
+  static dynamic errors(dynamic response) => getJsonField(
+        response,
+        r'''$.errors''',
+      );
+  static List<String>? errorsku(dynamic response) => (getJsonField(
+        response,
+        r'''$.errors.sku''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? errorbarcode(dynamic response) => (getJsonField(
+        response,
+        r'''$.errors.barcode''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class ApiProductUpdateCall {

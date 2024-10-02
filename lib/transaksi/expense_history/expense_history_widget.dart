@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'expense_history_model.dart';
@@ -235,10 +236,9 @@ class _ExpenseHistoryWidgetState extends State<ExpenseHistoryWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                                  child: SpinKitFadingFour(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
                                   ),
                                 ),
                               );
@@ -259,6 +259,7 @@ class _ExpenseHistoryWidgetState extends State<ExpenseHistoryWidget> {
                                     [];
 
                                 return RefreshIndicator(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   onRefresh: () async {
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);

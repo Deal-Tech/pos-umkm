@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'home_model.dart';
@@ -72,10 +73,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                       child: SizedBox(
                         width: 50.0,
                         height: 50.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            FlutterFlowTheme.of(context).primary,
-                          ),
+                        child: SpinKitFadingFour(
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 50.0,
                         ),
                       ),
                     );
@@ -96,7 +96,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'POS UMKM',
+                                  'Deal POS',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -576,7 +576,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   await authManager.signOut();
                                   GoRouter.of(context).clearRedirectLocation();
 
-                                  context.pushNamedAuth(
+                                  context.goNamedAuth(
                                       'Halaman_login_2', context.mounted);
                                 }
                               },
@@ -705,7 +705,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 20.0, 0.0),
                               child: Text(
-                                'Kasir',
+                                'Deal POS',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -1095,10 +1095,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                                  child: SpinKitFadingFour(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
                                   ),
                                 ),
                               );
@@ -1133,6 +1132,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 }
 
                                 return RefreshIndicator(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   onRefresh: () async {
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);
@@ -1201,7 +1201,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 child: Image.network(
                                                   listProdukItem.imageUrl ==
                                                           'null'
-                                                      ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                                      ? 'https://thetester.me/storage/product_images/Box.png'
                                                       : listProdukItem.imageUrl,
                                                   width:
                                                       MediaQuery.sizeOf(context)
@@ -1228,7 +1228,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily: 'Rubik',
-                                                          fontSize: 16.0,
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
@@ -1239,7 +1239,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        10.0, 0.0, 10.0, 0.0),
+                                                        10.0, 5.0, 10.0, 0.0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,

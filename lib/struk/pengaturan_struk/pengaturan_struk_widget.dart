@@ -196,6 +196,8 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
                                                     Text(
                                                       FFAppState().SettingStruk ==
@@ -276,6 +278,8 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
                                                     Text(
                                                       FFAppState().SettingStruk ==
@@ -365,6 +369,8 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
                                                     children: [
                                                       Flexible(
                                                         child: Column(

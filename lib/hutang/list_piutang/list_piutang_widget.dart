@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'list_piutang_model.dart';
 export 'list_piutang_model.dart';
 
@@ -230,10 +231,9 @@ class _ListPiutangWidgetState extends State<ListPiutangWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                                  child: SpinKitFadingFour(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
                                   ),
                                 ),
                               );
@@ -264,6 +264,7 @@ class _ListPiutangWidgetState extends State<ListPiutangWidget> {
                                 }
 
                                 return RefreshIndicator(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   onRefresh: () async {
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);
@@ -428,6 +429,60 @@ class _ListPiutangWidgetState extends State<ListPiutangWidget> {
                                                             ),
                                                           ),
                                                         ],
+                                                      ),
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: receivabletlistItem
+                                                                      .isPaid ==
+                                                                  0
+                                                              ? FlutterFlowTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .error
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100.0),
+                                                        ),
+                                                        child: Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        5.0,
+                                                                        20.0,
+                                                                        5.0),
+                                                            child: Text(
+                                                              receivabletlistItem
+                                                                          .isPaid ==
+                                                                      0
+                                                                  ? 'Belum Lunas'
+                                                                  : 'Lunas',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Rubik',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ].divide(
                                                         const SizedBox(height: 10.0)),

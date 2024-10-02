@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'halaman_tambah_produk_model.dart';
 export 'halaman_tambah_produk_model.dart';
@@ -260,7 +261,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                             Uint8List.fromList([]),
                                         width: 152.0,
                                         height: 98.0,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.contain,
                                       ),
                                     ),
                                   ),
@@ -390,6 +391,9 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 20,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -967,181 +971,307 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                           onPressed: () async {
                             if ((_model.uploadedLocalFile2.bytes?.isEmpty ??
                                     true)) {
-                              _model.apiResultUploudImage1 =
-                                  await ApiUploudImageProductCall.call(
-                                token: currentAuthenticationToken,
-                                image: _model.uploadedLocalFile1,
-                              );
-
-                              if ((_model.apiResultUploudImage1?.succeeded ??
-                                  true)) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text((_model
-                                              .apiResultUploudImage1
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
+                              if (_model.namaProdukTextController.text != '') {
+                                if (_model.hargaProdukTextController.text !=
+                                        '') {
+                                  if ((_model.nilaiSatuanTextController
+                                                  .text !=
+                                              '') &&
+                                      (_model.dropDownValue != null &&
+                                          _model.dropDownValue != '')) {
+                                    _model.apiResultUploudImage1 =
+                                        await ApiUploudImageProductCall.call(
+                                      token: currentAuthenticationToken,
+                                      image: _model.uploadedLocalFile1,
                                     );
-                                  },
-                                );
-                                _model.apiResultyspp =
-                                    await ApiProductCreateCall.call(
-                                  token: currentAuthenticationToken,
-                                  userId: currentUserUid,
-                                  name: _model.namaProdukTextController.text,
-                                  price: int.tryParse(
-                                      _model.hargaProdukTextController.text),
-                                  unit:
-                                      '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
-                                  imageUrl: ApiUploudImageProductCall.imageurl(
-                                    (_model.apiResultUploudImage1?.jsonBody ??
-                                        ''),
-                                  ).toString(),
-                                  category: FFAppState().selectcategory.name,
-                                  categoryId:
-                                      FFAppState().selectcategory.id.toString(),
-                                  sku: _model.sKUProdukTextController.text,
-                                  barcode: _model.barcodeTextController.text,
-                                  status: true,
-                                );
 
-                                if ((_model.apiResultysp?.succeeded ?? true)) {
-                                  FFAppState().selectcategory =
-                                      CategoriesStruct();
-                                  safeSetState(() {});
+                                    if ((_model
+                                            .apiResultUploudImage1?.succeeded ??
+                                        true)) {
+                                      _model.apiResultyspp =
+                                          await ApiProductCreateCall.call(
+                                        token: currentAuthenticationToken,
+                                        userId: currentUserUid,
+                                        name: _model
+                                            .namaProdukTextController.text,
+                                        price: int.tryParse(_model
+                                            .hargaProdukTextController.text),
+                                        unit:
+                                            '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                                        imageUrl:
+                                            ApiUploudImageProductCall.imageurl(
+                                          (_model.apiResultUploudImage1
+                                                  ?.jsonBody ??
+                                              ''),
+                                        ).toString(),
+                                        category:
+                                            FFAppState().selectcategory.name,
+                                        categoryId: FFAppState()
+                                            .selectcategory
+                                            .id
+                                            .toString(),
+                                        sku:
+                                            _model.sKUProdukTextController.text,
+                                        barcode:
+                                            _model.barcodeTextController.text,
+                                        status: true,
+                                      );
 
-                                  context.pushNamed('sukses_add-produk');
-                                } else {
-                                  context.pushNamed(
-                                    'gagal-add-produk',
-                                    queryParameters: {
-                                      'pesanerror': serializeParam(
-                                        (_model.apiResultyspp
-                                                ?.exceptionMessage ??
-                                            ''),
-                                        ParamType.String,
+                                      if (ApiProductCreateCall.errors(
+                                            (_model.apiResultyspp?.jsonBody ??
+                                                ''),
+                                          ) ==
+                                          null) {
+                                        FFAppState().selectcategory =
+                                            CategoriesStruct();
+                                        safeSetState(() {});
+
+                                        context.goNamed('sukses_add-produk');
+
+                                        context.goNamed('List-produk');
+                                      } else {
+                                        context.pushNamed(
+                                          'gagal-add-produk',
+                                          queryParameters: {
+                                            'pesanerror': serializeParam(
+                                              '${ApiProductCreateCall.errorsku(
+                                                        (_model.apiResultyspp
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ) != null && (ApiProductCreateCall.errorsku(
+                                                    (_model.apiResultyspp
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ))!.isNotEmpty ? ApiProductCreateCall.errorsku(
+                                                  (_model.apiResultyspp
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                )?.first : ' '}  ${ApiProductCreateCall.errorbarcode(
+                                                        (_model.apiResultyspp
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      ) != null && (ApiProductCreateCall.errorbarcode(
+                                                    (_model.apiResultyspp
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ))!.isNotEmpty ? ApiProductCreateCall.errorbarcode(
+                                                  (_model.apiResultyspp
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                )?.first : ' '}',
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text('Gagal'),
+                                            content: Text((_model
+                                                    .apiResultUploudImage1
+                                                    ?.bodyText ??
+                                                '')),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: const Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Satuan wajib diisi',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: const Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context).error,
                                       ),
-                                    }.withoutNulls,
+                                    );
+                                  }
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Harga wajib diisi',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: const Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).error,
+                                    ),
                                   );
                                 }
                               } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('gagal'),
-                                      content: Text((_model
-                                              .apiResultUploudImage1
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Nama produk wajib diisi',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: const Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).error,
+                                  ),
                                 );
                               }
                             } else {
-                              _model.apiResultUploudImage2 =
-                                  await ApiUploudImageProductCall.call(
-                                token: currentAuthenticationToken,
-                                image: _model.uploadedLocalFile2,
-                              );
-
-                              if ((_model.apiResultUploudImage2?.succeeded ??
-                                  true)) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text((_model
-                                              .apiResultUploudImage2
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
+                              if (_model.namaProdukTextController.text != '') {
+                                if (_model.hargaProdukTextController.text !=
+                                        '') {
+                                  if ((_model.nilaiSatuanTextController
+                                                  .text !=
+                                              '') &&
+                                      (_model.dropDownValue != null &&
+                                          _model.dropDownValue != '')) {
+                                    _model.apiResultUploudImage2 =
+                                        await ApiUploudImageProductCall.call(
+                                      token: currentAuthenticationToken,
+                                      image: _model.uploadedLocalFile2,
                                     );
-                                  },
-                                );
-                                _model.apiResultysp =
-                                    await ApiProductCreateCall.call(
-                                  token: currentAuthenticationToken,
-                                  userId: currentUserUid,
-                                  name: _model.namaProdukTextController.text,
-                                  price: int.tryParse(
-                                      _model.hargaProdukTextController.text),
-                                  unit:
-                                      '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
-                                  imageUrl: ApiUploudImageProductCall.imageurl(
-                                    (_model.apiResultUploudImage2?.jsonBody ??
-                                        ''),
-                                  ).toString(),
-                                  category: FFAppState().selectcategory.name,
-                                  categoryId:
-                                      FFAppState().selectcategory.id.toString(),
-                                  sku: _model.sKUProdukTextController.text,
-                                  barcode: _model.barcodeTextController.text,
-                                  status: true,
-                                );
 
-                                if ((_model.apiResultysp?.succeeded ?? true)) {
-                                  FFAppState().selectcategory =
-                                      CategoriesStruct();
-                                  safeSetState(() {});
+                                    if ((_model
+                                            .apiResultUploudImage2?.succeeded ??
+                                        true)) {
+                                      _model.apiResultysp =
+                                          await ApiProductCreateCall.call(
+                                        token: currentAuthenticationToken,
+                                        userId: currentUserUid,
+                                        name: _model
+                                            .namaProdukTextController.text,
+                                        price: int.tryParse(_model
+                                            .hargaProdukTextController.text),
+                                        unit:
+                                            '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                                        imageUrl:
+                                            ApiUploudImageProductCall.imageurl(
+                                          (_model.apiResultUploudImage2
+                                                  ?.jsonBody ??
+                                              ''),
+                                        ).toString(),
+                                        category:
+                                            FFAppState().selectcategory.name,
+                                        categoryId: FFAppState()
+                                            .selectcategory
+                                            .id
+                                            .toString(),
+                                        sku:
+                                            _model.sKUProdukTextController.text,
+                                        barcode:
+                                            _model.barcodeTextController.text,
+                                        status: true,
+                                      );
 
-                                  context.pushNamed('sukses_add-produk');
-                                } else {
-                                  context.pushNamed(
-                                    'gagal-add-produk',
-                                    queryParameters: {
-                                      'pesanerror': serializeParam(
-                                        (_model.apiResultysp
-                                                ?.exceptionMessage ??
-                                            ''),
-                                        ParamType.String,
+                                      if (ApiProductCreateCall.errors(
+                                            (_model.apiResultyspp?.jsonBody ??
+                                                ''),
+                                          ) ==
+                                          null) {
+                                        FFAppState().selectcategory =
+                                            CategoriesStruct();
+                                        safeSetState(() {});
+
+                                        context.goNamed('sukses_add-produk');
+
+                                        context.goNamed('List-produk');
+                                      } else {
+                                        context.pushNamed(
+                                          'gagal-add-produk',
+                                          queryParameters: {
+                                            'pesanerror': serializeParam(
+                                              (_model.apiResultysp
+                                                      ?.exceptionMessage ??
+                                                  ''),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text('gagal'),
+                                            content: Text((_model
+                                                    .apiResultUploudImage2
+                                                    ?.bodyText ??
+                                                '')),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: const Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Satuan wajib diisi',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: const Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context).error,
                                       ),
-                                    }.withoutNulls,
+                                    );
+                                  }
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Harga wajib diisi',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: const Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context).error,
+                                    ),
                                   );
                                 }
                               } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('gagal'),
-                                      content: Text((_model
-                                              .apiResultUploudImage2
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Nama produk wajib diisi',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: const Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).error,
+                                  ),
                                 );
                               }
                             }

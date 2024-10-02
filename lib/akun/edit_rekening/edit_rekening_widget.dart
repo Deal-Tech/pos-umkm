@@ -514,9 +514,7 @@ class _EditRekeningWidgetState extends State<EditRekeningWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResultepm?.exceptionMessage ??
-                                      '')),
+                              content: const Text('Update rekening berhasil'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

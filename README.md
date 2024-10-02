@@ -1,4 +1,4 @@
-# Cahrur - POS UMKM
+# Deal POS
 
 A new Flutter project.
 

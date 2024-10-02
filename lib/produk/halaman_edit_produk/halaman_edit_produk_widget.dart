@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'halaman_edit_produk_model.dart';
 export 'halaman_edit_produk_model.dart';
@@ -280,7 +281,7 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                           Uint8List.fromList([]),
                                       width: 152.0,
                                       height: 98.0,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),
@@ -340,12 +341,10 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.network(
-                                      widget.imageurl == 'null'
-                                          ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
-                                          : widget.imagetampil!,
+                                      widget.imagetampil!,
                                       width: 152.0,
                                       height: 98.0,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),
@@ -433,6 +432,9 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 20,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model

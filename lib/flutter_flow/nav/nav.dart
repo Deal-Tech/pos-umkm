@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
@@ -23,8 +24,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  CahrurPOSUMKMAuthUser? initialUser;
-  CahrurPOSUMKMAuthUser? user;
+  DealPOSAuthUser? initialUser;
+  DealPOSAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -49,7 +50,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(CahrurPOSUMKMAuthUser newUser) {
+  void update(DealPOSAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -75,13 +76,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const SplashPageWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const HalamanDepanWidget(),
         ),
         FFRoute(
           name: 'SplashPage',
@@ -342,6 +343,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             total: params.getParam(
               'total',
               ParamType.int,
+            ),
+            paymentmethod: params.getParam(
+              'paymentmethod',
+              ParamType.String,
             ),
           ),
         ),
@@ -829,7 +834,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/splashPage';
+            return '/halamanDepan';
           }
           return null;
         },
@@ -847,10 +852,9 @@ class FFRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
+                    child: SpinKitFadingFour(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 50.0,
                     ),
                   ),
                 )

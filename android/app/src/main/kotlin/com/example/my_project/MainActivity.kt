@@ -1,4 +1,4 @@
-package com.dealtech.posumkm
+package com.mudahdeal.pos
 
 import io.flutter.embedding.android.FlutterActivity
 

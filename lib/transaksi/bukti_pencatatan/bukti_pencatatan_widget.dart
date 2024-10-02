@@ -293,6 +293,10 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                                       widget.total,
                                       ParamType.int,
                                     ),
+                                    'paymentmethod': serializeParam(
+                                      widget.paymentmethod,
+                                      ParamType.String,
+                                    ),
                                   }.withoutNulls,
                                 );
                               },

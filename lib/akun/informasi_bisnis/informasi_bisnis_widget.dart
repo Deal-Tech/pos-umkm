@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'informasi_bisnis_model.dart';
 export 'informasi_bisnis_model.dart';
@@ -162,12 +163,11 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                              ),
+                                            child: SpinKitFadingFour(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 50.0,
                                             ),
                                           ),
                                         );
@@ -183,8 +183,8 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                           ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
-                                            child: Image.network(
-                                              'https://picsum.photos/seed/1/600',
+                                            child: Image.asset(
+                                              'assets/images/Untitled_design_(23).png',
                                               width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.25,
@@ -199,7 +199,26 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 10.0, 0.0, 0.0),
                                             child: Text(
-                                              'Subur Makmur',
+                                              QrisGroup.getQrisCall.alamatusaha(
+                                                            columnGetQrisResponse
+                                                                .jsonBody,
+                                                          ) !=
+                                                          null &&
+                                                      QrisGroup.getQrisCall
+                                                              .alamatusaha(
+                                                            columnGetQrisResponse
+                                                                .jsonBody,
+                                                          ) !=
+                                                          ''
+                                                  ? valueOrDefault<String>(
+                                                      QrisGroup.getQrisCall
+                                                          .namausaha(
+                                                        columnGetQrisResponse
+                                                            .jsonBody,
+                                                      ),
+                                                      'alamat',
+                                                    )
+                                                  : 'Nama Usaha',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium

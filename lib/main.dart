@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
-  late Stream<CahrurPOSUMKMAuthUser> userStream;
+  late Stream<DealPOSAuthUser> userStream;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = cahrurPOSUMKMAuthUserStream()
+    userStream = dealPOSAuthUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Cahrur - POS UMKM',
+      title: 'Deal POS',
       localizationsDelegates: const [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,

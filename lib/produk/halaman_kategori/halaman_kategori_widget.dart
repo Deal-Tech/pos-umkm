@@ -4,7 +4,10 @@ import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'halaman_kategori_model.dart';
 export 'halaman_kategori_model.dart';
@@ -246,6 +249,9 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                             fontFamily: 'Readex Pro',
                                             letterSpacing: 0.0,
                                           ),
+                                      maxLength: 20,
+                                      maxLengthEnforcement:
+                                          MaxLengthEnforcement.enforced,
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       validator: _model.textControllerValidator
@@ -264,24 +270,6 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
 
                                     if ((_model.apiResultgqy?.succeeded ??
                                         true)) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Sukses'),
-                                            content: Text((_model.apiResultgqy
-                                                    ?.exceptionMessage ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
                                       safeSetState(() {
                                         _model.textController?.clear();
                                       });
@@ -344,9 +332,12 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 50.0, 0.0, 0.0),
                             child: FutureBuilder<ApiCallResponse>(
-                              future: ApiGetListCategoryCall.call(
-                                token: currentAuthenticationToken,
-                              ),
+                              future: (_model.apiRequestCompleter ??=
+                                      Completer<ApiCallResponse>()
+                                        ..complete(ApiGetListCategoryCall.call(
+                                          token: currentAuthenticationToken,
+                                        )))
+                                  .future,
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
@@ -354,11 +345,10 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
+                                      child: SpinKitFadingFour(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 50.0,
                                       ),
                                     ),
                                   );
@@ -486,10 +476,8 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                             return AlertDialog(
                                                               title: const Text(
                                                                   'Sukses'),
-                                                              content: Text((_model
-                                                                      .apiResultqqe
-                                                                      ?.bodyText ??
-                                                                  '')),
+                                                              content: const Text(
+                                                                  'Kategori berhasil dihapus'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
@@ -502,6 +490,11 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                             );
                                                           },
                                                         );
+                                                        safeSetState(() => _model
+                                                                .apiRequestCompleter =
+                                                            null);
+                                                        await _model
+                                                            .waitForApiRequestCompleted();
                                                       } else {
                                                         await showDialog(
                                                           context: context,

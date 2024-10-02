@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'halaman_metode_pembayaran_model.dart';
 export 'halaman_metode_pembayaran_model.dart';
@@ -221,10 +222,10 @@ class _HalamanMetodePembayaranWidgetState
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
+                                    child: SpinKitFadingFour(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 50.0,
                                     ),
                                   ),
                                 );
@@ -354,9 +355,7 @@ class _HalamanMetodePembayaranWidgetState
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: const Text('Sukses'),
-                                content: Text((_model
-                                        .apiResultqristransactions?.bodyText ??
-                                    '')),
+                                content: const Text('Transaksi berhasil dibuat'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -370,7 +369,7 @@ class _HalamanMetodePembayaranWidgetState
                           FFAppState().cart = [];
                           safeSetState(() {});
 
-                          context.pushNamed(
+                          context.goNamed(
                             'Halaman-pembayaran-non-cash',
                             queryParameters: {
                               'total': serializeParam(
@@ -434,8 +433,7 @@ class _HalamanMetodePembayaranWidgetState
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: const Text('Sukses'),
-                                content:
-                                    Text((_model.apiResultdpc?.bodyText ?? '')),
+                                content: const Text('Transaksi berhasil dibuat'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -449,7 +447,7 @@ class _HalamanMetodePembayaranWidgetState
                           FFAppState().cart = [];
                           safeSetState(() {});
 
-                          context.pushNamed(
+                          context.goNamed(
                             'Bukti-pencatatan',
                             queryParameters: {
                               'paymentmethod': serializeParam(

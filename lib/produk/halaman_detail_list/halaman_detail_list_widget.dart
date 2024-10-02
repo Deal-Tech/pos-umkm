@@ -190,9 +190,11 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                               },
                                             ) ??
                                             false;
-                                    FFAppState()
-                                        .removeAtIndexFromCart(listCartIndex);
-                                    safeSetState(() {});
+                                    if (confirmDialogResponse) {
+                                      FFAppState()
+                                          .removeAtIndexFromCart(listCartIndex);
+                                      safeSetState(() {});
+                                    }
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -203,7 +205,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                             BorderRadius.circular(8.0),
                                         child: Image.network(
                                           listCartItem.productImageUrl == 'null'
-                                              ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                              ? 'https://thetester.me/storage/product_images/Box.png'
                                               : listCartItem.productImageUrl,
                                           width: 100.0,
                                           fit: BoxFit.contain,

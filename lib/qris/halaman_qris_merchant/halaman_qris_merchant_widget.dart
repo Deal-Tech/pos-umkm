@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'halaman_qris_merchant_model.dart';
 export 'halaman_qris_merchant_model.dart';
@@ -56,10 +57,9 @@ class _HalamanQrisMerchantWidgetState extends State<HalamanQrisMerchantWidget> {
                     child: SizedBox(
                       width: 50.0,
                       height: 50.0,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).primary,
-                        ),
+                      child: SpinKitFadingFour(
+                        color: FlutterFlowTheme.of(context).primary,
+                        size: 50.0,
                       ),
                     ),
                   );

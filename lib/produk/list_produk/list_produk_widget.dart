@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'list_produk_model.dart';
 export 'list_produk_model.dart';
@@ -220,12 +221,10 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
+                                        child: SpinKitFadingFour(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 50.0,
                                         ),
                                       ),
                                     );
@@ -263,6 +262,8 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                       }
 
                                       return RefreshIndicator(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         onRefresh: () async {
                                           safeSetState(() => _model
                                               .apiRequestCompleter = null);
@@ -331,7 +332,7 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                                                       .network(
                                                                     listProductItem.imageUrl ==
                                                                             'null'
-                                                                        ? 'https://thetester.me/storage/product_images/xs8w0LCXrFg1N7BLdlyDSK1LHi5xEqd09Obhv2iF.png'
+                                                                        ? 'https://thetester.me/storage/product_images/Box.png'
                                                                         : listProductItem
                                                                             .imageUrl,
                                                                     width: 80.0,
@@ -492,8 +493,11 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                                                   ),
                                                                   'imagetampil':
                                                                       serializeParam(
-                                                                    listProductItem
-                                                                        .imageUrl,
+                                                                    listProductItem.imageUrl ==
+                                                                            'null'
+                                                                        ? 'https://thetester.me/storage/product_images/Box.png'
+                                                                        : listProductItem
+                                                                            .imageUrl,
                                                                     ParamType
                                                                         .String,
                                                                   ),

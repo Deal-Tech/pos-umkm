@@ -8,8 +8,6 @@ class HalamanAkunModel extends FlutterFlowModel<HalamanAkunWidget> {
 
   // Stores action output result for [Backend Call - API (Api Get User)] action in Halaman-akun widget.
   ApiCallResponse? apiResultgetuser;
-  // Stores action output result for [Backend Call - API (api logout)] action in Button widget.
-  ApiCallResponse? apiResult1xg;
 
   @override
   void initState(BuildContext context) {}

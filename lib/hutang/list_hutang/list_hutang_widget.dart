@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'list_hutang_model.dart';
 export 'list_hutang_model.dart';
 
@@ -229,10 +230,9 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                                  child: SpinKitFadingFour(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 50.0,
                                   ),
                                 ),
                               );
@@ -259,6 +259,7 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                 }
 
                                 return RefreshIndicator(
+                                  color: FlutterFlowTheme.of(context).primary,
                                   onRefresh: () async {
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);
@@ -278,7 +279,6 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                             0.0, 20.0, 0.0, 0.0),
                                         child: Container(
                                           width: 100.0,
-                                          height: 95.0,
                                           decoration: BoxDecoration(
                                             color: const Color(0xFFF0F3F7),
                                             borderRadius:
@@ -334,8 +334,8 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                               children: [
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          20.0, 0.0, 0.0, 0.0),
+                                                      .fromSTEB(20.0, 10.0, 0.0,
+                                                          10.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -419,14 +419,67 @@ class _ListHutangWidgetState extends State<ListHutangWidget> {
                                                           ),
                                                         ],
                                                       ),
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: debtlistItem
+                                                                      .isPaid ==
+                                                                  0
+                                                              ? FlutterFlowTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .error
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      100.0),
+                                                        ),
+                                                        child: Align(
+                                                          alignment:
+                                                              const AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        5.0,
+                                                                        20.0,
+                                                                        5.0),
+                                                            child: Text(
+                                                              debtlistItem.isPaid ==
+                                                                      0
+                                                                  ? 'Belum Lunas'
+                                                                  : 'Lunas',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Rubik',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ].divide(
                                                         const SizedBox(height: 10.0)),
                                                   ),
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 20.0, 0.0),
+                                                      .fromSTEB(0.0, 10.0, 20.0,
+                                                          10.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,

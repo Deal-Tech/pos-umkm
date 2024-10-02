@@ -50,6 +50,22 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _uploudedimage = prefs.getString('ff_uploudedimage') ?? _uploudedimage;
     });
+    _safeInit(() {
+      _categoryexpenslocal = prefs
+              .getStringList('ff_categoryexpenslocal')
+              ?.map((x) {
+                try {
+                  return CategoryexpenslocalStruct.fromSerializableMap(
+                      jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _categoryexpenslocal;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -198,6 +214,56 @@ class FFAppState extends ChangeNotifier {
   set uploudedimage(String value) {
     _uploudedimage = value;
     prefs.setString('ff_uploudedimage', value);
+  }
+
+  List<CategoryexpenslocalStruct> _categoryexpenslocal = [
+    CategoryexpenslocalStruct.fromSerializableMap(
+        jsonDecode('{\"name\":\"Belanja Kebutuhan\"}')),
+    CategoryexpenslocalStruct.fromSerializableMap(
+        jsonDecode('{\"name\":\"Pembayaran Utilitas\"}')),
+    CategoryexpenslocalStruct.fromSerializableMap(
+        jsonDecode('{\"name\":\"Gaji Karyawan\"}'))
+  ];
+  List<CategoryexpenslocalStruct> get categoryexpenslocal =>
+      _categoryexpenslocal;
+  set categoryexpenslocal(List<CategoryexpenslocalStruct> value) {
+    _categoryexpenslocal = value;
+    prefs.setStringList(
+        'ff_categoryexpenslocal', value.map((x) => x.serialize()).toList());
+  }
+
+  void addToCategoryexpenslocal(CategoryexpenslocalStruct value) {
+    categoryexpenslocal.add(value);
+    prefs.setStringList('ff_categoryexpenslocal',
+        _categoryexpenslocal.map((x) => x.serialize()).toList());
+  }
+
+  void removeFromCategoryexpenslocal(CategoryexpenslocalStruct value) {
+    categoryexpenslocal.remove(value);
+    prefs.setStringList('ff_categoryexpenslocal',
+        _categoryexpenslocal.map((x) => x.serialize()).toList());
+  }
+
+  void removeAtIndexFromCategoryexpenslocal(int index) {
+    categoryexpenslocal.removeAt(index);
+    prefs.setStringList('ff_categoryexpenslocal',
+        _categoryexpenslocal.map((x) => x.serialize()).toList());
+  }
+
+  void updateCategoryexpenslocalAtIndex(
+    int index,
+    CategoryexpenslocalStruct Function(CategoryexpenslocalStruct) updateFn,
+  ) {
+    categoryexpenslocal[index] = updateFn(_categoryexpenslocal[index]);
+    prefs.setStringList('ff_categoryexpenslocal',
+        _categoryexpenslocal.map((x) => x.serialize()).toList());
+  }
+
+  void insertAtIndexInCategoryexpenslocal(
+      int index, CategoryexpenslocalStruct value) {
+    categoryexpenslocal.insert(index, value);
+    prefs.setStringList('ff_categoryexpenslocal',
+        _categoryexpenslocal.map((x) => x.serialize()).toList());
   }
 }
 

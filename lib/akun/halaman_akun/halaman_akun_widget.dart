@@ -414,39 +414,12 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                           },
                                         ) ??
                                         false;
-                                _model.apiResult1xg = await ApiLogoutCall.call(
-                                  token: currentAuthenticationToken,
-                                );
+                                GoRouter.of(context).prepareAuthEvent();
+                                await authManager.signOut();
+                                GoRouter.of(context).clearRedirectLocation();
 
-                                if ((_model.apiResult1xg?.succeeded ?? true)) {
-                                  GoRouter.of(context).prepareAuthEvent();
-                                  await authManager.signOut();
-                                  GoRouter.of(context).clearRedirectLocation();
-
-                                  context.pushNamedAuth(
-                                      'Halaman_login_1', context.mounted);
-                                } else {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: const Text('Gagal'),
-                                        content: Text((_model.apiResult1xg
-                                                ?.exceptionMessage ??
-                                            '')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: const Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
-
-                                safeSetState(() {});
+                                context.goNamedAuth(
+                                    'Halaman_login_2', context.mounted);
                               },
                               text: 'Keluar',
                               options: FFButtonOptions(
