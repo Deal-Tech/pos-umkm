@@ -212,6 +212,8 @@ class _EditNomorTeleponWidgetState extends State<EditNomorTeleponWidget> {
                                               fontFamily: 'Readex Pro',
                                               letterSpacing: 0.0,
                                             ),
+                                        maxLength: 14,
+                                        keyboardType: TextInputType.phone,
                                         cursorColor:
                                             FlutterFlowTheme.of(context)
                                                 .primaryText,

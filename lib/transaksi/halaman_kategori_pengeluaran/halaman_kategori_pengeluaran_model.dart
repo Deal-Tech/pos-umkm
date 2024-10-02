@@ -16,6 +16,8 @@ class HalamanKategoriPengeluaranModel
   // Stores action output result for [Backend Call - API (Add Category Expense)] action in Button widget.
   ApiCallResponse? apiResultv1e;
   Completer<ApiCallResponse>? apiRequestCompleter;
+  // Stores action output result for [Backend Call - API (Delete)] action in Icon widget.
+  ApiCallResponse? apiResultglp;
 
   @override
   void initState(BuildContext context) {}

@@ -252,6 +252,11 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                       maxLength: 20,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
+                                      buildCounter: (context,
+                                              {required currentLength,
+                                              required isFocused,
+                                              maxLength}) =>
+                                          null,
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       validator: _model.textControllerValidator
@@ -273,6 +278,9 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                       safeSetState(() {
                                         _model.textController?.clear();
                                       });
+                                      safeSetState(() =>
+                                          _model.apiRequestCompleter = null);
+                                      await _model.waitForApiRequestCompleted();
                                     } else {
                                       await showDialog(
                                         context: context,
@@ -547,33 +555,6 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Align(
-                  alignment: const AlignmentDirectional(0.0, 1.0),
-                  child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
-                    },
-                    text: 'Konfirmasi',
-                    options: FFButtonOptions(
-                      width: 327.0,
-                      height: 60.0,
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: const Color(0xFF0EC244),
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Rubik',
-                                color: Colors.white,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                      elevation: 0.0,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
                   ),
                 ),
               ],

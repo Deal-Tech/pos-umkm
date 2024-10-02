@@ -466,7 +466,8 @@ class _HalamanSetPasswordWidgetState extends State<HalamanSetPasswordWidget> {
                                   },
                                 );
 
-                                context.pushNamed('Halaman_login_2');
+                                context
+                                    .pushNamed('Halaman-sukses-set-password');
                               } else {
                                 await showDialog(
                                   context: context,

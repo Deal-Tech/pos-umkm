@@ -52,40 +52,8 @@ class _HalamanSuksesSetPasswordWidgetState
                       const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 10.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: '',
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Colors.white,
-                            size: 15.0,
-                          ),
-                          options: FFButtonOptions(
-                            width: 34.0,
-                            height: 34.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
-                            color: const Color(0xFF0EC244),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
                       Text(
                         'Sukses',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -150,8 +118,8 @@ class _HalamanSuksesSetPasswordWidgetState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
+                            onPressed: () async {
+                              context.goNamed('Halaman_login_2');
                             },
                             text: 'Selesai',
                             options: FFButtonOptions(

@@ -1,7 +1,11 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'halaman_langganan_model.dart';
 export 'halaman_langganan_model.dart';
 
@@ -21,6 +25,13 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HalamanLanggananModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiResultvuo = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -71,7 +82,6 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
-            primary: false,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -150,6 +160,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                 ),
                 ListView(
                   padding: EdgeInsets.zero,
+                  primary: false,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   children: [
@@ -158,15 +169,13 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                           const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: 320.0,
                         decoration: const BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: MediaQuery.sizeOf(context).width * 0.8,
-                              height: 320.0,
                               decoration: const BoxDecoration(
                                 color: Color(0xFFDFF2EA),
                                 borderRadius: BorderRadius.only(
@@ -200,7 +209,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   20.0, 0.0, 0.0, 0.0),
                                           child: Text(
-                                            'Free Plan',
+                                            'Premium',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -222,7 +231,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
-                                                  text: 'RP0',
+                                                  text: 'RP 25.000',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -236,7 +245,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                       ),
                                                 ),
                                                 TextSpan(
-                                                  text: '/mounth',
+                                                  text: '/bulan',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -267,161 +276,457 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          decoration: const BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 15.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 5.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Iklan',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
-                                                ),
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
                                                       ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Batas Product',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                      Text(
+                                                        'Tanpa batas',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Layanan Support',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Container(
-                                            width: 250.0,
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFF0EC244),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'QRIS',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Catat Hutang',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Diskon, Pajak, Cashback',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Watermark Struk',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ].divide(const SizedBox(height: 5.0)),
                                             ),
-                                            child: Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Text(
-                                                'Pilih Paket',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                _model.apiResultvae =
+                                                    await OrderGroup.addCall
+                                                        .call(
+                                                  token:
+                                                      currentAuthenticationToken,
+                                                  name: ApiGetUserCall.nama(
+                                                    (_model.apiResultvuo
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ),
+                                                  phone: ApiGetUserCall.phone(
+                                                    (_model.apiResultvuo
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ),
+                                                  email: ApiGetUserCall.email(
+                                                    (_model.apiResultvuo
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ),
+                                                  planId: 2,
+                                                  planName: 'Pro 1 Bulan',
+                                                  amount: 30000,
+                                                  paymentId: 2,
+                                                  paymentMethod: 'Xendit',
+                                                  paymentAmount: null,
+                                                );
+
+                                                if ((_model.apiResultvae
+                                                        ?.succeeded ??
+                                                    true)) {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Sukses'),
+                                                        content: Text((_model
+                                                                .apiResultvae
+                                                                ?.bodyText ??
+                                                            '')),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                  _model.apiResulta5r =
+                                                      await ApiXenditCall.call(
+                                                    token:
+                                                        'eG5kX2RldmVsb3BtZW50X2dadXJRYW1xSXNpVkdMMEg5U1pkcmh5VWhaZHZXYWdlU1JJSjdLdTVjcTZvWmJpdjZoM05qWVBvU0JxTlhSdzo=',
+                                                    orderid: OrderGroup.addCall
+                                                        .idorder(
+                                                          (_model.apiResultvae
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                        )
+                                                        ?.toString(),
+                                                    amount: 30000,
+                                                    payerEmail:
+                                                        ApiGetUserCall.email(
+                                                      (_model.apiResultvuo
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ),
+                                                    description: 'Pro 1 Bulan',
+                                                  );
+
+                                                  if ((_model.apiResulta5r
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: const Text('Sukses'),
+                                                          content: Text((_model
+                                                                  .apiResulta5r
+                                                                  ?.bodyText ??
+                                                              '')),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: const Text('Ok'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                    await launchURL(
+                                                        ApiXenditCall
+                                                            .invoiceurl(
+                                                      (_model.apiResulta5r
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    )!);
+                                                  } else {
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: const Text('Gagal'),
+                                                          content: Text((_model
+                                                                  .apiResulta5r
+                                                                  ?.bodyText ??
+                                                              '')),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: const Text('Ok'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                } else {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Gagal'),
+                                                        content: Text((_model
+                                                                .apiResultvae
+                                                                ?.bodyText ??
+                                                            '')),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }
+
+                                                safeSetState(() {});
+                                              },
+                                              child: Container(
+                                                width: 250.0,
+                                                height: 40.0,
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFF0EC244),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                child: Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Text(
+                                                    'Pilih Paket',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
@@ -430,11 +735,13 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                           fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                         ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -445,19 +752,17 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          10.0, 20.0, 10.0, 100.0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: 320.0,
                         decoration: const BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               width: MediaQuery.sizeOf(context).width * 0.8,
-                              height: 320.0,
                               decoration: const BoxDecoration(
                                 color: Color(0xFFDFF2EA),
                                 borderRadius: BorderRadius.only(
@@ -491,7 +796,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   20.0, 0.0, 0.0, 0.0),
                                           child: Text(
-                                            'Free Plan',
+                                            'Gratis',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -513,7 +818,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                             text: TextSpan(
                                               children: [
                                                 TextSpan(
-                                                  text: 'Rp150.000',
+                                                  text: 'RP 0',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -527,7 +832,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                       ),
                                                 ),
                                                 TextSpan(
-                                                  text: '/mounth',
+                                                  text: '/bulan',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -558,174 +863,309 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          decoration: const BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 15.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 5.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Iklan',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
-                                                ),
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
                                                       ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Batas Product',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                              ),
-                                              ListTile(
-                                                leading: const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 15.0,
-                                                ),
-                                                title: Text(
-                                                  'Featured 1',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                                      Text(
+                                                        '20',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
                                                       ),
+                                                    ],
+                                                  ),
                                                 ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Layanan Support',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .windowClose,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Container(
-                                            width: 250.0,
-                                            height: 40.0,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFF0EC244),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'QRIS',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Catat Hutang',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .windowClose,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Diskon, Pajak, Cashback',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .windowClose,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Watermark Struk',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ].divide(const SizedBox(height: 5.0)),
                                             ),
-                                            child: Align(
-                                              alignment: const AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: Text(
-                                                'Pilih Paket',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          color: Colors.white,
-                                                          fontSize: 16.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: Container(
+                                              width: 250.0,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFF0EC244),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    0.0, 0.0),
+                                                child: Text(
+                                                  'Pilih Paket',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -735,7 +1175,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                         ),
                       ),
                     ),
-                  ],
+                  ].divide(const SizedBox(height: 20.0)),
                 ),
               ],
             ),

@@ -59,7 +59,7 @@ class _ListPiutangWidgetState extends State<ListPiutangWidget> {
               size: 20.0,
             ),
             onPressed: () async {
-              context.pop();
+              context.goNamed('Home');
             },
           ),
           title: Text(

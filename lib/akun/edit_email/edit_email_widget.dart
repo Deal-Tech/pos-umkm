@@ -275,9 +275,8 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResultopq?.exceptionMessage ??
-                                      '')),
+                              content:
+                                  Text((_model.apiResultopq?.bodyText ?? '')),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

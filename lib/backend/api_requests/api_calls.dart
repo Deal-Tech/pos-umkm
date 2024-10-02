@@ -453,6 +453,8 @@ class CategoryExpenseGroup {
       GetCategoryExpenseCall();
   static AddCategoryExpenseCall addCategoryExpenseCall =
       AddCategoryExpenseCall();
+  static DeleteCall deleteCall = DeleteCall();
+  static DeleteCopyCall deleteCopyCall = DeleteCopyCall();
 }
 
 class GetCategoryExpenseCall {
@@ -500,6 +502,69 @@ class AddCategoryExpenseCall {
       callName: 'Add Category Expense',
       apiUrl: '$baseUrl/category-expenses',
       callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = CategoryExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete',
+      apiUrl: '$baseUrl/category-expenses/$id',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class DeleteCopyCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? name = '',
+    bool? status,
+    String? token = '',
+  }) async {
+    final baseUrl = CategoryExpenseGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "nama": "$name",
+  "status": $status
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Delete Copy',
+      apiUrl: '$baseUrl/category-expenses/$id',
+      callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -1143,6 +1208,75 @@ class DeleteReceivableCall {
 }
 
 /// End Receivable Group Code
+
+/// Start Order Group Code
+
+class OrderGroup {
+  static String getBaseUrl({
+    String? token = '',
+  }) =>
+      'https://thetester.me/api';
+  static Map<String, String> headers = {
+    'Authorization': 'Bearer [token]',
+  };
+  static AddCall addCall = AddCall();
+}
+
+class AddCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? phone = '',
+    String? email = '',
+    int? planId,
+    String? planName = '',
+    int? amount,
+    int? paymentId,
+    String? paymentMethod = '',
+    String? paymentAmount = '',
+    String? token = '',
+  }) async {
+    final baseUrl = OrderGroup.getBaseUrl(
+      token: token,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "phone": "$phone",
+  "email": "$email",
+  "plan_id": $planId,
+  "plan_name": "$planName",
+  "amount": $amount,
+  "payment_id": $paymentId,
+  "payment_method": "$paymentMethod",
+  "payment_amount": "$paymentAmount"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Add',
+      apiUrl: '$baseUrl/orders',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? idorder(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.order.id''',
+      ));
+}
+
+/// End Order Group Code
 
 class ApiDaftarCall {
   static Future<ApiCallResponse> call({
@@ -1970,6 +2104,69 @@ class ApiUpdateUserCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class PlansCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Plans',
+      apiUrl: 'https://thetester.me/api/plans',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ApiXenditCall {
+  static Future<ApiCallResponse> call({
+    String? orderid = '',
+    String? token = '',
+    int? amount,
+    String? payerEmail = '',
+    String? description = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "external_id": "$orderid",
+  "amount": $amount,
+  "payer_email": "$payerEmail",
+  "description": "$description"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Api Xendit',
+      apiUrl: 'https://api.xendit.co/v2/invoices',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Basic $token',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? invoiceurl(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.invoice_url''',
+      ));
 }
 
 class ApiPagingParams {

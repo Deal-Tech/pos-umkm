@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'halaman_kategori_pengeluaran_model.dart';
 export 'halaman_kategori_pengeluaran_model.dart';
 
@@ -204,6 +205,9 @@ class _HalamanKategoriPengeluaranWidgetState
                                   status: true,
                                 );
 
+                                safeSetState(() {
+                                  _model.textController?.clear();
+                                });
                                 safeSetState(
                                     () => _model.apiRequestCompleter = null);
                                 await _model.waitForApiRequestCompleted();
@@ -442,15 +446,125 @@ class _HalamanKategoriPengeluaranWidgetState
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      Text(
-                                        categoryexpenseItem.nama,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Rubik',
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                            ),
+                                      Expanded(
+                                        child: Text(
+                                          categoryexpenseItem.nama,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Rubik',
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(1.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            var confirmDialogResponse =
+                                                await showDialog<bool>(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              'Konfirmasi'),
+                                                          content: Text(
+                                                              'Apakah yakin ingin hapus ${categoryexpenseItem.nama} ?'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      false),
+                                                              child:
+                                                                  const Text('Tidak'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      true),
+                                                              child:
+                                                                  const Text('Iya'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ) ??
+                                                    false;
+                                            _model.apiResultglp =
+                                                await CategoryExpenseGroup
+                                                    .deleteCall
+                                                    .call(
+                                              token: currentAuthenticationToken,
+                                              id: categoryexpenseItem.id
+                                                  .toString(),
+                                            );
+
+                                            if ((_model
+                                                    .apiResultglp?.succeeded ??
+                                                true)) {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: const Text('Sukses'),
+                                                    content: const Text(
+                                                        'Kategori berhasil dihapus'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: const Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              safeSetState(() => _model
+                                                  .apiRequestCompleter = null);
+                                              await _model
+                                                  .waitForApiRequestCompleted();
+                                            } else {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: const Text('Sukses'),
+                                                    content: Text((_model
+                                                            .apiResultglp
+                                                            ?.bodyText ??
+                                                        '')),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: const Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }
+
+                                            safeSetState(() {});
+                                          },
+                                          child: FaIcon(
+                                            FontAwesomeIcons.trash,
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            size: 24.0,
+                                          ),
+                                        ),
                                       ),
                                     ].divide(const SizedBox(width: 20.0)),
                                   ),

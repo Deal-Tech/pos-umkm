@@ -160,6 +160,7 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                   FFAppState().SettingStruk.alamat != ''
                                       ? FFAppState().SettingStruk.alamat
                                       : 'Alamat Usaha',
+                                  textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -699,8 +700,23 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: const Text('Ups!!'),
+                            content: const Text('Fitur masih dalam pengembangan..'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: const Text('Ok'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     text: 'Cetak Struk',
                     icon: const Icon(

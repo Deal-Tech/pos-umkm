@@ -259,6 +259,14 @@ class _HalamanRiwayatTransaksiWidgetState
                                             .withoutNulls
                                             .toList() ??
                                         [];
+                                if (listtransactions.isEmpty) {
+                                  return Center(
+                                    child: Image.asset(
+                                      'assets/images/undraw_empty_re_opql_3.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                  );
+                                }
 
                                 return RefreshIndicator(
                                   color: FlutterFlowTheme.of(context).primary,

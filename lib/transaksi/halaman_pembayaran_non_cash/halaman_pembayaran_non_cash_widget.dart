@@ -266,7 +266,7 @@ class _HalamanPembayaranNonCashWidgetState
                         transactionId: widget.idtransactions,
                       );
 
-                      context.pushNamed(
+                      context.goNamed(
                         'Bukti-pencatatan',
                         queryParameters: {
                           'paymentmethod': serializeParam(
@@ -296,7 +296,7 @@ class _HalamanPembayaranNonCashWidgetState
                           const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: const Color(0xFF0EC244),
+                      color: FlutterFlowTheme.of(context).success,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Rubik',

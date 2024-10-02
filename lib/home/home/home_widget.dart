@@ -617,8 +617,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 20.0, 0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.pushNamed('Halaman-langganan');
                               },
                               text: 'Upgrade Premium',
                               options: FFButtonOptions(

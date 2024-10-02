@@ -384,6 +384,8 @@ class _PengaturanStrukWidgetState extends State<PengaturanStrukWidget> {
                                                                   : FFAppState()
                                                                       .SettingStruk
                                                                       .alamat,
+                                                              textAlign:
+                                                                  TextAlign.end,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium

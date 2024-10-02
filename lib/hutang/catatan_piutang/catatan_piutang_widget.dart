@@ -338,6 +338,7 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                               maxLength: 14,
                                               maxLengthEnforcement:
                                                   MaxLengthEnforcement.enforced,
+                                              keyboardType: TextInputType.phone,
                                               cursorColor:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
@@ -689,6 +690,8 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 cursorColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,

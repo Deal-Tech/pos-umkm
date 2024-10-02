@@ -217,12 +217,12 @@ class FFAppState extends ChangeNotifier {
   }
 
   List<CategoryexpenslocalStruct> _categoryexpenslocal = [
-    CategoryexpenslocalStruct.fromSerializableMap(
-        jsonDecode('{\"name\":\"Belanja Kebutuhan\"}')),
-    CategoryexpenslocalStruct.fromSerializableMap(
-        jsonDecode('{\"name\":\"Pembayaran Utilitas\"}')),
-    CategoryexpenslocalStruct.fromSerializableMap(
-        jsonDecode('{\"name\":\"Gaji Karyawan\"}'))
+    CategoryexpenslocalStruct.fromSerializableMap(jsonDecode(
+        '{\"id\":\"1111\",\"user_id\":\"0\",\"nama\":\"Belanja Kebutuhan\",\"status\":\"1\",\"created_at\":\"\",\"updated_at\":\"\"}')),
+    CategoryexpenslocalStruct.fromSerializableMap(jsonDecode(
+        '{\"id\":\"0\",\"user_id\":\"0\",\"nama\":\"Hello World\",\"status\":\"0\",\"created_at\":\"Hello World\",\"updated_at\":\"Hello World\"}')),
+    CategoryexpenslocalStruct.fromSerializableMap(jsonDecode(
+        '{\"id\":\"0\",\"user_id\":\"0\",\"nama\":\"Hello World\",\"status\":\"0\",\"created_at\":\"Hello World\",\"updated_at\":\"Hello World\"}'))
   ];
   List<CategoryexpenslocalStruct> get categoryexpenslocal =>
       _categoryexpenslocal;

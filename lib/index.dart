@@ -25,8 +25,6 @@ export '/transaksi/halaman_pembayaran_non_cash/halaman_pembayaran_non_cash_widge
     show HalamanPembayaranNonCashWidget;
 export '/transaksi/bukti_pencatatan/bukti_pencatatan_widget.dart'
     show BuktiPencatatanWidget;
-export '/auth/halaman_verifikasi_kode_reset/halaman_verifikasi_kode_reset_widget.dart'
-    show HalamanVerifikasiKodeResetWidget;
 export '/auth/halaman_set_password/halaman_set_password_widget.dart'
     show HalamanSetPasswordWidget;
 export '/auth/halaman_sukses_set_password/halaman_sukses_set_password_widget.dart'
