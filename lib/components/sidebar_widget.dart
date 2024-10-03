@@ -409,8 +409,18 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        context
-                                            .pushNamed('Halaman-kelola-toko');
+                                        context.pushNamed(
+                                          'Halaman-kelola-toko',
+                                          queryParameters: {
+                                            'planuser': serializeParam(
+                                              ApiGetUserCall.plan(
+                                                columnApiGetUserResponse
+                                                    .jsonBody,
+                                              ),
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

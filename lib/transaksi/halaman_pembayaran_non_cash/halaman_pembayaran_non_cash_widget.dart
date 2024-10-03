@@ -16,11 +16,13 @@ class HalamanPembayaranNonCashWidget extends StatefulWidget {
     required this.total,
     required this.idtransactions,
     required this.datetransactions,
+    required this.planuser,
   });
 
   final int? total;
   final int? idtransactions;
   final String? datetransactions;
+  final String? planuser;
 
   @override
   State<HalamanPembayaranNonCashWidget> createState() =>
@@ -285,6 +287,10 @@ class _HalamanPembayaranNonCashWidgetState
                             widget.datetransactions,
                             ParamType.String,
                           ),
+                          'userplan': serializeParam(
+                            widget.planuser,
+                            ParamType.String,
+                          ),
                         }.withoutNulls,
                       );
                     },
@@ -361,6 +367,10 @@ class _HalamanPembayaranNonCashWidgetState
                               ),
                               'datetransactions': serializeParam(
                                 widget.datetransactions,
+                                ParamType.String,
+                              ),
+                              'userplan': serializeParam(
+                                widget.planuser,
                                 ParamType.String,
                               ),
                             }.withoutNulls,

@@ -421,8 +421,6 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       isDense: true,
-                                                      labelText:
-                                                          'Masukan nominal transaksi',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -436,6 +434,8 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
+                                                      hintText:
+                                                          'Masukan nominal transaksi',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -681,7 +681,6 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       isDense: true,
-                                                      labelText: 'Catatan',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -692,6 +691,7 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
+                                                      hintText: 'Catatan',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -792,46 +792,99 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      _model.apiResult99e =
-                          await ExpenseGroup.addExpenseCall.call(
-                        token: currentAuthenticationToken,
-                        tanggal: dateTimeFormat(
-                          "y-MM-d",
-                          _model.datePicked1,
-                          locale: FFLocalizations.of(context).languageCode,
-                        ),
-                        waktu: dateTimeFormat(
-                          "Hms",
-                          _model.datePicked2,
-                          locale: FFLocalizations.of(context).languageCode,
-                        ),
-                        nominal: int.tryParse(
-                            _model.nominalTransaksiTextController.text),
-                        categoryName: FFAppState().selectcategoryexpense.nama,
-                        catatan: _model.textController2.text,
-                        categoryExpenseId:
-                            FFAppState().selectcategoryexpense.id,
-                      );
-
-                      if ((_model.apiResult99e?.succeeded ?? true)) {
-                        context.pushNamed('expense_history');
-                      } else {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Gagal'),
-                              content:
-                                  Text((_model.apiResult99e?.bodyText ?? '')),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
+                      if (_model.datePicked1 != null) {
+                        if (_model.datePicked2 != null) {
+                          if (_model.nominalTransaksiTextController.text !=
+                                  '') {
+                            _model.apiResult99e =
+                                await ExpenseGroup.addExpenseCall.call(
+                              token: currentAuthenticationToken,
+                              tanggal: dateTimeFormat(
+                                "y-MM-d",
+                                _model.datePicked1,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                              waktu: dateTimeFormat(
+                                "Hms",
+                                _model.datePicked2,
+                                locale:
+                                    FFLocalizations.of(context).languageCode,
+                              ),
+                              nominal: int.tryParse(
+                                  _model.nominalTransaksiTextController.text),
+                              categoryName:
+                                  FFAppState().selectcategoryexpense.nama,
+                              catatan: _model.textController2.text,
+                              categoryExpenseId:
+                                  FFAppState().selectcategoryexpense.id,
                             );
-                          },
+
+                            if ((_model.apiResult99e?.succeeded ?? true)) {
+                              context.pushNamed('expense_history');
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Gagal'),
+                                    content: const Text(
+                                        'Ada kendala, hubngi admin untuk info lebi lanjut. Atau coba lagi'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                                                    } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Nominal wajib diatur',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).error,
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Waktu wajib diatur',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: const Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).error,
+                            ),
+                          );
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Tanggal wajib diatur',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).error,
+                          ),
                         );
                       }
 

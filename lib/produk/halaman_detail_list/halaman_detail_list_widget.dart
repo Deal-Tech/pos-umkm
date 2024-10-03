@@ -1,3 +1,4 @@
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,7 +10,12 @@ import 'halaman_detail_list_model.dart';
 export 'halaman_detail_list_model.dart';
 
 class HalamanDetailListWidget extends StatefulWidget {
-  const HalamanDetailListWidget({super.key});
+  const HalamanDetailListWidget({
+    super.key,
+    required this.planuser,
+  });
+
+  final String? planuser;
 
   @override
   State<HalamanDetailListWidget> createState() =>
@@ -124,6 +130,13 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                       ),
                     ),
                   ),
+                  if (widget.planuser == 'Free')
+                    FlutterFlowAdBanner(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 50.0,
+                      showsTestAd: false,
+                      androidAdUnitID: 'ca-app-pub-9360031341295738/9329003839',
+                    ),
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
@@ -501,6 +514,10 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                   functions.calaculateTotalCartPrice(
                                       FFAppState().cart.toList()),
                                   ParamType.int,
+                                ),
+                                'planuser': serializeParam(
+                                  widget.planuser,
+                                  ParamType.String,
                                 ),
                               }.withoutNulls,
                             );

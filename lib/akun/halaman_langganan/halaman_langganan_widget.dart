@@ -135,7 +135,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                             ),
                                       ),
                                       Text(
-                                        'Nikmati berbagai fitur unggulan dari alikasi POS dengan berlangganan premium.',
+                                        'Nikmati berbagai fitur unggulan dari aplikasi Deal POS dengan berlangganan paket PRO.',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -209,7 +209,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   20.0, 0.0, 0.0, 0.0),
                                           child: Text(
-                                            'Premium',
+                                            'Pro',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -447,7 +447,43 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Catat Hutang',
+                                                        'Catat Hutang dan Piutang',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .checkSquare,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Catat Pengeluaran',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -582,37 +618,13 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                   amount: 30000,
                                                   paymentId: 2,
                                                   paymentMethod: 'Xendit',
-                                                  paymentAmount: null,
                                                 );
 
                                                 if ((_model.apiResultvae
                                                         ?.succeeded ??
                                                     true)) {
-                                                  await showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (alertDialogContext) {
-                                                      return AlertDialog(
-                                                        title: const Text('Sukses'),
-                                                        content: Text((_model
-                                                                .apiResultvae
-                                                                ?.bodyText ??
-                                                            '')),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    alertDialogContext),
-                                                            child: const Text('Ok'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                  _model.apiResulta5r =
+                                                  _model.apiResulte3v =
                                                       await ApiXenditCall.call(
-                                                    token:
-                                                        'eG5kX2RldmVsb3BtZW50X2dadXJRYW1xSXNpVkdMMEg5U1pkcmh5VWhaZHZXYWdlU1JJSjdLdTVjcTZvWmJpdjZoM05qWVBvU0JxTlhSdzo=',
                                                     orderid: OrderGroup.addCall
                                                         .idorder(
                                                           (_model.apiResultvae
@@ -620,7 +632,9 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                               ''),
                                                         )
                                                         ?.toString(),
-                                                    amount: 30000,
+                                                    token:
+                                                        'eG5kX2RldmVsb3BtZW50X2dadXJRYW1xSXNpVkdMMEg5U1pkcmh5VWhaZHZXYWdlU1JJSjdLdTVjcTZvWmJpdjZoM05qWVBvU0JxTlhSdzo=',
+                                                    amount: 25000,
                                                     payerEmail:
                                                         ApiGetUserCall.email(
                                                       (_model.apiResultvuo
@@ -630,37 +644,93 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                     description: 'Pro 1 Bulan',
                                                   );
 
-                                                  if ((_model.apiResulta5r
+                                                  if ((_model.apiResulte3v
                                                           ?.succeeded ??
                                                       true)) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: const Text('Sukses'),
-                                                          content: Text((_model
-                                                                  .apiResulta5r
-                                                                  ?.bodyText ??
-                                                              '')),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: const Text('Ok'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
                                                     await launchURL(
                                                         ApiXenditCall
                                                             .invoiceurl(
-                                                      (_model.apiResulta5r
+                                                      (_model.apiResulte3v
                                                               ?.jsonBody ??
                                                           ''),
                                                     )!);
+                                                    if (OrderGroup.addCall
+                                                            .status(
+                                                          (_model.apiResultvae
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                        ) ==
+                                                        'paid') {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title:
+                                                                const Text('Sukses'),
+                                                            content: const Text(
+                                                                'Pembayaran Anda sudah kami terima, selamat menikmati fitur aplikasi tanpa batas !!'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    const Text('Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+
+                                                      context.goNamed('Home');
+                                                    } else {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: const Text(
+                                                                        'Status'),
+                                                                    content: const Text(
+                                                                        'Pembayaran Anda belum kami terima, apakah ingin melanjutkan pembayaran?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: const Text(
+                                                                            'Tidak'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: const Text(
+                                                                            'Iya'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await launchURL(
+                                                            ApiXenditCall
+                                                                .invoiceurl(
+                                                          (_model.apiResulte3v
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                        )!);
+
+                                                        context.goNamed('Home');
+                                                      } else {
+                                                        context.goNamed('Home');
+                                                      }
+                                                    }
                                                   } else {
                                                     await showDialog(
                                                       context: context,
@@ -669,7 +739,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                         return AlertDialog(
                                                           title: const Text('Gagal'),
                                                           content: Text((_model
-                                                                  .apiResulta5r
+                                                                  .apiResulte3v
                                                                   ?.bodyText ??
                                                               '')),
                                                           actions: [
@@ -1034,7 +1104,43 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Catat Hutang',
+                                                        'Catat Hutang dan Piutang',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons
+                                                            .windowClose,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        size: 24.0,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          20.0, 0.0, 20.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Catat Pengeluaran',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1131,37 +1237,6 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                   ),
                                                 ),
                                               ].divide(const SizedBox(height: 5.0)),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: 250.0,
-                                              height: 40.0,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xFF0EC244),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
-                                              child: Align(
-                                                alignment: const AlignmentDirectional(
-                                                    0.0, 0.0),
-                                                child: Text(
-                                                  'Pilih Paket',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        color: Colors.white,
-                                                        fontSize: 16.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
                                             ),
                                           ),
                                         ],

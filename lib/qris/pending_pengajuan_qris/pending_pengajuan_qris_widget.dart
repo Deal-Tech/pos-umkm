@@ -62,7 +62,15 @@ class _PendingPengajuanQrisWidgetState
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.safePop();
+                                context.goNamed(
+                                  'Halaman-kelola-toko',
+                                  queryParameters: {
+                                    'planuser': serializeParam(
+                                      'Pro',
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               },
                               text: '',
                               icon: const Icon(

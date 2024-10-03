@@ -35,9 +35,10 @@ class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
   FocusNode? nomorTeleponFocusNode;
   TextEditingController? nomorTeleponTextController;
   String? Function(BuildContext, String?)? nomorTeleponTextControllerValidator;
-  // State field(s) for kategori_usaha widget.
-  String? kategoriUsahaValue;
-  FormFieldController<String>? kategoriUsahaValueController;
+  // State field(s) for kategori widget.
+  FocusNode? kategoriFocusNode;
+  TextEditingController? kategoriTextController;
+  String? Function(BuildContext, String?)? kategoriTextControllerValidator;
   // State field(s) for penjelasan_usaha widget.
   FocusNode? penjelasanUsahaFocusNode;
   TextEditingController? penjelasanUsahaTextController;
@@ -94,6 +95,9 @@ class HalamanAjukanQrisModel extends FlutterFlowModel<HalamanAjukanQrisWidget> {
 
     nomorTeleponFocusNode?.dispose();
     nomorTeleponTextController?.dispose();
+
+    kategoriFocusNode?.dispose();
+    kategoriTextController?.dispose();
 
     penjelasanUsahaFocusNode?.dispose();
     penjelasanUsahaTextController?.dispose();

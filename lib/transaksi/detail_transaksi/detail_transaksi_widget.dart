@@ -20,12 +20,14 @@ class DetailTransaksiWidget extends StatefulWidget {
     required this.datetransactions,
     required this.total,
     required this.paymentmethod,
+    required this.userplan,
   });
 
   final int? transactionsid;
   final String? datetransactions;
   final int? total;
   final String? paymentmethod;
+  final String? userplan;
 
   @override
   State<DetailTransaksiWidget> createState() => _DetailTransaksiWidgetState();
@@ -649,6 +651,52 @@ class _DetailTransaksiWidgetState extends State<DetailTransaksiWidget> {
                                     ],
                                   ),
                                 ),
+                                if (widget.userplan == 'Free')
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 10.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 10.0, 10.0, 10.0),
+                                        child: Text(
+                                          'Aplikasi Kasir ini Menggunakan  Deal POS',
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Rubik',
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                if (widget.userplan == 'Free')
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 5.0),
+                                    child: Text(
+                                      'Deal POS - Aplikasi Kasir Gratis',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Rubik',
+                                            color: const Color(0xFF0EC244),
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
                                 Text(
                                   '**********',
                                   textAlign: TextAlign.center,

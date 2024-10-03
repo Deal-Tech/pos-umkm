@@ -13,11 +13,14 @@ import 'flutter_flow/internationalization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'index.dart';
 
+import '/flutter_flow/admob_util.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
+  adMobUpdateRequestConfiguration();
   await authManager.initialize();
 
   final appState = FFAppState(); // Initialize FFAppState

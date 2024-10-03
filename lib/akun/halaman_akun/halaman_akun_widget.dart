@@ -123,8 +123,8 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/842/600',
+                            child: Image.asset(
+                              'assets/images/Untitled_design_(22).png',
                               width: 80.0,
                               height: 80.0,
                               fit: BoxFit.cover,
@@ -135,7 +135,12 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Ardian P',
+                                valueOrDefault<String>(
+                                  ApiGetUserCall.nama(
+                                    (_model.apiResultgetuser?.jsonBody ?? ''),
+                                  ),
+                                  'nama',
+                                ),
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -147,7 +152,12 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                     ),
                               ),
                               Text(
-                                '085456123435',
+                                valueOrDefault<String>(
+                                  ApiGetUserCall.phone(
+                                    (_model.apiResultgetuser?.jsonBody ?? ''),
+                                  ),
+                                  'phone',
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -156,7 +166,12 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                     ),
                               ),
                               Text(
-                                'sfhfsjhf@gmail.com',
+                                valueOrDefault<String>(
+                                  ApiGetUserCall.email(
+                                    (_model.apiResultgetuser?.jsonBody ?? ''),
+                                  ),
+                                  'email',
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -367,6 +382,31 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                   ),
+                                  if (ApiGetUserCall.plan(
+                                        (_model.apiResultgetuser?.jsonBody ??
+                                            ''),
+                                      ) ==
+                                      'Pro')
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 5.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Expired Langganan ${ApiGetUserCall.expiredplan(
+                                          (_model.apiResultgetuser?.jsonBody ??
+                                              ''),
+                                        )}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

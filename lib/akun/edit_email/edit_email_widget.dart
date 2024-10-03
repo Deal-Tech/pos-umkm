@@ -250,33 +250,15 @@ class _EditEmailWidgetState extends State<EditEmailWidget> {
                       );
 
                       if ((_model.apiResultopq?.succeeded ?? true)) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Sukses'),
-                              content:
-                                  Text((_model.apiResultopq?.bodyText ?? '')),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-
                         context.goNamed('Informasi_bisnis');
                       } else {
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: const Text('Sukses'),
-                              content:
-                                  Text((_model.apiResultopq?.bodyText ?? '')),
+                              title: const Text('Gagal'),
+                              content: const Text(
+                                  'Ada kendala, hubungi admin untuk info lebih lanjut, atau coba lagi secara berkala.'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

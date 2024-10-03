@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 class StatistikModel extends FlutterFlowModel<StatistikWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (Api Get User)] action in Statistik widget.
+  ApiCallResponse? apiGetuserrespon;
   Completer<ApiCallResponse>? apiRequestCompleter;
 
   @override

@@ -139,7 +139,6 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 isDense: true,
-                                                labelText: 'Masukan Nama',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -148,6 +147,7 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
+                                                hintText: 'Masukan Nama',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -264,8 +264,6 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 isDense: true,
-                                                labelText:
-                                                    'Masukan Nomor Telepon',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -274,6 +272,8 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
+                                                hintText:
+                                                    'Masukan Nomor Telepon',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -616,7 +616,6 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                 obscureText: false,
                                                 decoration: InputDecoration(
                                                   isDense: true,
-                                                  labelText: 'Masukkan Nominal',
                                                   labelStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -626,6 +625,7 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                                 'Readex Pro',
                                                             letterSpacing: 0.0,
                                                           ),
+                                                  hintText: 'Masukkan Nominal',
                                                   hintStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -904,8 +904,6 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 isDense: true,
-                                                labelText:
-                                                    'Masukkan Keterangan',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -914,6 +912,7 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
+                                                hintText: 'Masukkan Keterangan',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -1006,59 +1005,132 @@ class _CatatanHutangWidgetState extends State<CatatanHutangWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      _model.apiResultearu = await DebtGroup.addDebtCall.call(
-                        jenis: FFAppState().SelectJenisDebt,
-                        name: _model.namaPenghutangTextController.text,
-                        phone:
-                            _model.textFieldnomorPenghutangTextController.text,
-                        description: _model.deskripsiHutangTextController.text,
-                        amount: int.tryParse(
-                            _model.jumlahHutangTextController.text),
-                        dueDate: dateTimeFormat(
-                          "y-MM-d",
-                          _model.datePicked,
-                          locale: FFLocalizations.of(context).languageCode,
-                        ),
-                        isPaid: false,
-                        token: currentAuthenticationToken,
-                      );
+                      if (_model.namaPenghutangTextController.text != '') {
+                        if (_model.textFieldnomorPenghutangTextController
+                                    .text !=
+                                '') {
+                          if (FFAppState().SelectJenisDebt != '') {
+                            if (_model.jumlahHutangTextController.text != '') {
+                              if (_model.datePicked != null) {
+                                _model.apiResultearu =
+                                    await DebtGroup.addDebtCall.call(
+                                  jenis: FFAppState().SelectJenisDebt,
+                                  name:
+                                      _model.namaPenghutangTextController.text,
+                                  phone: _model
+                                      .textFieldnomorPenghutangTextController
+                                      .text,
+                                  description:
+                                      _model.deskripsiHutangTextController.text,
+                                  amount: int.tryParse(
+                                      _model.jumlahHutangTextController.text),
+                                  dueDate: dateTimeFormat(
+                                    "y-MM-d",
+                                    _model.datePicked,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  ),
+                                  isPaid: false,
+                                  token: currentAuthenticationToken,
+                                );
 
-                      if ((_model.apiResultearu?.succeeded ?? true)) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Berhasil'),
-                              content: const Text('Hutang baru berhasil ditambahkan'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
+                                if ((_model.apiResultearu?.succeeded ?? true)) {
+                                  context.goNamed('List_hutang');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Gagal'),
+                                        content: const Text(
+                                            'Gagal menambahkan catatan hutang baru'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Tanggal jatuh tempo wajib diisi',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: const Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).error,
+                                  ),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Jumlah wajib diisi',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: const Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).error,
                                 ),
-                              ],
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Jenis  wajib diisi',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).error,
+                              ),
                             );
-                          },
-                        );
-
-                        context.goNamed('List_hutang');
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Nomor wajib diisi',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: const Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).error,
+                            ),
+                          );
+                        }
                       } else {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Gagal'),
-                              content:
-                                  const Text('Gagal menambahkan catatan hutang baru'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Nama wajib diisi',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: FlutterFlowTheme.of(context).error,
+                          ),
                         );
                       }
 

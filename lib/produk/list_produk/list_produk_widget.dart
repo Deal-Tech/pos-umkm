@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,6 +30,9 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ListProdukModel());
+
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -104,40 +108,90 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                FutureBuilder<ApiCallResponse>(
-                                  future: ApiListProductFixedBugCall.call(
-                                    token: currentAuthenticationToken,
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return const Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Color(0x000EC244),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    final textApiListProductFixedBugResponse =
-                                        snapshot.data!;
-
-                                    return Text(
-                                      '${(textApiListProductFixedBugResponse.jsonBody.toList().map<ProductStruct?>(ProductStruct.maybeFromMap).toList() as Iterable<ProductStruct?>).withoutNulls.length.toString()} Produk',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _model.textController,
+                                    focusNode: _model.textFieldFocusNode,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.textController',
+                                      const Duration(milliseconds: 2000),
+                                      () async {
+                                        safeSetState(() =>
+                                            _model.apiRequestCompleter = null);
+                                        await _model
+                                            .waitForApiRequestCompleted();
+                                      },
+                                    ),
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
                                           .override(
-                                            fontFamily: 'Rubik',
-                                            fontSize: 16.0,
+                                            fontFamily: 'Readex Pro',
                                             letterSpacing: 0.0,
                                           ),
-                                    );
-                                  },
+                                      hintText: 'Cari produk',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      prefixIcon: const Icon(
+                                        Icons.search_sharp,
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    validator: _model.textControllerValidator
+                                        .asValidator(context),
+                                  ),
                                 ),
                                 Container(
                                   width: 150.0,
@@ -212,6 +266,7 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
                                           ..complete(
                                               ApiListProductFixedBugCall.call(
                                             token: currentAuthenticationToken,
+                                            query: _model.textController.text,
                                           )))
                                     .future,
                                 builder: (context, snapshot) {

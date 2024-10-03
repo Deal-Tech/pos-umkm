@@ -1,5 +1,6 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,7 +11,12 @@ import 'halaman_kelola_toko_model.dart';
 export 'halaman_kelola_toko_model.dart';
 
 class HalamanKelolaTokoWidget extends StatefulWidget {
-  const HalamanKelolaTokoWidget({super.key});
+  const HalamanKelolaTokoWidget({
+    super.key,
+    required this.planuser,
+  });
+
+  final String? planuser;
 
   @override
   State<HalamanKelolaTokoWidget> createState() =>
@@ -115,6 +121,14 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         children: [
+                          if (widget.planuser == 'Free')
+                            FlutterFlowAdBanner(
+                              width: MediaQuery.sizeOf(context).width * 1.0,
+                              height: 50.0,
+                              showsTestAd: false,
+                              androidAdUnitID:
+                                  'ca-app-pub-9360031341295738/9329003839',
+                            ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 20.0, 20.0, 0.0),
@@ -453,18 +467,27 @@ class _HalamanKelolaTokoWidgetState extends State<HalamanKelolaTokoWidget> {
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          if (QrisGroup.getQrisCall.linkqris(
+                                          if (QrisGroup.getQrisCall.status(
                                                 halamanKelolaTokoGetQrisResponse
                                                     .jsonBody,
                                               ) ==
-                                              'Null') {
+                                              null) {
                                             context.pushNamed(
-                                                'Pending-pengajuan-qris');
+                                                'Halaman-ajukan-qris');
                                           } else {
-                                            context.pushNamed(
-                                                'gagal-pengajuan-qris');
+                                            if (QrisGroup.getQrisCall.linkqris(
+                                                  halamanKelolaTokoGetQrisResponse
+                                                      .jsonBody,
+                                                ) ==
+                                                'Null') {
+                                              context.pushNamed(
+                                                  'Pending-pengajuan-qris');
+                                            } else {
+                                              context.pushNamed(
+                                                  'gagal-pengajuan-qris');
+                                            }
                                           }
-                                                                                },
+                                        },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:

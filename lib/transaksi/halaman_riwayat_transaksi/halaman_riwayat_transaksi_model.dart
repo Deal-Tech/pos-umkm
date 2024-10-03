@@ -9,6 +9,8 @@ class HalamanRiwayatTransaksiModel
     extends FlutterFlowModel<HalamanRiwayatTransaksiWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (Api Get User)] action in Halaman-riwayat-transaksi widget.
+  ApiCallResponse? apiGetuserrespon;
   Completer<ApiCallResponse>? apiRequestCompleter;
 
   @override

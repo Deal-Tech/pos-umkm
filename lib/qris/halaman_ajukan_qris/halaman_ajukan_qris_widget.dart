@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'halaman_ajukan_qris_model.dart';
 export 'halaman_ajukan_qris_model.dart';
 
@@ -39,6 +40,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
 
     _model.nomorTeleponTextController ??= TextEditingController();
     _model.nomorTeleponFocusNode ??= FocusNode();
+
+    _model.kategoriTextController ??= TextEditingController();
+    _model.kategoriFocusNode ??= FocusNode();
 
     _model.penjelasanUsahaTextController ??= TextEditingController();
     _model.penjelasanUsahaFocusNode ??= FocusNode();
@@ -191,38 +195,16 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                 image: _model.uploadedLocalFile1,
                               );
 
-                              if (ApiUploudImageProductCall.imageurl(
+                              if (!ApiUploudImageProductCall.imageurl(
                                 (_model.apiResultUploudImage1?.jsonBody ?? ''),
                               )) {
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text((_model
-                                              .apiResultUploudImage1
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
                                       title: const Text('gagal'),
-                                      content: Text((_model
-                                              .apiResultUploudImage1
-                                              ?.exceptionMessage ??
-                                          '')),
+                                      content: const Text(
+                                          'Uploud gambar gagal, silahkan cek lagi'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
@@ -298,38 +280,15 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                 image: _model.uploadedLocalFile2,
                               );
 
-                              if ((_model.apiResultUploudImage2?.succeeded ??
+                              if (!(_model.apiResultUploudImage2?.succeeded ??
                                   true)) {
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text((_model
-                                              .apiResultUploudImage2
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
                                       title: const Text('gagal'),
-                                      content: Text((_model
-                                                  .apiResultUploudImage2
-                                                  ?.succeeded ??
-                                              true)
-                                          .toString()),
+                                      content: const Text(
+                                          'Uploud gambar gagal, silahkan cek lagi'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
@@ -465,6 +424,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 12,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -556,6 +518,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 12,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -647,6 +612,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 20,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -738,6 +706,10 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 14,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
+                                  keyboardType: TextInputType.phone,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -761,41 +733,84 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                     ),
                               ),
                             ),
-                            FlutterFlowDropDown<String>(
-                              controller:
-                                  _model.kategoriUsahaValueController ??=
-                                      FormFieldController<String>(null),
-                              options: const ['Option 1', 'Option 2', 'Option 3'],
-                              onChanged: (val) => safeSetState(
-                                  () => _model.kategoriUsahaValue = val),
-                              width: MediaQuery.sizeOf(context).width * 0.9,
-                              height: 60.0,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: const Color(0xFF325681),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.9,
+                                child: TextFormField(
+                                  controller: _model.kategoriTextController,
+                                  focusNode: _model.kategoriFocusNode,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: const Color(0x752A3357),
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
+                                          lineHeight: 2.5,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    filled: true,
                                   ),
-                              hintText: 'Select...',
-                              icon: Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 24.0,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Rubik',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  maxLines: null,
+                                  maxLength: 12,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .kategoriTextControllerValidator
+                                      .asValidator(context),
+                                ),
                               ),
-                              fillColor: const Color(0xFFE6E8ED),
-                              elevation: 2.0,
-                              borderColor: Colors.transparent,
-                              borderWidth: 0.0,
-                              borderRadius: 8.0,
-                              margin: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 0.0),
-                              hidesUnderline: true,
-                              isOverButton: false,
-                              isSearchable: false,
-                              isMultiSelect: false,
                             ),
                             Align(
                               alignment: const AlignmentDirectional(-1.0, 0.0),
@@ -881,6 +896,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 30,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -1027,6 +1045,10 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 20,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
+                                  keyboardType: TextInputType.number,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -1090,38 +1112,16 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                     image: _model.uploadedLocalFile3,
                                   );
 
-                                  if ((_model
+                                  if (!(_model
                                           .apiResultUploudImage3?.succeeded ??
                                       true)) {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title: const Text('Sukses'),
-                                          content: Text((_model
-                                                  .apiResultUploudImage3
-                                                  ?.exceptionMessage ??
-                                              '')),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
                                           title: const Text('Gagal'),
-                                          content: Text((_model
-                                                  .apiResultUploudImage3
-                                                  ?.exceptionMessage ??
-                                              '')),
+                                          content: const Text(
+                                              'Uploud gambar gagal, silahkan cek lagi'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -1201,38 +1201,16 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                     image: _model.uploadedLocalFile3,
                                   );
 
-                                  if ((_model
+                                  if (!(_model
                                           .apiResultUploudImage4?.succeeded ??
                                       true)) {
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title: const Text('Sukses'),
-                                          content: Text((_model
-                                                  .apiResultUploudImage4
-                                                  ?.exceptionMessage ??
-                                              '')),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
                                           title: const Text('Gagal'),
-                                          content: Text((_model
-                                                  .apiResultUploudImage4
-                                                  ?.exceptionMessage ??
-                                              '')),
+                                          content: const Text(
+                                              'Uploud gambar gagal, silahkan cek lagi'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -1416,6 +1394,10 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 20,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
+                                  keyboardType: TextInputType.number,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -1508,6 +1490,9 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: null,
+                                  maxLength: 12,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   validator: _model
@@ -1555,7 +1540,7 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                   _model.alamatUsahaTextController.text,
                               nomorTelepon:
                                   _model.nomorTeleponTextController.text,
-                              kategoriUsaha: _model.kategoriUsahaValue,
+                              kategoriUsaha: _model.kategoriTextController.text,
                               deskripsiUsaha:
                                   _model.penjelasanUsahaTextController.text,
                               rekeningPencairan: _model.rekeningBankValue,
@@ -1577,8 +1562,8 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
                                     title: const Text('Sukses'),
-                                    content: Text(
-                                        (_model.apiResult37m?.bodyText ?? '')),
+                                    content: const Text(
+                                        'Pengajuan Anda sudah kami terima, pengajuan maksimal 2 hari untuk disetujui'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
@@ -1590,15 +1575,15 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                                 },
                               );
 
-                              context.pushNamed('Pending-pengajuan-qris');
+                              context.goNamed('Pending-pengajuan-qris');
                             } else {
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
                                     title: const Text('Gagal'),
-                                    content: Text(
-                                        (_model.apiResult37m?.bodyText ?? '')),
+                                    content: const Text(
+                                        'Ada yang salah !! mohon cek kembali pengisian Anda'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>

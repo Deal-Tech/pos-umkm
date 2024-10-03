@@ -13,12 +13,14 @@ class BuktiPencatatanWidget extends StatefulWidget {
     required this.total,
     required this.transactionsid,
     required this.datetransactions,
+    required this.userplan,
   });
 
   final String? paymentmethod;
   final int? total;
   final int? transactionsid;
   final String? datetransactions;
+  final String? userplan;
 
   @override
   State<BuktiPencatatanWidget> createState() => _BuktiPencatatanWidgetState();
@@ -295,6 +297,10 @@ class _BuktiPencatatanWidgetState extends State<BuktiPencatatanWidget> {
                                     ),
                                     'paymentmethod': serializeParam(
                                       widget.paymentmethod,
+                                      ParamType.String,
+                                    ),
+                                    'userplan': serializeParam(
+                                      widget.userplan,
                                       ParamType.String,
                                     ),
                                   }.withoutNulls,

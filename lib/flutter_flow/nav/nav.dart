@@ -127,7 +127,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman_detail_list',
           path: '/halamanDetailList',
-          builder: (context, params) => const HalamanDetailListWidget(),
+          builder: (context, params) => HalamanDetailListWidget(
+            planuser: params.getParam(
+              'planuser',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'NOTUSE-Halaman_add_list',
@@ -147,6 +152,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'total',
               ParamType.int,
             ),
+            planuser: params.getParam(
+              'planuser',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -163,6 +172,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             datetransactions: params.getParam(
               'datetransactions',
+              ParamType.String,
+            ),
+            planuser: params.getParam(
+              'planuser',
               ParamType.String,
             ),
           ),
@@ -185,6 +198,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             datetransactions: params.getParam(
               'datetransactions',
+              ParamType.String,
+            ),
+            userplan: params.getParam(
+              'userplan',
               ParamType.String,
             ),
           ),
@@ -229,7 +246,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Halaman-kelola-toko',
           path: '/halamanKelolaToko',
-          builder: (context, params) => const HalamanKelolaTokoWidget(),
+          builder: (context, params) => HalamanKelolaTokoWidget(
+            planuser: params.getParam(
+              'planuser',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'Halaman-akun',
@@ -340,6 +362,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             paymentmethod: params.getParam(
               'paymentmethod',
+              ParamType.String,
+            ),
+            userplan: params.getParam(
+              'userplan',
               ParamType.String,
             ),
           ),

@@ -710,39 +710,21 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                             context)
                                                         .secondaryBackground,
                                                   ),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      context.pushNamed(
-                                                        'edit_alamat_bisnis',
-                                                        queryParameters: {
-                                                          'alamat':
-                                                              serializeParam(
-                                                            QrisGroup
-                                                                .getQrisCall
-                                                                .alamatusaha(
-                                                              columnGetQrisResponse
-                                                                  .jsonBody,
-                                                            ),
-                                                            ParamType.String,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    },
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        Flexible(
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      29.0,
+                                                                      0.0),
                                                           child: Text(
                                                             QrisGroup.getQrisCall
                                                                             .alamatusaha(
@@ -783,15 +765,9 @@ class _InformasiBisnisWidgetState extends State<InformasiBisnisWidget> {
                                                                 ),
                                                           ),
                                                         ),
-                                                        const FaIcon(
-                                                          FontAwesomeIcons.edit,
-                                                          color:
-                                                              Color(0x8057636C),
-                                                          size: 18.0,
-                                                        ),
-                                                      ].divide(const SizedBox(
-                                                          width: 10.0)),
-                                                    ),
+                                                      ),
+                                                    ].divide(
+                                                        const SizedBox(width: 10.0)),
                                                   ),
                                                 ),
                                               ],

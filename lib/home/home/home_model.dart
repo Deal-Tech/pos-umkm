@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 class HomeModel extends FlutterFlowModel<HomeWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (Api Get User)] action in Home widget.
+  ApiCallResponse? apiGetuserrespon;
+  // Stores action output result for [AdMob - Show Interstitial Ad] action in Home widget.
+  bool? interstitialAdSuccess;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;

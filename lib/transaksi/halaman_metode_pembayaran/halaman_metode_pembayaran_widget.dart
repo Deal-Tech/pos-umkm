@@ -1,6 +1,7 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -14,9 +15,11 @@ class HalamanMetodePembayaranWidget extends StatefulWidget {
   const HalamanMetodePembayaranWidget({
     super.key,
     required this.total,
+    required this.planuser,
   });
 
   final int? total;
+  final String? planuser;
 
   @override
   State<HalamanMetodePembayaranWidget> createState() =>
@@ -327,6 +330,18 @@ class _HalamanMetodePembayaranWidgetState
                       ],
                     ),
                   ),
+                  if (widget.planuser == 'Free')
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
+                      child: FlutterFlowAdBanner(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 250.0,
+                        showsTestAd: false,
+                        androidAdUnitID:
+                            'ca-app-pub-9360031341295738/9329003839',
+                      ),
+                    ),
                 ],
               ),
               Align(
@@ -350,22 +365,6 @@ class _HalamanMetodePembayaranWidgetState
 
                         if ((_model.apiResultqristransactions?.succeeded ??
                             true)) {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text('Sukses'),
-                                content: const Text('Transaksi berhasil dibuat'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
                           FFAppState().cart = [];
                           safeSetState(() {});
 
@@ -392,6 +391,10 @@ class _HalamanMetodePembayaranWidgetState
                                 ),
                                 ParamType.String,
                               ),
+                              'planuser': serializeParam(
+                                widget.planuser,
+                                ParamType.String,
+                              ),
                             }.withoutNulls,
                           );
                         } else {
@@ -399,10 +402,9 @@ class _HalamanMetodePembayaranWidgetState
                             context: context,
                             builder: (alertDialogContext) {
                               return AlertDialog(
-                                title: const Text('Sukses'),
-                                content: Text((_model
-                                        .apiResultqristransactions?.bodyText ??
-                                    '')),
+                                title: const Text('Gagal'),
+                                content: const Text(
+                                    'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -428,22 +430,6 @@ class _HalamanMetodePembayaranWidgetState
                         );
 
                         if ((_model.apiResultdpc?.succeeded ?? true)) {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text('Sukses'),
-                                content: const Text('Transaksi berhasil dibuat'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
                           FFAppState().cart = [];
                           safeSetState(() {});
 
@@ -472,6 +458,10 @@ class _HalamanMetodePembayaranWidgetState
                                 ),
                                 ParamType.String,
                               ),
+                              'userplan': serializeParam(
+                                widget.planuser,
+                                ParamType.String,
+                              ),
                             }.withoutNulls,
                           );
                         } else {
@@ -480,8 +470,8 @@ class _HalamanMetodePembayaranWidgetState
                             builder: (alertDialogContext) {
                               return AlertDialog(
                                 title: const Text('Gagal'),
-                                content:
-                                    Text((_model.apiResultdpc?.bodyText ?? '')),
+                                content: const Text(
+                                    'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>

@@ -1220,6 +1220,7 @@ class OrderGroup {
     'Authorization': 'Bearer [token]',
   };
   static AddCall addCall = AddCall();
+  static GetCall getCall = GetCall();
 }
 
 class AddCall {
@@ -1232,7 +1233,7 @@ class AddCall {
     int? amount,
     int? paymentId,
     String? paymentMethod = '',
-    String? paymentAmount = '',
+    int? paymentAmount,
     String? token = '',
   }) async {
     final baseUrl = OrderGroup.getBaseUrl(
@@ -1248,8 +1249,7 @@ class AddCall {
   "plan_name": "$planName",
   "amount": $amount,
   "payment_id": $paymentId,
-  "payment_method": "$paymentMethod",
-  "payment_amount": "$paymentAmount"
+  "payment_method": "$paymentMethod"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Add',
@@ -1274,6 +1274,36 @@ class AddCall {
         response,
         r'''$.order.id''',
       ));
+  String? status(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.order.status''',
+      ));
+}
+
+class GetCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = OrderGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get',
+      apiUrl: '$baseUrl/orders',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 /// End Order Group Code
@@ -1428,6 +1458,15 @@ class ApiGetUserCall {
   static String? resetcode(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.reset_code''',
+      ));
+  static String? startplan(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.start_plan''',
+      ));
+  static String? expiredplan(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.expired_plan''',
       ));
 }
 

@@ -333,7 +333,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: 'Masukkan Nama Produk',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -343,6 +342,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
+                                    hintText: 'Masukkan Nama Produk',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -452,7 +452,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: 'Masukkan Harga',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -462,6 +461,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
+                                    hintText: 'Masukkan Harga',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -648,7 +648,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 isDense: true,
-                                                labelText: 'Masukkan Satuan',
                                                 labelStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -660,6 +659,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                                           fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                         ),
+                                                hintText: 'Masukkan Satuan',
                                                 hintStyle: FlutterFlowTheme.of(
                                                         context)
                                                     .labelMedium
@@ -749,7 +749,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                               color: Colors.white,
                                               letterSpacing: 0.0,
                                             ),
-                                        hintText: 'Select...',
+                                        hintText: 'Pilih',
                                         icon: const Icon(
                                           Icons.keyboard_arrow_down_rounded,
                                           color: Colors.white,
@@ -798,7 +798,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText: 'Masukkan Kode SKU (Wajib Unik)',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -808,6 +807,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
+                                    hintText: 'Masukkan Kode SKU (Wajib Unik)',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -890,8 +890,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     isDense: true,
-                                    labelText:
-                                        'Masukkan Kode Barcode (Wajib Unik)',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -901,6 +899,8 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
+                                    hintText:
+                                        'Masukkan Kode Barcode (Wajib Unik)',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(

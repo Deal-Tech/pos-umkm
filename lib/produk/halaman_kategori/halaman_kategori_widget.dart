@@ -477,27 +477,6 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                       if ((_model.apiResultqqe
                                                               ?.succeeded ??
                                                           true)) {
-                                                        await showDialog(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: const Text(
-                                                                  'Sukses'),
-                                                              content: const Text(
-                                                                  'Kategori berhasil dihapus'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext),
-                                                                  child: const Text(
-                                                                      'Ok'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
                                                         safeSetState(() => _model
                                                                 .apiRequestCompleter =
                                                             null);
@@ -511,10 +490,8 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                             return AlertDialog(
                                                               title:
                                                                   const Text('Gagal'),
-                                                              content: Text((_model
-                                                                      .apiResultqqe
-                                                                      ?.bodyText ??
-                                                                  '')),
+                                                              content: const Text(
+                                                                  'Ada sedikit kendala, ulangi lagi!'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>

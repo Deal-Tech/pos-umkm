@@ -2,12 +2,14 @@ import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/filter_transaksi_widget.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +34,13 @@ class _HalamanRiwayatTransaksiWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => HalamanRiwayatTransaksiModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiGetuserrespon = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -204,6 +213,16 @@ class _HalamanRiwayatTransaksiWidgetState
                     ),
                   ),
                 ),
+                if (ApiGetUserCall.plan(
+                      (_model.apiGetuserrespon?.jsonBody ?? ''),
+                    ) ==
+                    'Free')
+                  FlutterFlowAdBanner(
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: 50.0,
+                    showsTestAd: false,
+                    androidAdUnitID: 'ca-app-pub-9360031341295738/9329003839',
+                  ),
                 Padding(
                   padding:
                       const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
@@ -316,6 +335,14 @@ class _HalamanRiwayatTransaksiWidgetState
                                                 'paymentmethod': serializeParam(
                                                   listtransactionsItem
                                                       .paymentMethod,
+                                                  ParamType.String,
+                                                ),
+                                                'userplan': serializeParam(
+                                                  ApiGetUserCall.plan(
+                                                    (_model.apiGetuserrespon
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ),
                                                   ParamType.String,
                                                 ),
                                               }.withoutNulls,

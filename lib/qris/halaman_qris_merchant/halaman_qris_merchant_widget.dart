@@ -283,7 +283,15 @@ class _HalamanQrisMerchantWidgetState extends State<HalamanQrisMerchantWidget> {
                                     0.0, 20.0, 0.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('Halaman-kelola-toko');
+                                    context.pushNamed(
+                                      'Halaman-kelola-toko',
+                                      queryParameters: {
+                                        'planuser': serializeParam(
+                                          'Pro',
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
                                   },
                                   text: 'Ajukan Sekarang!',
                                   icon: const Icon(

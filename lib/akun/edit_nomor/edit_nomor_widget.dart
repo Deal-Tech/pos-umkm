@@ -249,34 +249,15 @@ class _EditNomorWidgetState extends State<EditNomorWidget> {
                       );
 
                       if ((_model.apiResultopq?.succeeded ?? true)) {
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResultopq?.exceptionMessage ??
-                                      '')),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        context.safePop();
+                        context.goNamed('Informasi_bisnis');
                       } else {
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
                               title: const Text('Sukses'),
-                              content: Text(
-                                  (_model.apiResultopq?.exceptionMessage ??
-                                      '')),
+                              content: const Text(
+                                  'Ada kendala, hubungi admin untuk info lebih lanjut, atau coba lagi secara berkala.'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

@@ -1,13 +1,14 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'statistik_model.dart';
 export 'statistik_model.dart';
@@ -28,6 +29,13 @@ class _StatistikWidgetState extends State<StatistikWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => StatistikModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiGetuserrespon = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+    });
   }
 
   @override
@@ -103,56 +111,17 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: MediaQuery.sizeOf(context).height * 0.07,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 5.0,
-                            color: Color(0x1A000000),
-                            offset: Offset(
-                              0.0,
-                              2.0,
-                            ),
-                          )
-                        ],
+                    if (ApiGetUserCall.plan(
+                          (_model.apiGetuserrespon?.jsonBody ?? ''),
+                        ) ==
+                        'Free')
+                      FlutterFlowAdBanner(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 50.0,
+                        showsTestAd: false,
+                        androidAdUnitID:
+                            'ca-app-pub-9360031341295738/9329003839',
                       ),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 0.0, 20.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Keuntungan Penjualan',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                            Text(
-                              'Rp500.000',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Rubik',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ].divide(const SizedBox(width: 10.0)),
-                        ),
-                      ),
-                    ),
                     Container(
                       height: MediaQuery.sizeOf(context).height * 0.07,
                       decoration: const BoxDecoration(
@@ -292,31 +261,6 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4.0,
-                              color: Color(0x33000000),
-                              offset: Offset(
-                                0.0,
-                                2.0,
-                              ),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 15.0, 15.0, 15.0),
@@ -336,7 +280,82 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                         ),
                                   ),
                                   Text(
-                                    'Rp1.000.000',
+                                    formatNumber(
+                                      ReportStruct.maybeFromMap(
+                                              columnReportResponse.jsonBody)!
+                                          .totalPengeluaran,
+                                      formatType: FormatType.decimal,
+                                      decimalType: DecimalType.automatic,
+                                      currency: 'Rp ',
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15.0, 15.0, 15.0, 15.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Jumlah Transaksi ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                  Text(
+                                    ReportStruct.maybeFromMap(
+                                            columnReportResponse.jsonBody)!
+                                        .jumlahTransaksiPenjualan
+                                        .toString(),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  15.0, 15.0, 15.0, 15.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Jumlah Pengeluaran ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Rubik',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
+                                  Text(
+                                    ReportStruct.maybeFromMap(
+                                            columnReportResponse.jsonBody)!
+                                        .jumlahPengeluaran
+                                        .toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -365,7 +384,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 15.0, 15.0, 0.0),
+                                  15.0, 0.0, 15.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -442,7 +461,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  terlarisItem.total,
+                                                  'Rp ${terlarisItem.total}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -460,30 +479,12 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 5.0, 15.0, 5.0),
+                                                    15.0, 5.0, 15.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  '60%',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
                                                 RichText(
                                                   textScaler:
                                                       MediaQuery.of(context)
@@ -539,24 +540,6 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                               ],
                                             ),
                                           ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 0.0),
-                                            child: LinearPercentIndicator(
-                                              percent: terlarisItem
-                                                  .jumlahTransaksi
-                                                  .toDouble(),
-                                              width: 120.0,
-                                              lineHeight: 15.0,
-                                              animation: true,
-                                              animateFromLastPercent: true,
-                                              progressColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              padding: EdgeInsets.zero,
-                                            ),
-                                          ),
                                         ],
                                       ),
                                     );
@@ -581,7 +564,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  15.0, 15.0, 15.0, 0.0),
+                                  15.0, 0.0, 15.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
@@ -657,7 +640,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  paymentItem.total,
+                                                  'Rp ${paymentItem.total}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -679,7 +662,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 5.0, 15.0, 5.0),
+                                                    15.0, 5.0, 15.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -738,23 +721,6 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                                         ),
                                                   ),
                                                 ),
-                                                Text(
-                                                  '60%',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Rubik',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
                                               ],
                                             ),
                                           ),
@@ -769,7 +735,7 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                         ),
                       ),
                     ),
-                  ].divide(const SizedBox(height: 3.0)),
+                  ],
                 ),
               );
             },

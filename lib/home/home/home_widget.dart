@@ -1,15 +1,18 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/admob_util.dart' as admob;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,6 +36,26 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomeModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.apiGetuserrespon = await ApiGetUserCall.call(
+        token: currentAuthenticationToken,
+      );
+
+      if (ApiGetUserCall.plan(
+            (_model.apiGetuserrespon?.jsonBody ?? ''),
+          ) ==
+          'Free') {
+        admob.loadInterstitialAd(
+          "",
+          "ca-app-pub-9360031341295738/2219873841",
+          false,
+        );
+
+        _model.interstitialAdSuccess = await admob.showInterstitialAd();
+      }
+    });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -182,7 +205,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('Transaksi-keluar');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed('Transaksi-keluar');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Fitur Catat Pengeluaran hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -218,8 +264,31 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context
-                                    .pushNamed('Halaman-kategori-pengeluaran');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed(
+                                      'Halaman-kategori-pengeluaran');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Fitur Catat Pengeluaran hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -255,7 +324,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('expense_history');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed('expense_history');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Fitur Catat Pengeluaran hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -327,7 +419,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('Halaman-kelola-toko');
+                                context.pushNamed(
+                                  'Halaman-kelola-toko',
+                                  queryParameters: {
+                                    'planuser': serializeParam(
+                                      ApiGetUserCall.plan(
+                                        columnApiGetUserResponse.jsonBody,
+                                      ),
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -399,7 +501,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('List_hutang');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed('List_hutang');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Fitur Catat Hutang hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -435,7 +560,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('List_piutang');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed('List_piutang');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Fitur Catat Piutang hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -507,7 +655,30 @@ class _HomeWidgetState extends State<HomeWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed('Halaman-bantuan');
+                                if (ApiGetUserCall.plan(
+                                      columnApiGetUserResponse.jsonBody,
+                                    ) ==
+                                    'Pro') {
+                                  context.pushNamed('Halaman-bantuan');
+                                } else {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Maaf !!'),
+                                        content: const Text(
+                                            'Layanan Support admin hanya tersedia untuk paket langganan PRO, silahkan upgrade akun menjadi PRO agar dapat menikmati semua fitur.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -607,43 +778,46 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         ].divide(const SizedBox(height: 5.0)),
                       ),
-                      if (ApiGetUserCall.plan(
-                            columnApiGetUserResponse.jsonBody,
-                          ) ==
-                          'Free')
-                        Align(
-                          alignment: const AlignmentDirectional(0.0, 1.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed('Halaman-langganan');
-                              },
-                              text: 'Upgrade Premium',
-                              options: FFButtonOptions(
-                                width: MediaQuery.sizeOf(context).width * 0.6,
-                                height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: Colors.white,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Rubik',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, 1.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 20.0, 0.0, 0.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              context.pushNamed('Halaman-langganan');
+                            },
+                            text: valueOrDefault<String>(
+                                      ApiGetUserCall.plan(
+                                        columnApiGetUserResponse.jsonBody,
+                                      ),
+                                      'expired',
+                                    ) ==
+                                    'Free'
+                                ? 'Upgrade Pro'
+                                : 'Perpanjang',
+                            options: FFButtonOptions(
+                              width: MediaQuery.sizeOf(context).width * 0.6,
+                              height: 50.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: Colors.white,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Rubik',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ),
+                      ),
                     ],
                   );
                 },
@@ -1015,7 +1189,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ));
                                     safeSetState(() {});
 
-                                    context.pushNamed('Halaman_detail_list');
+                                    context.pushNamed(
+                                      'Halaman_detail_list',
+                                      queryParameters: {
+                                        'planuser': serializeParam(
+                                          ApiGetUserCall.plan(
+                                            (_model.apiGetuserrespon
+                                                    ?.jsonBody ??
+                                                ''),
+                                          ),
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
                                   } else {
                                     await showDialog(
                                       context: context,
@@ -1070,6 +1256,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                         ),
                       ),
                     ),
+                    if (ApiGetUserCall.plan(
+                          (_model.apiGetuserrespon?.jsonBody ?? ''),
+                        ) ==
+                        'Free')
+                      FlutterFlowAdBanner(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 50.0,
+                        showsTestAd: false,
+                        androidAdUnitID:
+                            'ca-app-pub-9360031341295738/9329003839',
+                      ),
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn,
@@ -1383,7 +1580,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        context.pushNamed('Halaman_detail_list');
+                        context.pushNamed(
+                          'Halaman_detail_list',
+                          queryParameters: {
+                            'planuser': serializeParam(
+                              ApiGetUserCall.plan(
+                                (_model.apiGetuserrespon?.jsonBody ?? ''),
+                              ),
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                        );
                       },
                       child: Container(
                         width: MediaQuery.sizeOf(context).width * 0.9,

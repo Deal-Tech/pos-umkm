@@ -1,6 +1,7 @@
 export '/backend/schema/util/schema_util.dart';
 
 export 'debt_struct.dart';
+export 'orders_struct.dart';
 export 'plans_struct.dart';
 export 'receivable_struct.dart';
 export 'report_struct.dart';
