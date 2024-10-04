@@ -1221,6 +1221,7 @@ class OrderGroup {
   };
   static AddCall addCall = AddCall();
   static GetCall getCall = GetCall();
+  static GetIDCall getIDCall = GetIDCall();
 }
 
 class AddCall {
@@ -1291,6 +1292,33 @@ class GetCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Get',
       apiUrl: '$baseUrl/orders',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetIDCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? token = '',
+  }) async {
+    final baseUrl = OrderGroup.getBaseUrl(
+      token: token,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get ID',
+      apiUrl: '$baseUrl/orders/$id',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1586,6 +1614,29 @@ class ApiProductUpdateCall {
       alwaysAllowBody: false,
     );
   }
+
+  static dynamic error(dynamic response) => getJsonField(
+        response,
+        r'''$.errors''',
+      );
+  static List<String>? errorsku(dynamic response) => (getJsonField(
+        response,
+        r'''$.errors.sku''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  static List<String>? errorbarcode(dynamic response) => (getJsonField(
+        response,
+        r'''$.errors.barcode''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class ApiProductShowCall {
@@ -2056,6 +2107,8 @@ class ReportCall {
   static Future<ApiCallResponse> call({
     String? token = '',
     String? filter = '',
+    String? startDate = '',
+    String? endDate = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Report',
@@ -2066,6 +2119,8 @@ class ReportCall {
       },
       params: {
         'filter': filter,
+        'start_date': startDate,
+        'end_date': endDate,
       },
       returnBody: true,
       encodeBodyUtf8: false,

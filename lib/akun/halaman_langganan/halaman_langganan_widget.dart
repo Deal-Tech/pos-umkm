@@ -3,6 +3,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/backend/schema/structs/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -313,11 +314,11 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                       ),
                                                       FaIcon(
                                                         FontAwesomeIcons
-                                                            .checkSquare,
+                                                            .windowClose,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primary,
+                                                                .error,
                                                         size: 24.0,
                                                       ),
                                                     ],
@@ -654,38 +655,132 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                               ?.jsonBody ??
                                                           ''),
                                                     )!);
-                                                    if (OrderGroup.addCall
-                                                            .status(
-                                                          (_model.apiResultvae
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                        ) ==
-                                                        'paid') {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title:
-                                                                const Text('Sukses'),
-                                                            content: const Text(
-                                                                'Pembayaran Anda sudah kami terima, selamat menikmati fitur aplikasi tanpa batas !!'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    const Text('Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
+                                                    var confirmDialogResponse =
+                                                        await showDialog<bool>(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return AlertDialog(
+                                                                  title: const Text(
+                                                                      'Konfirmasi'),
+                                                                  content: const Text(
+                                                                      'Apakah sudah melakukan pembayaran?'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                      child: const Text(
+                                                                          'Belum'),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                      child: const Text(
+                                                                          'Sudah'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ) ??
+                                                            false;
+                                                    if (confirmDialogResponse) {
+                                                      _model.resultCekID =
+                                                          await OrderGroup
+                                                              .getIDCall
+                                                              .call(
+                                                        id: OrderGroup.addCall
+                                                            .idorder(
+                                                              (_model.apiResultvae
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            )
+                                                            ?.toString(),
+                                                        token:
+                                                            currentAuthenticationToken,
                                                       );
 
-                                                      context.goNamed('Home');
+                                                      if (OrdersStruct.maybeFromMap((_model
+                                                                      .resultCekID
+                                                                      ?.jsonBody ??
+                                                                  ''))
+                                                              ?.status ==
+                                                          'paid') {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: const Text(
+                                                                  'Sukses'),
+                                                              content: const Text(
+                                                                  'Pembayaran Anda sudah kami terima, selamat menikmati fitur aplikasi tanpa batas !!'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext),
+                                                                  child: const Text(
+                                                                      'Ok'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+
+                                                        context.goNamed('Home');
+                                                      } else {
+                                                        confirmDialogResponse =
+                                                            await showDialog<
+                                                                    bool>(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: const Text(
+                                                                          'Status'),
+                                                                      content: const Text(
+                                                                          'Pembayaran Anda belum kami terima, apakah ingin melanjutkan pembayaran?'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              false),
+                                                                          child:
+                                                                              const Text('Tidak'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              true),
+                                                                          child:
+                                                                              const Text('Iya'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                ) ??
+                                                                false;
+                                                        if (confirmDialogResponse) {
+                                                          await launchURL(
+                                                              ApiXenditCall
+                                                                  .invoiceurl(
+                                                            (_model.apiResulte3v
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          )!);
+
+                                                          context
+                                                              .goNamed('Home');
+                                                        } else {
+                                                          context
+                                                              .goNamed('Home');
+                                                        }
+                                                      }
                                                     } else {
-                                                      var confirmDialogResponse =
+                                                      confirmDialogResponse =
                                                           await showDialog<
                                                                   bool>(
                                                                 context:
@@ -694,9 +789,9 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                                     (alertDialogContext) {
                                                                   return AlertDialog(
                                                                     title: const Text(
-                                                                        'Status'),
+                                                                        'Konfirmasi'),
                                                                     content: const Text(
-                                                                        'Pembayaran Anda belum kami terima, apakah ingin melanjutkan pembayaran?'),
+                                                                        'Apakah ingin melanjutkan pembayaran?'),
                                                                     actions: [
                                                                       TextButton(
                                                                         onPressed: () => Navigator.pop(

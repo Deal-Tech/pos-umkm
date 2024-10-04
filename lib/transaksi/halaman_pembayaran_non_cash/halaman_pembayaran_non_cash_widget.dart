@@ -1,6 +1,7 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -267,6 +268,9 @@ class _HalamanPembayaranNonCashWidgetState
                         status: Status.paid.name,
                         transactionId: widget.idtransactions,
                       );
+
+                      FFAppState().paymentmethod = PaymentMethodStruct();
+                      safeSetState(() {});
 
                       context.goNamed(
                         'Bukti-pencatatan',

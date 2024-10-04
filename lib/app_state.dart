@@ -265,6 +265,16 @@ class FFAppState extends ChangeNotifier {
     prefs.setStringList('ff_categoryexpenslocal',
         _categoryexpenslocal.map((x) => x.serialize()).toList());
   }
+
+  FilterreportdateStruct _filterreportdate = FilterreportdateStruct();
+  FilterreportdateStruct get filterreportdate => _filterreportdate;
+  set filterreportdate(FilterreportdateStruct value) {
+    _filterreportdate = value;
+  }
+
+  void updateFilterreportdateStruct(Function(FilterreportdateStruct) updateFn) {
+    updateFn(_filterreportdate);
+  }
 }
 
 void _safeInit(Function() initializeField) {

@@ -133,7 +133,6 @@ class _HalamanKategoriPengeluaranWidgetState
                                           fontFamily: 'Readex Pro',
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'masukkan kategori',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -374,61 +373,67 @@ class _HalamanKategoriPengeluaranWidgetState
                                                       },
                                                     ) ??
                                                     false;
-                                            _model.apiResultglp =
-                                                await CategoryExpenseGroup
-                                                    .deleteCall
-                                                    .call(
-                                              token: currentAuthenticationToken,
-                                              id: categoryexpenseItem.id
-                                                  .toString(),
-                                            );
+                                            if (confirmDialogResponse) {
+                                              _model.apiResultglp =
+                                                  await CategoryExpenseGroup
+                                                      .deleteCall
+                                                      .call(
+                                                token:
+                                                    currentAuthenticationToken,
+                                                id: categoryexpenseItem.id
+                                                    .toString(),
+                                              );
 
-                                            if ((_model
-                                                    .apiResultglp?.succeeded ??
-                                                true)) {
-                                              await showDialog(
-                                                context: context,
-                                                builder: (alertDialogContext) {
-                                                  return AlertDialog(
-                                                    title: const Text('Sukses'),
-                                                    content: const Text(
-                                                        'Kategori berhasil dihapus'),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext),
-                                                        child: const Text('Ok'),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                              safeSetState(() => _model
-                                                  .apiRequestCompleter = null);
-                                              await _model
-                                                  .waitForApiRequestCompleted();
-                                            } else {
-                                              await showDialog(
-                                                context: context,
-                                                builder: (alertDialogContext) {
-                                                  return AlertDialog(
-                                                    title: const Text('Sukses'),
-                                                    content: Text((_model
-                                                            .apiResultglp
-                                                            ?.bodyText ??
-                                                        '')),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                alertDialogContext),
-                                                        child: const Text('Ok'),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
+                                              if ((_model.apiResultglp
+                                                      ?.succeeded ??
+                                                  true)) {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text('Sukses'),
+                                                      content: const Text(
+                                                          'Kategori berhasil dihapus'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: const Text('Ok'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                safeSetState(() =>
+                                                    _model.apiRequestCompleter =
+                                                        null);
+                                                await _model
+                                                    .waitForApiRequestCompleted();
+                                              } else {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: const Text('Sukses'),
+                                                      content: Text((_model
+                                                              .apiResultglp
+                                                              ?.bodyText ??
+                                                          '')),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: const Text('Ok'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             }
 
                                             safeSetState(() {});

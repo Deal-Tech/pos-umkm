@@ -147,7 +147,6 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
-                                                hintText: 'Masukkan Nama',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -272,8 +271,6 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
-                                                hintText:
-                                                    'Masukan Nomor Telepon',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -624,7 +621,6 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                                                 'Readex Pro',
                                                             letterSpacing: 0.0,
                                                           ),
-                                                  hintText: 'Masukkan Nominal',
                                                   hintStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -911,7 +907,6 @@ class _CatatanPiutangWidgetState extends State<CatatanPiutangWidget> {
                                                               'Readex Pro',
                                                           letterSpacing: 0.0,
                                                         ),
-                                                hintText: 'Masukkan Keterangan',
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium

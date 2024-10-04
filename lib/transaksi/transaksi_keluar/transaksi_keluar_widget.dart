@@ -434,8 +434,6 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
-                                                      hintText:
-                                                          'Masukan nominal transaksi',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -691,7 +689,6 @@ class _TransaksiKeluarWidgetState extends State<TransaksiKeluarWidget> {
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
-                                                      hintText: 'Catatan',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)

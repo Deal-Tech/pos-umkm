@@ -81,7 +81,7 @@ class _KonfirmasiHapusProdukWidgetState
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
             child: Text(
-              'Yakin ingin mengahapus item ini?',
+              'Yakin ingin menghapus item ini?',
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Rubik',
                     letterSpacing: 0.0,

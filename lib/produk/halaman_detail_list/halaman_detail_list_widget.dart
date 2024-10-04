@@ -180,23 +180,23 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                               context: context,
                                               builder: (alertDialogContext) {
                                                 return AlertDialog(
-                                                  title: const Text('Hapus ?'),
+                                                  title: const Text('Konfirmasi'),
                                                   content: const Text(
-                                                      'apakah mau hapus dari keranjang?'),
+                                                      'Apakah yakin ingin hapus dari keranjang?'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () =>
                                                           Navigator.pop(
                                                               alertDialogContext,
                                                               false),
-                                                      child: const Text('Cancel'),
+                                                      child: const Text('Tidak'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () =>
                                                           Navigator.pop(
                                                               alertDialogContext,
                                                               true),
-                                                      child: const Text('Confirm'),
+                                                      child: const Text('Iya'),
                                                     ),
                                                   ],
                                                 );
@@ -345,14 +345,23 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        FFAppState()
-                                                            .updateCartAtIndex(
-                                                          listCartIndex,
-                                                          (e) => e
-                                                            ..incrementQuantity(
-                                                                -1),
-                                                        );
-                                                        safeSetState(() {});
+                                                        if (listCartItem
+                                                                .quantity ==
+                                                            1) {
+                                                          FFAppState()
+                                                              .removeAtIndexFromCart(
+                                                                  listCartIndex);
+                                                          safeSetState(() {});
+                                                        } else {
+                                                          FFAppState()
+                                                              .updateCartAtIndex(
+                                                            listCartIndex,
+                                                            (e) => e
+                                                              ..incrementQuantity(
+                                                                  -1),
+                                                          );
+                                                          safeSetState(() {});
+                                                        }
                                                       },
                                                       child: const FaIcon(
                                                         FontAwesomeIcons.minus,
@@ -443,6 +452,47 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                       ),
                     ),
                   ),
+                  if (FFAppState().cart.isNotEmpty)
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 0.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primary,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 5.0, 0.0),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 20.0,
+                                ),
+                              ),
+                              Text(
+                                'Tekan lama untuk hapus produk dari keranjang',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      fontSize: 12.0,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
               Align(
@@ -498,7 +548,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                         width: 150.0,
                         height: 60.0,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF0EC244),
+                          color: FlutterFlowTheme.of(context).primary,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: InkWell(
@@ -507,20 +557,22 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            context.pushNamed(
-                              'Halaman_metode_pembayaran',
-                              queryParameters: {
-                                'total': serializeParam(
-                                  functions.calaculateTotalCartPrice(
-                                      FFAppState().cart.toList()),
-                                  ParamType.int,
-                                ),
-                                'planuser': serializeParam(
-                                  widget.planuser,
-                                  ParamType.String,
-                                ),
-                              }.withoutNulls,
-                            );
+                            if (FFAppState().cart.isNotEmpty) {
+                              context.pushNamed(
+                                'Halaman_metode_pembayaran',
+                                queryParameters: {
+                                  'total': serializeParam(
+                                    functions.calaculateTotalCartPrice(
+                                        FFAppState().cart.toList()),
+                                    ParamType.int,
+                                  ),
+                                  'planuser': serializeParam(
+                                    widget.planuser,
+                                    ParamType.String,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            }
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,

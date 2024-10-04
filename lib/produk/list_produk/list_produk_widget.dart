@@ -82,653 +82,658 @@ class _ListProdukWidgetState extends State<ListProdukWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Stack(
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: MediaQuery.sizeOf(context).height * 0.07,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            border: Border.all(
-                              color: const Color(0x1E3E3E3E),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 20.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: _model.textController,
-                                    focusNode: _model.textFieldFocusNode,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      '_model.textController',
-                                      const Duration(milliseconds: 2000),
-                                      () async {
-                                        safeSetState(() =>
-                                            _model.apiRequestCompleter = null);
-                                        await _model
-                                            .waitForApiRequestCompleted();
-                                      },
-                                    ),
-                                    autofocus: false,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      hintText: 'Cari produk',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      prefixIcon: const Icon(
-                                        Icons.search_sharp,
-                                        size: 24.0,
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
-                                    cursorColor: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    validator: _model.textControllerValidator
-                                        .asValidator(context),
-                                  ),
-                                ),
-                                Container(
-                                  width: 150.0,
-                                  height: 40.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    borderRadius: BorderRadius.circular(6.0),
-                                  ),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context
-                                          .pushNamed('Halaman_tambah-produk');
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.add_circle_outline_sharp,
-                                          color: Colors.white,
-                                          size: 24.0,
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            'Tambah Produk',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Rubik',
-                                                  color: Colors.white,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ].divide(const SizedBox(width: 5.0)),
-                                    ),
-                                  ),
-                                ),
-                              ].divide(const SizedBox(width: 25.0)),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
-                          child: Container(
+          child: RefreshIndicator(
+            color: FlutterFlowTheme.of(context).primary,
+            onRefresh: () async {
+              safeSetState(() => _model.apiRequestCompleter = null);
+              await _model.waitForApiRequestCompleted();
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Stack(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: MediaQuery.sizeOf(context).height * 0.07,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                              border: Border.all(
+                                color: const Color(0x1E3E3E3E),
+                              ),
                             ),
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 20.0, 0.0, 0.0),
-                              child: FutureBuilder<ApiCallResponse>(
-                                future: (_model.apiRequestCompleter ??=
-                                        Completer<ApiCallResponse>()
-                                          ..complete(
-                                              ApiListProductFixedBugCall.call(
-                                            token: currentAuthenticationToken,
-                                            query: _model.textController.text,
-                                          )))
-                                    .future,
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: SpinKitFadingFour(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 50.0,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  final listViewApiListProductFixedBugResponse =
-                                      snapshot.data!;
-
-                                  return Builder(
-                                    builder: (context) {
-                                      final listProduct =
-                                          (listViewApiListProductFixedBugResponse
-                                                          .jsonBody
-                                                          .toList()
-                                                          .map<ProductStruct?>(
-                                                              ProductStruct
-                                                                  .maybeFromMap)
-                                                          .toList()
-                                                      as Iterable<
-                                                          ProductStruct?>)
-                                                  .withoutNulls
-                                                  .toList() ??
-                                              [];
-                                      if (listProduct.isEmpty) {
-                                        return Center(
-                                          child: Image.asset(
-                                            'assets/images/icons8-empty-192_1_(1).png',
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
-                                                0.4,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.4,
-                                          ),
-                                        );
-                                      }
-
-                                      return RefreshIndicator(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        onRefresh: () async {
+                                  20.0, 0.0, 20.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _model.textController,
+                                      focusNode: _model.textFieldFocusNode,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.textController',
+                                        const Duration(milliseconds: 2000),
+                                        () async {
                                           safeSetState(() => _model
                                               .apiRequestCompleter = null);
                                           await _model
                                               .waitForApiRequestCompleted();
                                         },
-                                        child: ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: listProduct.length,
-                                          itemBuilder:
-                                              (context, listProductIndex) {
-                                            final listProductItem =
-                                                listProduct[listProductIndex];
-                                            return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      10.0, 10.0, 10.0, 10.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: const Color(0x3FE0E3E7),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      20.0,
-                                                                      20.0,
-                                                                      20.0,
-                                                                      10.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Padding(
-                                                                padding: const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        10.0,
-                                                                        0.0,
-                                                                        10.0),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    listProductItem.imageUrl ==
-                                                                            'null'
-                                                                        ? 'https://thetester.me/storage/product_images/Box.png'
-                                                                        : listProductItem
-                                                                            .imageUrl,
-                                                                    width: 80.0,
-                                                                    height:
-                                                                        80.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    listProductItem
-                                                                        .name,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Rubik',
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    formatNumber(
-                                                                      listProductItem
-                                                                          .price,
-                                                                      formatType:
-                                                                          FormatType
-                                                                              .decimal,
-                                                                      decimalType:
-                                                                          DecimalType
-                                                                              .automatic,
-                                                                      currency:
-                                                                          'Rp ',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Rubik',
-                                                                          fontSize:
-                                                                              18.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ].divide(const SizedBox(
-                                                                width: 20.0)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  10.0,
-                                                                  0.0,
-                                                                  10.0,
-                                                                  20.0),
-                                                      child: Row(
+                                      ),
+                                      autofocus: false,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        hintText: 'Cari produk',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        prefixIcon: const Icon(
+                                          Icons.search_sharp,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model.textControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 150.0,
+                                    height: 40.0,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context
+                                            .pushNamed('Halaman_tambah-produk');
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.add_circle_outline_sharp,
+                                            color: Colors.white,
+                                            size: 24.0,
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              'Tambah Produk',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Rubik',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ].divide(const SizedBox(width: 5.0)),
+                                      ),
+                                    ),
+                                  ),
+                                ].divide(const SizedBox(width: 25.0)),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 10.0, 0.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 10.0, 0.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 20.0, 0.0, 0.0),
+                                child: FutureBuilder<ApiCallResponse>(
+                                  future: (_model.apiRequestCompleter ??=
+                                          Completer<ApiCallResponse>()
+                                            ..complete(
+                                                ApiListProductFixedBugCall.call(
+                                              token: currentAuthenticationToken,
+                                              query: _model.textController.text,
+                                            )))
+                                      .future,
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: SpinKitFadingFour(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            size: 50.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final listViewApiListProductFixedBugResponse =
+                                        snapshot.data!;
+
+                                    return Builder(
+                                      builder: (context) {
+                                        final listProduct =
+                                            (listViewApiListProductFixedBugResponse
+                                                            .jsonBody
+                                                            .toList()
+                                                            .map<ProductStruct?>(
+                                                                ProductStruct
+                                                                    .maybeFromMap)
+                                                            .toList()
+                                                        as Iterable<
+                                                            ProductStruct?>)
+                                                    .withoutNulls
+                                                    .toList() ??
+                                                [];
+                                        if (listProduct.isEmpty) {
+                                          return Center(
+                                            child: Image.asset(
+                                              'assets/images/icons8-empty-192_1_(1).png',
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.4,
+                                              height: MediaQuery.sizeOf(context)
+                                                      .height *
+                                                  0.4,
+                                            ),
+                                          );
+                                        }
+
+                                        return RefreshIndicator(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          onRefresh: () async {
+                                            safeSetState(() => _model
+                                                .apiRequestCompleter = null);
+                                            await _model
+                                                .waitForApiRequestCompleted();
+                                          },
+                                          child: ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: listProduct.length,
+                                            itemBuilder:
+                                                (context, listProductIndex) {
+                                              final listProductItem =
+                                                  listProduct[listProductIndex];
+                                              return Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 10.0, 10.0, 10.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0x3FE0E3E7),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
                                                         children: [
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              context.pushNamed(
-                                                                'Halaman_edit_produk',
-                                                                queryParameters:
-                                                                    {
-                                                                  'name':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .name,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'price':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .price,
-                                                                    ParamType
-                                                                        .int,
-                                                                  ),
-                                                                  'category':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .category,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'categoryid':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .categoryId,
-                                                                    ParamType
-                                                                        .int,
-                                                                  ),
-                                                                  'unit':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .unit,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'sku':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .sku,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'barcode':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .barcode,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'imageurl':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .hasImageUrl()
-                                                                        .toString(),
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'productid':
-                                                                      serializeParam(
-                                                                    listProductItem
-                                                                        .id
-                                                                        .toString(),
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                  'imagetampil':
-                                                                      serializeParam(
-                                                                    listProductItem.imageUrl ==
-                                                                            'null'
-                                                                        ? 'https://thetester.me/storage/product_images/Box.png'
-                                                                        : listProductItem
-                                                                            .imageUrl,
-                                                                    ParamType
-                                                                        .String,
-                                                                  ),
-                                                                }.withoutNulls,
-                                                              );
-                                                            },
-                                                            text: 'Edit item',
-                                                            icon: const Icon(
-                                                              Icons.edit_square,
-                                                              size: 20.0,
-                                                            ),
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: MediaQuery
-                                                                          .sizeOf(
-                                                                              context)
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 40.0,
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          0.0,
-                                                                          16.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  const EdgeInsetsDirectional
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        20.0,
+                                                                        20.0,
+                                                                        10.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
+                                                                          10.0,
                                                                           0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Rubik',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                          ),
-                                                          FFButtonWidget(
-                                                            onPressed:
-                                                                () async {
-                                                              await showModalBottomSheet(
-                                                                isScrollControlled:
-                                                                    true,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                enableDrag:
-                                                                    false,
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) {
-                                                                  return GestureDetector(
-                                                                    onTap: () =>
-                                                                        FocusScope.of(context)
-                                                                            .unfocus(),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: MediaQuery
-                                                                          .viewInsetsOf(
-                                                                              context),
-                                                                      child:
-                                                                          SizedBox(
-                                                                        height: MediaQuery.sizeOf(context).height *
-                                                                            0.3,
-                                                                        child:
-                                                                            KonfirmasiHapusProdukWidget(
-                                                                          productid:
-                                                                              listProductItem.id,
-                                                                          imageurl:
-                                                                              listProductItem.imageUrl,
-                                                                        ),
-                                                                      ),
+                                                                          10.0),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      listProductItem.imageUrl ==
+                                                                              'null'
+                                                                          ? 'https://thetester.me/storage/product_images/Box.png'
+                                                                          : listProductItem
+                                                                              .imageUrl,
+                                                                      width:
+                                                                          80.0,
+                                                                      height:
+                                                                          80.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
-                                                                  );
-                                                                },
-                                                              ).then((value) =>
-                                                                  safeSetState(
-                                                                      () {}));
-
-                                                              safeSetState(() =>
-                                                                  _model.apiRequestCompleter =
-                                                                      null);
-                                                              await _model
-                                                                  .waitForApiRequestCompleted();
-                                                            },
-                                                            text: 'Hapus Item',
-                                                            icon: const FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .trash,
-                                                              size: 18.0,
-                                                            ),
-                                                            options:
-                                                                FFButtonOptions(
-                                                              width: MediaQuery
-                                                                          .sizeOf(
+                                                                  ),
+                                                                ),
+                                                                Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      listProductItem
+                                                                          .name,
+                                                                      style: FlutterFlowTheme.of(
                                                                               context)
-                                                                      .width *
-                                                                  0.4,
-                                                              height: 40.0,
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          0.0,
-                                                                          16.0,
-                                                                          0.0),
-                                                              iconPadding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .error,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmall
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Rubik',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        letterSpacing:
-                                                                            0.0,
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Rubik',
+                                                                            fontSize:
+                                                                                16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                    Text(
+                                                                      formatNumber(
+                                                                        listProductItem
+                                                                            .price,
+                                                                        formatType:
+                                                                            FormatType.decimal,
+                                                                        decimalType:
+                                                                            DecimalType.automatic,
+                                                                        currency:
+                                                                            'Rp ',
                                                                       ),
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Rubik',
+                                                                            fontSize:
+                                                                                18.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ].divide(const SizedBox(
+                                                                  width: 20.0)),
                                                             ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    20.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                context
+                                                                    .pushNamed(
+                                                                  'Halaman_edit_produk',
+                                                                  queryParameters:
+                                                                      {
+                                                                    'name':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .name,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'price':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .price,
+                                                                      ParamType
+                                                                          .int,
+                                                                    ),
+                                                                    'category':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .category,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'categoryid':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .categoryId,
+                                                                      ParamType
+                                                                          .int,
+                                                                    ),
+                                                                    'unit':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .unit,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'sku':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .sku,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'barcode':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .barcode,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'imageurl':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .hasImageUrl()
+                                                                          .toString(),
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'productid':
+                                                                        serializeParam(
+                                                                      listProductItem
+                                                                          .id
+                                                                          .toString(),
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'imagetampil':
+                                                                        serializeParam(
+                                                                      listProductItem.imageUrl ==
+                                                                              'null'
+                                                                          ? 'https://thetester.me/storage/product_images/Box.png'
+                                                                          : listProductItem
+                                                                              .imageUrl,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                );
+                                                              },
+                                                              text: 'Edit item',
+                                                              icon: const Icon(
+                                                                Icons
+                                                                    .edit_square,
+                                                                size: 20.0,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: MediaQuery.sizeOf(
+                                                                            context)
+                                                                        .width *
+                                                                    0.4,
+                                                                height: 40.0,
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                                iconPadding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Rubik',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                                elevation: 0.0,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                            ),
+                                                            FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                await showModalBottomSheet(
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  enableDrag:
+                                                                      false,
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    return GestureDetector(
+                                                                      onTap: () =>
+                                                                          FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            MediaQuery.viewInsetsOf(context),
+                                                                        child:
+                                                                            SizedBox(
+                                                                          height:
+                                                                              MediaQuery.sizeOf(context).height * 0.3,
+                                                                          child:
+                                                                              KonfirmasiHapusProdukWidget(
+                                                                            productid:
+                                                                                listProductItem.id,
+                                                                            imageurl:
+                                                                                listProductItem.imageUrl,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ).then((value) =>
+                                                                    safeSetState(
+                                                                        () {}));
+
+                                                                safeSetState(() =>
+                                                                    _model.apiRequestCompleter =
+                                                                        null);
+                                                                await _model
+                                                                    .waitForApiRequestCompleted();
+                                                              },
+                                                              text:
+                                                                  'Hapus Item',
+                                                              icon: const FaIcon(
+                                                                FontAwesomeIcons
+                                                                    .trash,
+                                                                size: 18.0,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: MediaQuery.sizeOf(
+                                                                            context)
+                                                                        .width *
+                                                                    0.4,
+                                                                height: 40.0,
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                                iconPadding:
+                                                                    const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                textStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Rubik',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                                elevation: 0.0,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

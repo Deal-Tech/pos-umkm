@@ -299,43 +299,50 @@ class _HalamanAkunWidgetState extends State<HalamanAkunWidget> {
                                     color:
                                         FlutterFlowTheme.of(context).alternate,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 10.0, 10.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        context.pushNamed(
-                                            'Halaman-riwayat-langganan');
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Riwayat berlangganan',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Rubik',
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 15.0,
-                                          ),
-                                        ],
+                                  if (ApiGetUserCall.phone(
+                                        (_model.apiResultgetuser?.jsonBody ??
+                                            ''),
+                                      ) !=
+                                      '081111111111')
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 0.0, 10.0, 10.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                              'Halaman-riwayat-langganan');
+                                        },
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Riwayat berlangganan',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Rubik',
+                                                        fontSize: 16.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 15.0,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
                                   Divider(
                                     thickness: 1.0,
                                     color:

@@ -43,6 +43,8 @@ class HalamanTambahProdukModel
   ApiCallResponse? apiResultUploudImage1;
   // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
   ApiCallResponse? apiResultyspp;
+  // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.
+  ApiCallResponse? apiResultysppp;
   // Stores action output result for [Backend Call - API (Api Uploud Image product)] action in Button widget.
   ApiCallResponse? apiResultUploudImage2;
   // Stores action output result for [Backend Call - API (Api Product Create)] action in Button widget.

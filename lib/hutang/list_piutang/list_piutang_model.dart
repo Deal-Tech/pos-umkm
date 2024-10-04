@@ -8,6 +8,8 @@ class ListPiutangModel extends FlutterFlowModel<ListPiutangWidget> {
   ///  State fields for stateful widgets in this page.
 
   Completer<ApiCallResponse>? apiRequestCompleter;
+  // Stores action output result for [Backend Call - API (Delete Receivable)] action in Row widget.
+  ApiCallResponse? apiResultsf0;
 
   @override
   void initState(BuildContext context) {}

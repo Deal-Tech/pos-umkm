@@ -15,6 +15,7 @@ export 'categories_struct.dart';
 export 'category_expense_struct.dart';
 export 'categoryexpenslocal_struct.dart';
 export 'expense_struct.dart';
+export 'filterreportdate_struct.dart';
 export 'filtertransactions_struct.dart';
 export 'image_url_struct.dart';
 export 'payment_method_struct.dart';

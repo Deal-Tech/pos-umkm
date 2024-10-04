@@ -12,6 +12,8 @@ class HalamanLanggananModel extends FlutterFlowModel<HalamanLanggananWidget> {
   ApiCallResponse? apiResultvae;
   // Stores action output result for [Backend Call - API (Api Xendit)] action in Container widget.
   ApiCallResponse? apiResulte3v;
+  // Stores action output result for [Backend Call - API (Get ID)] action in Container widget.
+  ApiCallResponse? resultCekID;
 
   @override
   void initState(BuildContext context) {}

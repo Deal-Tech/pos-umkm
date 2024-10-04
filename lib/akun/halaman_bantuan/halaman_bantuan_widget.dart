@@ -146,7 +146,7 @@ class _HalamanBantuanWidgetState extends State<HalamanBantuanWidget> {
                               width: MediaQuery.sizeOf(context).width * 0.75,
                               decoration: const BoxDecoration(),
                               child: Text(
-                                'Saya asisten yang siap membantu kamu, hubungi saya melaluikontak berikut',
+                                'Saya asisten yang siap membantu kamu, hubungi saya melalui kontak berikut',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium

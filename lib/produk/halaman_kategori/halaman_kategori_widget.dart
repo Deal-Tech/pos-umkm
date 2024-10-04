@@ -197,7 +197,6 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                               color: const Color(0x3357636C),
                                               letterSpacing: 0.0,
                                             ),
-                                        hintText: 'Masukkan kategori',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -464,46 +463,49 @@ class _HalamanKategoriWidgetState extends State<HalamanKategoriWidget> {
                                                                 },
                                                               ) ??
                                                               false;
-                                                      _model.apiResultqqe =
-                                                          await ApiDeleteCategoryCall
-                                                              .call(
-                                                        token:
-                                                            currentAuthenticationToken,
-                                                        categoryId:
-                                                            listCategoryItem.id
-                                                                .toString(),
-                                                      );
-
-                                                      if ((_model.apiResultqqe
-                                                              ?.succeeded ??
-                                                          true)) {
-                                                        safeSetState(() => _model
-                                                                .apiRequestCompleter =
-                                                            null);
-                                                        await _model
-                                                            .waitForApiRequestCompleted();
-                                                      } else {
-                                                        await showDialog(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title:
-                                                                  const Text('Gagal'),
-                                                              content: const Text(
-                                                                  'Ada sedikit kendala, ulangi lagi!'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext),
-                                                                  child: const Text(
-                                                                      'Ok'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
+                                                      if (confirmDialogResponse) {
+                                                        _model.apiResultqqe =
+                                                            await ApiDeleteCategoryCall
+                                                                .call(
+                                                          token:
+                                                              currentAuthenticationToken,
+                                                          categoryId:
+                                                              listCategoryItem
+                                                                  .id
+                                                                  .toString(),
                                                         );
+
+                                                        if ((_model.apiResultqqe
+                                                                ?.succeeded ??
+                                                            true)) {
+                                                          safeSetState(() =>
+                                                              _model.apiRequestCompleter =
+                                                                  null);
+                                                          await _model
+                                                              .waitForApiRequestCompleted();
+                                                        } else {
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: const Text(
+                                                                    'Gagal'),
+                                                                content: const Text(
+                                                                    'Ada sedikit kendala, ulangi lagi!'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child: const Text(
+                                                                        'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        }
                                                       }
 
                                                       safeSetState(() {});

@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 class ListProdukModel extends FlutterFlowModel<ListProdukWidget> {
   ///  State fields for stateful widgets in this page.
 
+  Completer<ApiCallResponse>? apiRequestCompleter;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  Completer<ApiCallResponse>? apiRequestCompleter;
 
   @override
   void initState(BuildContext context) {}

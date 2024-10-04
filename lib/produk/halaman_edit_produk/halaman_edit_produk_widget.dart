@@ -592,7 +592,17 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                       children: [
                                         Text(
                                           valueOrDefault<String>(
-                                            widget.category,
+                                            FFAppState()
+                                                            .selectcategory
+                                                            .name ==
+                                                        ''
+                                                ? valueOrDefault<String>(
+                                                    widget.category,
+                                                    'Uncategory',
+                                                  )
+                                                : FFAppState()
+                                                    .selectcategory
+                                                    .name,
                                             'Uncategory',
                                           ),
                                           style: FlutterFlowTheme.of(context)
@@ -736,7 +746,16 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                     controller:
                                         _model.dropDownValueController ??=
                                             FormFieldController<String>(null),
-                                    options: const ['KG', 'ML', 'L'],
+                                    options: const [
+                                      'Kg',
+                                      'Ml',
+                                      'L',
+                                      'Pcs',
+                                      'Cm',
+                                      'M',
+                                      'Box',
+                                      'Dus'
+                                    ],
                                     onChanged: (val) async {
                                       safeSetState(
                                           () => _model.dropDownValue = val);
@@ -765,7 +784,7 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                           color: Colors.white,
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'Select...',
+                                    hintText: 'Pilih',
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: Colors.white,
@@ -1006,48 +1025,42 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                 imageUrl: widget.imagetampil,
                               );
 
-                              if ((_model.apiResultysp?.succeeded ?? true)) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text(
-                                          (_model.apiResultysp?.bodyText ??
-                                              '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                              if (ApiProductUpdateCall.error(
+                                    (_model.apiResultysp?.jsonBody ?? ''),
+                                  ) ==
+                                  null) {
                                 FFAppState().selectcategory =
                                     CategoriesStruct();
                                 safeSetState(() {});
 
-                                context.pushNamed('List-produk');
+                                context.goNamed('List-produk');
                               } else {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Gagal'),
-                                      content: Text(
-                                          (_model.apiResultysp?.bodyText ??
-                                              '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                context.pushNamed(
+                                  'gagal-add-produk',
+                                  queryParameters: {
+                                    'pesanerror': serializeParam(
+                                      '${ApiProductUpdateCall.errorsku(
+                                                (_model.apiResultysp
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ) != null && (ApiProductUpdateCall.errorsku(
+                                            (_model.apiResultysp?.jsonBody ??
+                                                ''),
+                                          ))!.isNotEmpty ? ApiProductUpdateCall.errorsku(
+                                          (_model.apiResultysp?.jsonBody ?? ''),
+                                        )?.first : '  '}  ${ApiProductUpdateCall.errorbarcode(
+                                                (_model.apiResultysp
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ) != null && (ApiProductUpdateCall.errorbarcode(
+                                            (_model.apiResultysp?.jsonBody ??
+                                                ''),
+                                          ))!.isNotEmpty ? ApiProductUpdateCall.errorbarcode(
+                                          (_model.apiResultysp?.jsonBody ?? ''),
+                                        )?.first : '  '}',
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
                                 );
                               }
                             } else {
@@ -1059,25 +1072,6 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
 
                               if ((_model.apiResultUploudImage2?.succeeded ??
                                   true)) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Sukses'),
-                                      content: Text((_model
-                                              .apiResultUploudImage2
-                                              ?.exceptionMessage ??
-                                          '')),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
                                 _model.apiResultysppp =
                                     await ApiProductUpdateCall.call(
                                   categoryId:
@@ -1109,48 +1103,46 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                   ).toString(),
                                 );
 
-                                if ((_model.apiResultysp?.succeeded ?? true)) {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: const Text('Sukses'),
-                                        content: Text((_model.apiResultysppp
-                                                ?.exceptionMessage ??
-                                            '')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: const Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
+                                if (ApiProductUpdateCall.error(
+                                      (_model.apiResultysppp?.jsonBody ?? ''),
+                                    ) ==
+                                    null) {
                                   FFAppState().selectcategory =
                                       CategoriesStruct();
                                   safeSetState(() {});
 
-                                  context.pushNamed('List-produk');
+                                  context.goNamed('List-produk');
                                 } else {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: const Text('Gagal'),
-                                        content: Text((_model.apiResultysppp
-                                                ?.exceptionMessage ??
-                                            '')),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: const Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                  context.pushNamed(
+                                    'gagal-add-produk',
+                                    queryParameters: {
+                                      'pesanerror': serializeParam(
+                                        '${ApiProductUpdateCall.errorsku(
+                                                  (_model.apiResultysppp
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                ) != null && (ApiProductUpdateCall.errorsku(
+                                              (_model.apiResultysppp
+                                                      ?.jsonBody ??
+                                                  ''),
+                                            ))!.isNotEmpty ? ApiProductUpdateCall.errorsku(
+                                            (_model.apiResultysppp?.jsonBody ??
+                                                ''),
+                                          )?.first : '  '}  ${ApiProductUpdateCall.errorbarcode(
+                                                  (_model.apiResultysppp
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                ) != null && (ApiProductUpdateCall.errorbarcode(
+                                              (_model.apiResultysppp
+                                                      ?.jsonBody ??
+                                                  ''),
+                                            ))!.isNotEmpty ? ApiProductUpdateCall.errorbarcode(
+                                            (_model.apiResultysppp?.jsonBody ??
+                                                ''),
+                                          )?.first : '  '}',
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
                                   );
                                 }
                               } else {
@@ -1158,11 +1150,9 @@ class _HalamanEditProdukWidgetState extends State<HalamanEditProdukWidget> {
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: const Text('gagal'),
-                                      content: Text((_model
-                                              .apiResultUploudImage2
-                                              ?.exceptionMessage ??
-                                          '')),
+                                      title: const Text('Gagal uploud gambar'),
+                                      content: const Text(
+                                          'Batas ukuran gambar 2MB, silahkan coba lagi'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>

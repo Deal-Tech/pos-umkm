@@ -59,7 +59,7 @@ class _SuksesAddProdukWidgetState extends State<SuksesAddProdukWidget> {
                             alignment: const AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                context.pushNamed('List-produk');
+                                context.goNamed('List-produk');
                               },
                               text: '',
                               icon: const Icon(

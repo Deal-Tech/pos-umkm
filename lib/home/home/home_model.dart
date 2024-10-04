@@ -12,11 +12,11 @@ class HomeModel extends FlutterFlowModel<HomeWidget> {
   ApiCallResponse? apiGetuserrespon;
   // Stores action output result for [AdMob - Show Interstitial Ad] action in Home widget.
   bool? interstitialAdSuccess;
+  Completer<ApiCallResponse>? apiRequestCompleter;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  Completer<ApiCallResponse>? apiRequestCompleter;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;

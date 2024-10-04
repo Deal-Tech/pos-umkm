@@ -74,7 +74,7 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 100.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -1511,111 +1511,120 @@ class _HalamanAjukanQrisWidgetState extends State<HalamanAjukanQrisWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        FFButtonWidget(
-                          onPressed: () async {
-                            _model.apiResult37m =
-                                await QrisGroup.addQrisCall.call(
-                              fotoKtp: _model.apiResultUploudImage3 != null
-                                  ? ApiUploudImageProductCall.imageurl(
-                                      (_model.apiResultUploudImage3?.jsonBody ??
-                                          ''),
-                                    ).toString()
-                                  : ApiUploudImageProductCall.imageurl(
-                                      (_model.apiResultUploudImage4?.jsonBody ??
-                                          ''),
-                                    ).toString(),
-                              fotoUsaha: _model.apiResultUploudImage1 != null
-                                  ? ApiUploudImageProductCall.imageurl(
-                                      (_model.apiResultUploudImage1?.jsonBody ??
-                                          ''),
-                                    ).toString()
-                                  : ApiUploudImageProductCall.imageurl(
-                                      (_model.apiResultUploudImage2?.jsonBody ??
-                                          ''),
-                                    ).toString(),
-                              namaUsaha: _model.namaUsahaTextController.text,
-                              namaPemilik:
-                                  _model.pemilikUsahaTextController.text,
-                              alamatUsaha:
-                                  _model.alamatUsahaTextController.text,
-                              nomorTelepon:
-                                  _model.nomorTeleponTextController.text,
-                              kategoriUsaha: _model.kategoriTextController.text,
-                              deskripsiUsaha:
-                                  _model.penjelasanUsahaTextController.text,
-                              rekeningPencairan: _model.rekeningBankValue,
-                              nomorRekening:
-                                  _model.nomorRekeningTextController.text,
-                              pemilikRekening:
-                                  _model.pemilikRekeningTextController.text,
-                              linkQris: 'Null',
-                              status: false,
-                              token: currentAuthenticationToken,
-                              jenisDokumen: _model.jenisDokumenValue,
-                              nomorIdentitas:
-                                  _model.nomorIdentitasTextController.text,
-                            );
-
-                            if ((_model.apiResult37m?.succeeded ?? true)) {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Sukses'),
-                                    content: const Text(
-                                        'Pengajuan Anda sudah kami terima, pengajuan maksimal 2 hari untuk disetujui'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 20.0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              _model.apiResult37m =
+                                  await QrisGroup.addQrisCall.call(
+                                fotoKtp: _model.apiResultUploudImage3 != null
+                                    ? ApiUploudImageProductCall.imageurl(
+                                        (_model.apiResultUploudImage3
+                                                ?.jsonBody ??
+                                            ''),
+                                      ).toString()
+                                    : ApiUploudImageProductCall.imageurl(
+                                        (_model.apiResultUploudImage4
+                                                ?.jsonBody ??
+                                            ''),
+                                      ).toString(),
+                                fotoUsaha: _model.apiResultUploudImage1 != null
+                                    ? ApiUploudImageProductCall.imageurl(
+                                        (_model.apiResultUploudImage1
+                                                ?.jsonBody ??
+                                            ''),
+                                      ).toString()
+                                    : ApiUploudImageProductCall.imageurl(
+                                        (_model.apiResultUploudImage2
+                                                ?.jsonBody ??
+                                            ''),
+                                      ).toString(),
+                                namaUsaha: _model.namaUsahaTextController.text,
+                                namaPemilik:
+                                    _model.pemilikUsahaTextController.text,
+                                alamatUsaha:
+                                    _model.alamatUsahaTextController.text,
+                                nomorTelepon:
+                                    _model.nomorTeleponTextController.text,
+                                kategoriUsaha:
+                                    _model.kategoriTextController.text,
+                                deskripsiUsaha:
+                                    _model.penjelasanUsahaTextController.text,
+                                rekeningPencairan: _model.rekeningBankValue,
+                                nomorRekening:
+                                    _model.nomorRekeningTextController.text,
+                                pemilikRekening:
+                                    _model.pemilikRekeningTextController.text,
+                                linkQris: 'Null',
+                                status: false,
+                                token: currentAuthenticationToken,
+                                jenisDokumen: _model.jenisDokumenValue,
+                                nomorIdentitas:
+                                    _model.nomorIdentitasTextController.text,
                               );
 
-                              context.goNamed('Pending-pengajuan-qris');
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: const Text('Gagal'),
-                                    content: const Text(
-                                        'Ada yang salah !! mohon cek kembali pengisian Anda'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
+                              if ((_model.apiResult37m?.succeeded ?? true)) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Sukses'),
+                                      content: const Text(
+                                          'Pengajuan Anda sudah kami terima, pengajuan maksimal 2 hari untuk disetujui'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
 
-                            safeSetState(() {});
-                          },
-                          text: 'Ajukan Sekarang',
-                          options: FFButtonOptions(
-                            width: 327.0,
-                            height: 57.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: const Color(0xFF0EC244),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
+                                context.goNamed('Pending-pengajuan-qris');
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Gagal'),
+                                      content: const Text(
+                                          'Ada yang salah !! mohon cek kembali pengisian Anda'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+
+                              safeSetState(() {});
+                            },
+                            text: 'Ajukan Sekarang',
+                            options: FFButtonOptions(
+                              width: 327.0,
+                              height: 57.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: const Color(0xFF0EC244),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 0.0,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
                       ].divide(const SizedBox(height: 15.0)),

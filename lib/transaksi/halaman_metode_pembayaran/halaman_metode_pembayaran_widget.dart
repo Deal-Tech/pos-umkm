@@ -350,139 +350,172 @@ class _HalamanMetodePembayaranWidgetState
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      if (FFAppState().paymentmethod.paymentMethod == 'QRIS') {
-                        _model.apiResultqristransactions =
-                            await ApiTransaksiGroup.createTransactionCall.call(
-                          paymentPosId: FFAppState().paymentmethod.id,
-                          paymentMethod:
-                              FFAppState().paymentmethod.paymentMethod,
-                          total: widget.total,
-                          token: currentAuthenticationToken,
-                          status: 'pending',
-                          productsJson:
-                              FFAppState().cart.map((e) => e.toMap()).toList(),
-                        );
-
-                        if ((_model.apiResultqristransactions?.succeeded ??
-                            true)) {
-                          FFAppState().cart = [];
-                          safeSetState(() {});
-
-                          context.goNamed(
-                            'Halaman-pembayaran-non-cash',
-                            queryParameters: {
-                              'total': serializeParam(
-                                widget.total,
-                                ParamType.int,
-                              ),
-                              'idtransactions': serializeParam(
-                                ApiTransaksiGroup.createTransactionCall
-                                    .transactionsid(
-                                  (_model.apiResultqristransactions?.jsonBody ??
-                                      ''),
-                                ),
-                                ParamType.int,
-                              ),
-                              'datetransactions': serializeParam(
-                                ApiTransaksiGroup.createTransactionCall
-                                    .createdat(
-                                  (_model.apiResultqristransactions?.jsonBody ??
-                                      ''),
-                                ),
-                                ParamType.String,
-                              ),
-                              'planuser': serializeParam(
-                                widget.planuser,
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
+                      if ((FFAppState().paymentmethod.paymentMethod ==
+                              'Cash') ||
+                          (FFAppState().paymentmethod.paymentMethod ==
+                              'QRIS')) {
+                        if (FFAppState().paymentmethod.paymentMethod ==
+                            'QRIS') {
+                          _model.apiResultqristransactions =
+                              await ApiTransaksiGroup.createTransactionCall
+                                  .call(
+                            paymentPosId: FFAppState().paymentmethod.id,
+                            paymentMethod:
+                                FFAppState().paymentmethod.paymentMethod,
+                            total: widget.total,
+                            token: currentAuthenticationToken,
+                            status: 'pending',
+                            productsJson: FFAppState()
+                                .cart
+                                .map((e) => e.toMap())
+                                .toList(),
                           );
-                        } else {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text('Gagal'),
-                                content: const Text(
-                                    'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
+
+                          if ((_model.apiResultqristransactions?.succeeded ??
+                              true)) {
+                            FFAppState().cart = [];
+                            FFAppState().paymentmethod = PaymentMethodStruct();
+                            safeSetState(() {});
+
+                            context.goNamed(
+                              'Halaman-pembayaran-non-cash',
+                              queryParameters: {
+                                'total': serializeParam(
+                                  widget.total,
+                                  ParamType.int,
+                                ),
+                                'idtransactions': serializeParam(
+                                  ApiTransaksiGroup.createTransactionCall
+                                      .transactionsid(
+                                    (_model.apiResultqristransactions
+                                            ?.jsonBody ??
+                                        ''),
                                   ),
-                                ],
-                              );
-                            },
+                                  ParamType.int,
+                                ),
+                                'datetransactions': serializeParam(
+                                  ApiTransaksiGroup.createTransactionCall
+                                      .createdat(
+                                    (_model.apiResultqristransactions
+                                            ?.jsonBody ??
+                                        ''),
+                                  ),
+                                  ParamType.String,
+                                ),
+                                'planuser': serializeParam(
+                                  widget.planuser,
+                                  ParamType.String,
+                                ),
+                              }.withoutNulls,
+                            );
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('Gagal'),
+                                  content: const Text(
+                                      'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        } else {
+                          _model.apiResultdpc = await ApiTransaksiGroup
+                              .createTransactionCall
+                              .call(
+                            paymentPosId: FFAppState().paymentmethod.id,
+                            paymentMethod:
+                                FFAppState().paymentmethod.paymentMethod,
+                            total: widget.total,
+                            token: currentAuthenticationToken,
+                            status: 'paid',
+                            productsJson: FFAppState()
+                                .cart
+                                .map((e) => e.toMap())
+                                .toList(),
                           );
+
+                          if ((_model.apiResultdpc?.succeeded ?? true)) {
+                            FFAppState().cart = [];
+                            FFAppState().paymentmethod = PaymentMethodStruct();
+                            safeSetState(() {});
+
+                            context.goNamed(
+                              'Bukti-pencatatan',
+                              queryParameters: {
+                                'paymentmethod': serializeParam(
+                                  'Cash',
+                                  ParamType.String,
+                                ),
+                                'total': serializeParam(
+                                  widget.total,
+                                  ParamType.int,
+                                ),
+                                'transactionsid': serializeParam(
+                                  ApiTransaksiGroup.createTransactionCall
+                                      .transactionsid(
+                                    (_model.apiResultdpc?.jsonBody ?? ''),
+                                  ),
+                                  ParamType.int,
+                                ),
+                                'datetransactions': serializeParam(
+                                  ApiTransaksiGroup.createTransactionCall
+                                      .createdat(
+                                    (_model.apiResultdpc?.jsonBody ?? ''),
+                                  ),
+                                  ParamType.String,
+                                ),
+                                'userplan': serializeParam(
+                                  widget.planuser,
+                                  ParamType.String,
+                                ),
+                              }.withoutNulls,
+                            );
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: const Text('Gagal'),
+                                  content: const Text(
+                                      'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: const Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         }
                       } else {
-                        _model.apiResultdpc =
-                            await ApiTransaksiGroup.createTransactionCall.call(
-                          paymentPosId: FFAppState().paymentmethod.id,
-                          paymentMethod:
-                              FFAppState().paymentmethod.paymentMethod,
-                          total: widget.total,
-                          token: currentAuthenticationToken,
-                          status: 'paid',
-                          productsJson:
-                              FFAppState().cart.map((e) => e.toMap()).toList(),
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Ups !!'),
+                              content: const Text('Metode pembayaran harus dipilih'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
                         );
-
-                        if ((_model.apiResultdpc?.succeeded ?? true)) {
-                          FFAppState().cart = [];
-                          safeSetState(() {});
-
-                          context.goNamed(
-                            'Bukti-pencatatan',
-                            queryParameters: {
-                              'paymentmethod': serializeParam(
-                                'Cash',
-                                ParamType.String,
-                              ),
-                              'total': serializeParam(
-                                widget.total,
-                                ParamType.int,
-                              ),
-                              'transactionsid': serializeParam(
-                                ApiTransaksiGroup.createTransactionCall
-                                    .transactionsid(
-                                  (_model.apiResultdpc?.jsonBody ?? ''),
-                                ),
-                                ParamType.int,
-                              ),
-                              'datetransactions': serializeParam(
-                                ApiTransaksiGroup.createTransactionCall
-                                    .createdat(
-                                  (_model.apiResultdpc?.jsonBody ?? ''),
-                                ),
-                                ParamType.String,
-                              ),
-                              'userplan': serializeParam(
-                                widget.planuser,
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
-                          );
-                        } else {
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text('Gagal'),
-                                content: const Text(
-                                    'Maaf terjadi kesalahan, silahkan hubungi admin untuk info detail'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
                       }
 
                       safeSetState(() {});

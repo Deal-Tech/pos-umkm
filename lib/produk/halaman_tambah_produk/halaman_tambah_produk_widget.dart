@@ -269,7 +269,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Text(
-                                    'Maks ukuran 3 MB',
+                                    'Maks ukuran 2 MB',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -342,7 +342,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'Masukkan Nama Produk',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -461,7 +460,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'Masukkan Harga',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -659,7 +657,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                                           fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                         ),
-                                                hintText: 'Masukkan Satuan',
                                                 hintStyle: FlutterFlowTheme.of(
                                                         context)
                                                     .labelMedium
@@ -737,7 +734,16 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                         controller: _model
                                                 .dropDownValueController ??=
                                             FormFieldController<String>(null),
-                                        options: const ['KG', 'ML', 'L'],
+                                        options: const [
+                                          'Kg',
+                                          'Ml',
+                                          'L',
+                                          'Pcs',
+                                          'Cm',
+                                          'M',
+                                          'Box',
+                                          'Dus'
+                                        ],
                                         onChanged: (val) => safeSetState(
                                             () => _model.dropDownValue = val),
                                         width: 111.0,
@@ -807,7 +813,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'Masukkan Kode SKU (Wajib Unik)',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -899,8 +904,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           fontSize: 12.0,
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText:
-                                        'Masukkan Kode Barcode (Wajib Unik)',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
@@ -979,16 +982,115 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                               '') &&
                                       (_model.dropDownValue != null &&
                                           _model.dropDownValue != '')) {
-                                    _model.apiResultUploudImage1 =
-                                        await ApiUploudImageProductCall.call(
-                                      token: currentAuthenticationToken,
-                                      image: _model.uploadedLocalFile1,
-                                    );
+                                    if ((_model.uploadedLocalFile1.bytes
+                                                ?.isNotEmpty ??
+                                            false)) {
+                                      _model.apiResultUploudImage1 =
+                                          await ApiUploudImageProductCall.call(
+                                        token: currentAuthenticationToken,
+                                        image: _model.uploadedLocalFile1,
+                                      );
 
-                                    if ((_model
-                                            .apiResultUploudImage1?.succeeded ??
-                                        true)) {
-                                      _model.apiResultyspp =
+                                      if ((_model.apiResultUploudImage1
+                                              ?.succeeded ??
+                                          true)) {
+                                        _model.apiResultyspp =
+                                            await ApiProductCreateCall.call(
+                                          token: currentAuthenticationToken,
+                                          userId: currentUserUid,
+                                          name: _model
+                                              .namaProdukTextController.text,
+                                          price: int.tryParse(_model
+                                              .hargaProdukTextController.text),
+                                          unit:
+                                              '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
+                                          imageUrl: ApiUploudImageProductCall
+                                              .imageurl(
+                                            (_model.apiResultUploudImage1
+                                                    ?.jsonBody ??
+                                                ''),
+                                          ).toString(),
+                                          category:
+                                              FFAppState().selectcategory.name,
+                                          categoryId: FFAppState()
+                                              .selectcategory
+                                              .id
+                                              .toString(),
+                                          sku: _model
+                                              .sKUProdukTextController.text,
+                                          barcode:
+                                              _model.barcodeTextController.text,
+                                          status: true,
+                                        );
+
+                                        if (ApiProductCreateCall.errors(
+                                              (_model.apiResultyspp?.jsonBody ??
+                                                  ''),
+                                            ) ==
+                                            null) {
+                                          FFAppState().selectcategory =
+                                              CategoriesStruct();
+                                          safeSetState(() {});
+
+                                          context.goNamed('sukses_add-produk');
+                                        } else {
+                                          context.pushNamed(
+                                            'gagal-add-produk',
+                                            queryParameters: {
+                                              'pesanerror': serializeParam(
+                                                '${ApiProductCreateCall.errorsku(
+                                                          (_model.apiResultyspp
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                        ) != null && (ApiProductCreateCall.errorsku(
+                                                      (_model.apiResultyspp
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ))!.isNotEmpty ? ApiProductCreateCall.errorsku(
+                                                    (_model.apiResultyspp
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  )?.first : ' '}  ${ApiProductCreateCall.errorbarcode(
+                                                          (_model.apiResultyspp
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                        ) != null && (ApiProductCreateCall.errorbarcode(
+                                                      (_model.apiResultyspp
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ))!.isNotEmpty ? ApiProductCreateCall.errorbarcode(
+                                                    (_model.apiResultyspp
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  )?.first : ' '}',
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        }
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Gagal uploud gambar'),
+                                              content: const Text(
+                                                  'Batas ukuran gambar 2MB, silahkan coba lagi'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                    } else {
+                                      _model.apiResultysppp =
                                           await ApiProductCreateCall.call(
                                         token: currentAuthenticationToken,
                                         userId: currentUserUid,
@@ -998,12 +1100,7 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                             .hargaProdukTextController.text),
                                         unit:
                                             '${_model.nilaiSatuanTextController.text} ${_model.dropDownValue}',
-                                        imageUrl:
-                                            ApiUploudImageProductCall.imageurl(
-                                          (_model.apiResultUploudImage1
-                                                  ?.jsonBody ??
-                                              ''),
-                                        ).toString(),
+                                        imageUrl: 'null',
                                         category:
                                             FFAppState().selectcategory.name,
                                         categoryId: FFAppState()
@@ -1017,45 +1114,40 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                         status: true,
                                       );
 
-                                      if (ApiProductCreateCall.errors(
-                                            (_model.apiResultyspp?.jsonBody ??
-                                                ''),
-                                          ) ==
-                                          null) {
+                                      if ((_model.apiResultysppp?.succeeded ??
+                                          true)) {
                                         FFAppState().selectcategory =
                                             CategoriesStruct();
                                         safeSetState(() {});
 
                                         context.goNamed('sukses_add-produk');
-
-                                        context.goNamed('List-produk');
                                       } else {
                                         context.pushNamed(
                                           'gagal-add-produk',
                                           queryParameters: {
                                             'pesanerror': serializeParam(
                                               '${ApiProductCreateCall.errorsku(
-                                                        (_model.apiResultyspp
+                                                        (_model.apiResultysppp
                                                                 ?.jsonBody ??
                                                             ''),
                                                       ) != null && (ApiProductCreateCall.errorsku(
-                                                    (_model.apiResultyspp
+                                                    (_model.apiResultysppp
                                                             ?.jsonBody ??
                                                         ''),
                                                   ))!.isNotEmpty ? ApiProductCreateCall.errorsku(
-                                                  (_model.apiResultyspp
+                                                  (_model.apiResultysppp
                                                           ?.jsonBody ??
                                                       ''),
                                                 )?.first : ' '}  ${ApiProductCreateCall.errorbarcode(
-                                                        (_model.apiResultyspp
+                                                        (_model.apiResultysppp
                                                                 ?.jsonBody ??
                                                             ''),
                                                       ) != null && (ApiProductCreateCall.errorbarcode(
-                                                    (_model.apiResultyspp
+                                                    (_model.apiResultysppp
                                                             ?.jsonBody ??
                                                         ''),
                                                   ))!.isNotEmpty ? ApiProductCreateCall.errorbarcode(
-                                                  (_model.apiResultyspp
+                                                  (_model.apiResultysppp
                                                           ?.jsonBody ??
                                                       ''),
                                                 )?.first : ' '}',
@@ -1064,26 +1156,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                           }.withoutNulls,
                                         );
                                       }
-                                    } else {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: const Text('Gagal'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage1
-                                                    ?.bodyText ??
-                                                '')),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: const Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
                                     }
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -1190,8 +1262,6 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                         safeSetState(() {});
 
                                         context.goNamed('sukses_add-produk');
-
-                                        context.goNamed('List-produk');
                                       } else {
                                         context.pushNamed(
                                           'gagal-add-produk',
@@ -1210,11 +1280,9 @@ class _HalamanTambahProdukWidgetState extends State<HalamanTambahProdukWidget> {
                                         context: context,
                                         builder: (alertDialogContext) {
                                           return AlertDialog(
-                                            title: const Text('gagal'),
-                                            content: Text((_model
-                                                    .apiResultUploudImage2
-                                                    ?.bodyText ??
-                                                '')),
+                                            title: const Text('Gagal uploud gambar'),
+                                            content: const Text(
+                                                'Batas ukuran gambar 2MB, silahkan coba lagi'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(

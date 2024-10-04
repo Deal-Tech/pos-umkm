@@ -1,21 +1,23 @@
 import '/backend/schema/structs/index.dart';
+import '/flutter_flow/flutter_flow_checkbox_group.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'filter_transaksi_model.dart';
-export 'filter_transaksi_model.dart';
+import 'filter_report_model.dart';
+export 'filter_report_model.dart';
 
-class FilterTransaksiWidget extends StatefulWidget {
-  const FilterTransaksiWidget({super.key});
+class FilterReportWidget extends StatefulWidget {
+  const FilterReportWidget({super.key});
 
   @override
-  State<FilterTransaksiWidget> createState() => _FilterTransaksiWidgetState();
+  State<FilterReportWidget> createState() => _FilterReportWidgetState();
 }
 
-class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
-  late FilterTransaksiModel _model;
+class _FilterReportWidgetState extends State<FilterReportWidget> {
+  late FilterReportModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -26,7 +28,7 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FilterTransaksiModel());
+    _model = createModel(context, () => FilterReportModel());
   }
 
   @override
@@ -79,6 +81,50 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                         safeSetState(() {});
                         Navigator.pop(context);
                       },
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: FlutterFlowCheckboxGroup(
+                        options: const ['Hari ini'],
+                        onChanged: (val) async {
+                          safeSetState(() => _model.checkboxGroupValues = val);
+                          FFAppState().filterreportdate =
+                              FilterreportdateStruct(
+                            datestart: getCurrentTimestamp,
+                            dateend: getCurrentTimestamp,
+                          );
+                          safeSetState(() {});
+                        },
+                        controller: _model.checkboxGroupValueController ??=
+                            FormFieldController<List<String>>(
+                          [],
+                        ),
+                        activeColor: FlutterFlowTheme.of(context).primary,
+                        checkColor: FlutterFlowTheme.of(context).info,
+                        checkboxBorderColor:
+                            FlutterFlowTheme.of(context).secondaryText,
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: 'Rubik',
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                        unselectedTextStyle:
+                            FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                        checkboxBorderRadius: BorderRadius.circular(4.0),
+                        initialized: _model.checkboxGroupValues != null,
+                      ),
                     ),
                   ],
                 ),
@@ -180,7 +226,7 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                                   );
                                 });
                               }
-                              FFAppState().updateFiltertransactionsdateStruct(
+                              FFAppState().updateFilterreportdateStruct(
                                 (e) => e..datestart = _model.datePicked1,
                               );
                               safeSetState(() {});
@@ -283,7 +329,7 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                                   );
                                 });
                               }
-                              FFAppState().updateFiltertransactionsdateStruct(
+                              FFAppState().updateFilterreportdateStruct(
                                 (e) => e..dateend = _model.datePicked2,
                               );
                               safeSetState(() {});
@@ -325,6 +371,8 @@ class _FilterTransaksiWidgetState extends State<FilterTransaksiWidget> {
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    FFAppState().filterreport = 'custom';
+                    safeSetState(() {});
                     Navigator.pop(context);
                   },
                   text: 'Tetapkan',
