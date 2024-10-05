@@ -616,7 +616,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                   ),
                                                   planId: 2,
                                                   planName: 'Pro 1 Bulan',
-                                                  amount: 30000,
+                                                  amount: 25000,
                                                   paymentId: 2,
                                                   paymentMethod: 'Xendit',
                                                 );
@@ -624,6 +624,25 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                 if ((_model.apiResultvae
                                                         ?.succeeded ??
                                                     true)) {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: const Text('Sukses'),
+                                                        content: const Text(
+                                                            'Pembelian Paket Langganan berhasil, setelah ini Anda akan dirahkan ke link pembayaran.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: const Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                   _model.apiResulte3v =
                                                       await ApiXenditCall.call(
                                                     orderid: OrderGroup.addCall
@@ -634,7 +653,7 @@ class _HalamanLanggananWidgetState extends State<HalamanLanggananWidget> {
                                                         )
                                                         ?.toString(),
                                                     token:
-                                                        'eG5kX2RldmVsb3BtZW50X2dadXJRYW1xSXNpVkdMMEg5U1pkcmh5VWhaZHZXYWdlU1JJSjdLdTVjcTZvWmJpdjZoM05qWVBvU0JxTlhSdzo=',
+                                                        currentAuthenticationToken,
                                                     amount: 25000,
                                                     payerEmail:
                                                         ApiGetUserCall.email(

@@ -19,21 +19,6 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
-      _cart = prefs
-              .getStringList('ff_cart')
-              ?.map((x) {
-                try {
-                  return CartItemStruct.fromSerializableMap(jsonDecode(x));
-                } catch (e) {
-                  print("Can't decode persisted data type. Error: $e.");
-                  return null;
-                }
-              })
-              .withoutNulls
-              .toList() ??
-          _cart;
-    });
-    _safeInit(() {
       _userid = prefs.getString('ff_userid') ?? _userid;
     });
     _safeInit(() {
@@ -79,22 +64,18 @@ class FFAppState extends ChangeNotifier {
   List<CartItemStruct> get cart => _cart;
   set cart(List<CartItemStruct> value) {
     _cart = value;
-    prefs.setStringList('ff_cart', value.map((x) => x.serialize()).toList());
   }
 
   void addToCart(CartItemStruct value) {
     cart.add(value);
-    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
   }
 
   void removeFromCart(CartItemStruct value) {
     cart.remove(value);
-    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
   }
 
   void removeAtIndexFromCart(int index) {
     cart.removeAt(index);
-    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
   }
 
   void updateCartAtIndex(
@@ -102,12 +83,10 @@ class FFAppState extends ChangeNotifier {
     CartItemStruct Function(CartItemStruct) updateFn,
   ) {
     cart[index] = updateFn(_cart[index]);
-    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
   }
 
   void insertAtIndexInCart(int index, CartItemStruct value) {
     cart.insert(index, value);
-    prefs.setStringList('ff_cart', _cart.map((x) => x.serialize()).toList());
   }
 
   String _userid = '';

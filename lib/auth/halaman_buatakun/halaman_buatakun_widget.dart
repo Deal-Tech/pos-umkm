@@ -730,7 +730,10 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                             _model.confirmpasswordTextController.text,
                       );
 
-                      if ((_model.apiResultDaftar?.succeeded ?? true)) {
+                      if (ApiDaftarCall.errors(
+                            (_model.apiResultDaftar?.jsonBody ?? ''),
+                          ) ==
+                          null) {
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -755,10 +758,12 @@ class _HalamanBuatakunWidgetState extends State<HalamanBuatakunWidget> {
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: const Text('Gagal'),
-                              content: Text(
-                                  (_model.apiResultDaftar?.exceptionMessage ??
-                                      '')),
+                              title: const Text('Maaf'),
+                              content: Text('${ApiDaftarCall.erroremail(
+                                (_model.apiResultDaftar?.jsonBody ?? ''),
+                              )} ${ApiDaftarCall.errorphone(
+                                (_model.apiResultDaftar?.jsonBody ?? ''),
+                              )}'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

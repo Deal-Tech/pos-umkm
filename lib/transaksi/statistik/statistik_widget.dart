@@ -204,8 +204,9 @@ class _StatistikWidgetState extends State<StatistikWidget> {
                                 ),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    FFAppState().filtertransactionsdate =
-                                        FiltertransactionsStruct();
+                                    FFAppState().filterreport = 'minggu_ini';
+                                    FFAppState().filterreportdate =
+                                        FilterreportdateStruct();
                                     safeSetState(() {});
                                     safeSetState(() =>
                                         _model.apiRequestCompleter = null);

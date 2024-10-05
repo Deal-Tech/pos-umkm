@@ -15,7 +15,7 @@ class ApiTransaksiGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -355,7 +355,7 @@ class ExpenseGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -445,7 +445,7 @@ class CategoryExpenseGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -589,7 +589,7 @@ class QrisGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -820,7 +820,7 @@ class DebtGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -1017,7 +1017,7 @@ class ReceivableGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -1215,7 +1215,7 @@ class OrderGroup {
   static String getBaseUrl({
     String? token = '',
   }) =>
-      'https://thetester.me/api';
+      'https://dealpos.mudahdeal.com/api';
   static Map<String, String> headers = {
     'Authorization': 'Bearer [token]',
   };
@@ -1354,7 +1354,7 @@ class ApiDaftarCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'api daftar',
-      apiUrl: 'https://thetester.me/api/register',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/register',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1378,6 +1378,20 @@ class ApiDaftarCall {
         response,
         r'''$.user.id''',
       ));
+  static dynamic errors(dynamic response) => getJsonField(
+        response,
+        r'''$.errors''',
+      );
+  static String? erroremail(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.errors.email''',
+      ));
+  static String? errorphone(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.errors.phone''',
+      ));
 }
 
 class LoginApiCall {
@@ -1392,7 +1406,7 @@ class LoginApiCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login api',
-      apiUrl: 'https://thetester.me/api/login',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/login',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -1429,7 +1443,7 @@ class ApiLogoutCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'api logout',
-      apiUrl: 'https://thetester.me/api/logout',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/logout',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1452,7 +1466,7 @@ class ApiGetUserCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get User',
-      apiUrl: 'https://thetester.me/api/user',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/user',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1527,7 +1541,7 @@ class ApiProductCreateCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Create',
-      apiUrl: 'https://thetester.me/api/products',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1598,7 +1612,7 @@ class ApiProductUpdateCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Update',
-      apiUrl: 'https://thetester.me/api/products/$productId',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products/$productId',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1646,7 +1660,7 @@ class ApiProductShowCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Product Show',
-      apiUrl: 'https://thetester.me/api/products/$productId',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products/$productId',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1672,7 +1686,7 @@ class ApiGetListProductCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get List Product',
-      apiUrl: 'https://thetester.me/api/products',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1772,7 +1786,7 @@ class ApiDeleteProductCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Delete Product',
-      apiUrl: 'https://thetester.me/api/products/$productId',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products/$productId',
       callType: ApiCallType.DELETE,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1795,7 +1809,7 @@ class ApiDeleteCategoryCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Delete Category',
-      apiUrl: 'https://thetester.me/api/categories/$categoryId',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/categories/$categoryId',
       callType: ApiCallType.DELETE,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1818,7 +1832,7 @@ class ApiUploudImageProductCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Uploud Image product',
-      apiUrl: 'https://thetester.me/api/upload-product-image',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/upload-product-image',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1850,7 +1864,7 @@ class ApiDeleteImageProductCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Delete Image Product',
-      apiUrl: 'https://thetester.me/api/delete-product-image',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/delete-product-image',
       callType: ApiCallType.DELETE,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1880,7 +1894,7 @@ class ApiGetListCategoryCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get List Category',
-      apiUrl: 'https://thetester.me/api/categories',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/categories',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1909,7 +1923,7 @@ class ApiCategoryCreateCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Category Create',
-      apiUrl: 'https://thetester.me/api/categories',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/categories',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1941,7 +1955,7 @@ class ApiUpdateCategoryCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Update Category',
-      apiUrl: 'https://thetester.me/api/categories/$categoryId',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/categories/$categoryId',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1965,7 +1979,7 @@ class ApiGetPaymentPOSCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api Get Payment POS',
-      apiUrl: 'https://thetester.me/api/payment_pos',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/payment_pos',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -1991,7 +2005,7 @@ class SendOTPCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send OTP',
-      apiUrl: 'https://thetester.me/api/password/code',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/password/code',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -2023,42 +2037,7 @@ class ApiChangePasswordWithCodeCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Change Password With Code',
-      apiUrl: 'https://thetester.me/api/password/reset-with-code',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class TesapiCall {
-  static Future<ApiCallResponse> call({
-    int? total,
-    int? paymentPosId,
-    dynamic productsJson,
-    String? status = '',
-    String? paymentMethod = '',
-  }) async {
-    final products = _serializeJson(productsJson, true);
-    final ffApiRequestBody = '''
-{
-  "total": $total,
-  "payment_pos_id": $paymentPosId,
-  "payment_method": "$paymentMethod",
-  "status": "$status",
-  "products": $products
-}''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'tesapi',
-      apiUrl: 'https://webhook.site/6ee8cb57-5f46-4a07-8cbe-fc8f17841730',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/password/reset-with-code',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -2083,7 +2062,7 @@ class ApiListProductFixedBugCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Api List Product Fixed Bug',
-      apiUrl: 'https://thetester.me/api/products',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/products',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -2112,7 +2091,7 @@ class ReportCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Report',
-      apiUrl: 'https://thetester.me/api/rekappos',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/rekappos',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -2146,7 +2125,7 @@ class SupportsCall {
   static Future<ApiCallResponse> call() async {
     return ApiManager.instance.makeApiCall(
       callName: 'Supports',
-      apiUrl: 'https://thetester.me/api/supports',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/supports',
       callType: ApiCallType.GET,
       headers: {},
       params: {},
@@ -2182,7 +2161,7 @@ class ApiUpdateUserCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Update User',
-      apiUrl: 'https://thetester.me/api/user/update',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/user/update',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $token',
@@ -2206,7 +2185,7 @@ class PlansCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Plans',
-      apiUrl: 'https://thetester.me/api/plans',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/plans',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $token',
@@ -2239,10 +2218,10 @@ class ApiXenditCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Api Xendit',
-      apiUrl: 'https://api.xendit.co/v2/invoices',
+      apiUrl: 'https://dealpos.mudahdeal.com/api/proxy/xendit',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Basic $token',
+        'Authorization': 'Bearer $token',
       },
       params: {},
       body: ffApiRequestBody,
