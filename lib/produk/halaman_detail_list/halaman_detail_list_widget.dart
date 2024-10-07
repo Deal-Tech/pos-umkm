@@ -218,7 +218,7 @@ class _HalamanDetailListWidgetState extends State<HalamanDetailListWidget> {
                                             BorderRadius.circular(8.0),
                                         child: Image.network(
                                           listCartItem.productImageUrl == 'null'
-                                              ? 'https://thetester.me/storage/product_images/Box.png'
+                                              ? 'https://dealpos.mudahdeal.com/storage/product_images/Box.png'
                                               : listCartItem.productImageUrl,
                                           width: 100.0,
                                           fit: BoxFit.contain,
